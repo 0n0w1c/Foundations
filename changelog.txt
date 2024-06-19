@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 2024-06-19
+  Bugfixes:
+    - None
+  Features:
+    - Renamed mod to Foundations
+    - Added support for Krastorio 2
+    - Added support for Fluidic Power
+    - Removed the foundation requirement for military turrets
+
+---------------------------------------------------------------------------------------------------
+Version: 0.0.0
+Date: 2024-06-18
+  Changes:
+    - Forked Buildings require foundation
