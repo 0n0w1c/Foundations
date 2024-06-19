@@ -1,7 +1,7 @@
 {
   "name": "Foundations",
   "version": "0.0.1",
-  "title": "Buildings require a foundation",
+  "title": "Foundations",
   "author": "0n0w1c",
   "factorio_version": "1.1",
   "dependencies": [
@@ -10,5 +10,5 @@
     "? FluidicPower >= 1.0.4",
     "! buildings-require-foundation"
   ],
-  "description": "All big buildings must be built on a brick or concrete foundation"
+  "description": "Factories require a solid foundation before construction"
 }
