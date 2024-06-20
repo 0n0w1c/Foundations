@@ -72,7 +72,9 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     local box = entity.selection_box
     -- Only entities bigger than 1.5x1.5 tile
     if (-box[1][1] + box[2][1]) > 1.5 and (-box[1][2] + box[2][2]) > 1.5 then
-        update_collision_mask(entity)
+        if entity.name ~= "fish-pole" then
+           update_collision_mask(entity)
+        end
     end
 end
 

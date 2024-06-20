@@ -8,6 +8,7 @@
     "base >= 1.1",
     "? Krastorio2 >= 1.3.24",
     "? FluidicPower >= 1.0.4",
+    "? fish-pole >= 1.0.7",
     "! buildings-require-foundation"
   ],
   "description": "Factories require foundations before construction"
