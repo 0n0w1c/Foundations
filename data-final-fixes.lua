@@ -78,7 +78,7 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     end
 end
 
--- fluid storage tanks and Fluidic Power accumulators
+-- add fluid storage tanks and Fluidic Power accumulators
 for _, entity in pairs(data.raw["storage-tank"]) do
     if (string.find(entity.name, "fluidic")
         or string.find(entity.name, "storage%-tank")

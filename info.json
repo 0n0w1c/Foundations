@@ -10,5 +10,5 @@
     "? FluidicPower >= 1.0.4",
     "! buildings-require-foundation"
   ],
-  "description": "Factories require a foundation before construction"
+  "description": "Factories require foundations before construction"
 }
