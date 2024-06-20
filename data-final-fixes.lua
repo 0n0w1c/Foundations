@@ -7,29 +7,10 @@ local layer = collision_mask_util.get_first_unused_layer()
 
 --local types_to_update = {"accumulator", "solar-panel", "lab", "radar", "rocket-silo", "boiler", "generator", "reactor",
 --                         "train-stop", "beacon", "ammo-turret", "electric-turret", "fluid-turret", "artillery-turret"}
-local types_to_update =
-        {
-            "accumulator",
-            "solar-panel",
-            "lab", "radar",
-            "rocket-silo",
-            "boiler",
-            "generator",
-            "reactor",
-            "train-stop",
-            "beacon",
-            "electric-turret",
-            "fluid-turret",
-            "artillery-turret",
-            "roboport",
-            "electric-energy-interface"
-        }
-local types_to_update_nonburner =
-        {
-            "inserter",
-            "furnace",
-            "assembling-machine"
-        }
+local types_to_update = {"accumulator", "solar-panel", "lab", "radar", "rocket-silo", "boiler", "generator", "reactor", "train-stop",
+                         "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface"}
+
+local types_to_update_nonburner = {"inserter", "furnace", "assembling-machine"}
 
 ------------------------------------------------------------------------------------------------------
 -- Define functions
