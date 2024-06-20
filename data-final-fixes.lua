@@ -88,7 +88,7 @@ for _, entity in pairs(data.raw["storage-tank"]) do
     end
 end
 
--- Fluidic Power switch
+-- add Fluidic Power switch
 for _, entity in pairs(data.raw["pump"]) do
     if string.find(entity.name, "fluidic") then
         update_collision_mask(entity)
@@ -97,7 +97,7 @@ end
 
 -- exclude the gun-turret
 for _, entity in pairs(data.raw["ammo-turret"]) do
-    if not string.find(entity.name, "gun%-turret") then
+    if entity.name ~= "gun-turret" then
         update_collision_mask(entity)
     end
 end
