@@ -94,3 +94,10 @@ for _, entity in pairs(data.raw["pump"]) do
         update_collision_mask(entity)
     end
 end
+
+-- exclude the gun-turret
+for _, entity in pairs(data.raw["ammo-turret"]) do
+    if not string.find(entity.name, "gun%-turret") then
+        update_collision_mask(entity)
+    end
+end
