@@ -3,7 +3,7 @@ However, factory entities require a foundation. Stone bricks work fine, so the c
 Your factory will look better and you will travel faster, and somehow it just seems natural.  
 It increases the pleasure I get from the game, I hope it does the same for you.  
 
-Safe to add to an existing save, it will not disturb what you have previously built. Only applies to new construction.  
+Safe to add to an existing save, will not disturb what you have previously built. Only applies to new construction.  
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  
