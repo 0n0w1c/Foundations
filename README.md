@@ -1,4 +1,4 @@
-Stone furnaces, burner inserters, pumps, pipes, belts, splitters, and gun turrerts... stuff you need early game are excluded.  
+Stone furnaces, burner inserters, pumps, pipes, belts, splitters, and gun turrerts... early game items are excluded.  
 However, factory entities require a foundation. Stone bricks work fine, so the cost is not so great.  
 Your factory will look better and you will travel faster, and somehow it just seems natural.  
 It increases the pleasure I get from the game, I hope it does the same for you.  
