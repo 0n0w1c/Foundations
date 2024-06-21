@@ -38,7 +38,6 @@ end
 
 -- Tiles
 for _, tile in pairs(data.raw["tile"]) do
-    -- Update only non-stone based tiles
     if not string.find(tile.name, "stone")
         and not string.find(tile.name, "concrete")
         and not string.find(tile.name, "plate")
