@@ -1,4 +1,4 @@
-Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)
+Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  
 
 Features:  
