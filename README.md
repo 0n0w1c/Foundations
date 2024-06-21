@@ -1,7 +1,7 @@
 Fork of "Buildings require foundation v0.1.1"  
 Authored by Subjectd_31415 under the GNU GPL3  
 
-Features:
+Features:  
 Renamed to Foundations  
 Added support for Krastorio 2  
 Added support for Fluidic Power  
