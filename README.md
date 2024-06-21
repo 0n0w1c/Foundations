@@ -5,9 +5,6 @@ It increases the pleasure I get from the game, I hope it does the same for you.
 
 Safe to add to an existing save, will not disturb what you have previously built. Only applies to new construction.  
 
-Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
-Authored by Subjectd_31415 under the GNU GPL3  
-
 Features:  
 Renamed to Foundations  
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
@@ -17,3 +14,10 @@ Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)
 Added the foundation requirement for roboports  
 Added the foundation requirement for fluid storage tanks  
 Removed the foundation requirement for gun turrets  
+
+Known issue:  
+Blueprints that include both tiles and entities that require a foundation.  
+Build a foundation first, then apply the blueprint.  
+
+Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
+Authored by Subjectd_31415 under the GNU GPL3  
