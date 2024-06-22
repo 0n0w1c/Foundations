@@ -10,6 +10,7 @@
     "? FluidicPower >= 1.0.4",
     "? fish-pole >= 1.0.7",
     "? PowerOverload >= 1.4.8",
+    "? LunarLandings >= 1.0.11",
     "! buildings-require-foundation"
   ],
   "description": "Factories require foundations before construction"
