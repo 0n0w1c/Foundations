@@ -89,7 +89,14 @@ end
 
 -- add Fluidic Power switch
 for _, entity in pairs(data.raw["pump"]) do
-    if string.name == "fluidic-power-switch" then
+    if entity.name == "fluidic-power-switch" then
+        update_collision_mask(entity)
+    end
+end
+
+-- add Lunar Landings support
+for _, entity in pairs(data.raw["container"]) do
+    if entity.name == "ll-landing-pad" or string.find(entity.name, "spidertron") then
         update_collision_mask(entity)
     end
 end

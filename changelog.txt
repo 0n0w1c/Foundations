@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 2024-06-22
+  Bugfixes:
+    - Fixed bug with adding fluidic-power-switch
+  Features:
+    - Beta: Adding support for Lunar Landings
+
+---------------------------------------------------------------------------------------------------
 Version: 0.0.2
 Date: 2024-06-21
   Bugfixes:
