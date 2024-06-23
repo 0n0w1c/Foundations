@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.5
+Date: 2024-06-23
+  Bugfixes:
+    - Removed beta support for Lunar Landings
+  Features:
+    - Added Lunar Landings as incompatible mod
+
+---------------------------------------------------------------------------------------------------
 Version: 0.0.4
 Date: 2024-06-22
   Bugfixes:

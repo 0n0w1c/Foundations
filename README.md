@@ -11,7 +11,6 @@ Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
 Added support for [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
-Added beta support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 Added the foundation requirement for roboports  
 Added the foundation requirement for fluid storage tanks  
 Removed the foundation requirement for gun turrets  

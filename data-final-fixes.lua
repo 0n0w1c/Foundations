@@ -94,13 +94,6 @@ for _, entity in pairs(data.raw["pump"]) do
     end
 end
 
--- add Lunar Landings support
-for _, entity in pairs(data.raw["container"]) do
-    if entity.name == "ll-landing-pad" or string.find(entity.name, "spidertron") then
-        update_collision_mask(entity)
-    end
-end
-
 -- exclude gun-turret
 for _, entity in pairs(data.raw["ammo-turret"]) do
     if entity.name ~= "gun-turret" then
