@@ -100,3 +100,15 @@ for _, entity in pairs(data.raw["ammo-turret"]) do
         update_collision_mask(entity)
     end
 end
+
+-- add all furnaces in Industrial Revolution 3 (must have same collision mask as upgrade)
+if mods["IndustrialRevolution3"] then
+    for _, entity in pairs(data.raw["furnace"]) do
+        update_collision_mask(entity)
+    end
+    for _, entity in pairs(data.raw["assembling-machine"]) do
+        if string.find(entity.name, "furnace") then
+            update_collision_mask(entity)
+        end
+    end
+end
