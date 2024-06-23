@@ -94,13 +94,6 @@ for _, entity in pairs(data.raw["pump"]) do
     end
 end
 
--- exclude gun-turret
-for _, entity in pairs(data.raw["ammo-turret"]) do
-    if entity.name ~= "gun-turret" then
-        update_collision_mask(entity)
-    end
-end
-
 -- add all furnaces in Industrial Revolution 3 (must have same collision mask as upgrade)
 if mods["IndustrialRevolution3"] then
     for _, entity in pairs(data.raw["furnace"]) do
@@ -110,5 +103,20 @@ if mods["IndustrialRevolution3"] then
         if string.find(entity.name, "furnace") then
             update_collision_mask(entity)
         end
+    end
+end
+
+-- add turrets, except early-game turrets depending on settings
+for _, entity in pairs(data.raw["ammo-turret"]) do
+    if entity.name == "gun-turret" then
+        if settings.startup["Foundations-gun-turret-needs-foundation"].value then
+            update_collision_mask(entity)
+        end
+    elseif entity.name == "scattergun-turret" then
+        if settings.startup["Foundations-IR3-scattergun-turret-needs-foundation"].value then
+            update_collision_mask(entity)
+        end
+    else
+        update_collision_mask(entity)
     end
 end
