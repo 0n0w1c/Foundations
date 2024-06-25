@@ -11,9 +11,10 @@ Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
 Added support for [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
+Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3) - provided by StephenBarnes  
 Added the foundation requirement for roboports  
 Added the foundation requirement for fluid storage tanks  
-Removed the foundation requirement for gun turrets  
+Made the foundation requirement for gun turrets optional, in startup settings - provided by StephenBarnes  
 
 Known issue:  
 Blueprints that include both tiles and entities that require a foundation.  
