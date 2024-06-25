@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.8
+Date: 2024-06-25
+  Bugfixes:
+    - None
+  Features:
+    - Added the foundation requirement for burner entities
+    - Added the foundation requirement for heat pipes
+    - Added support for Lunar Landings
+    - Added support for Zithorian's Extra Storage Tanks
+
+---------------------------------------------------------------------------------------------------
 Version: 0.0.7
 Date: 2024-06-25
   Bugfixes:

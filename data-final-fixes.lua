@@ -5,10 +5,10 @@ local collision_mask_util = require("__core__/lualib/collision-mask-util")
 
 local layer = collision_mask_util.get_first_unused_layer()
 
-local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "train-stop",
+local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop",
                          "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch"}
 
-local types_to_update_nonburner = {"inserter", "furnace", "lab", "assembling-machine"}
+local types_to_update_nonburner = {"inserter", "furnace", "lab", "assembling-machine", "burner-generator"}
 
 ------------------------------------------------------------------------------------------------------
 -- Define functions
@@ -50,10 +50,10 @@ end
 -- Regular entities by group
 for _, prop in pairs(types_to_update) do
     for _, entity in pairs(data.raw[prop]) do
-        if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole")) then
-            if not string.find(entity.name, "ll%-", 1) then
-                update_collision_mask(entity)
-            end
+        if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
+           and entity.name ~= "ll-arc-furnace-reactor"
+        then
+            update_collision_mask(entity)
         end
     end
 end
@@ -61,12 +61,13 @@ end
 -- Regular non-burner entities by group
 for _, prop in pairs(types_to_update_nonburner) do
     for _, entity in pairs(data.raw[prop]) do
-        if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole")) then
-            if entity.energy_source.type ~= "burner" then
-                if not string.find(entity.name, "ll%-", 1) then
-                    update_collision_mask(entity)
-                end
-            end
+        if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
+           and entity.name ~= "ll-telescope"
+           and entity.name ~= "stone-furnace"
+        then
+--            if entity.energy_source.type ~= "burner" then
+                update_collision_mask(entity)
+--            end
         end
     end
 end
@@ -84,19 +85,23 @@ end
 
 -- add fluid storage tanks and Fluidic Power accumulators
 for _, entity in pairs(data.raw["storage-tank"]) do
-    if (string.find(entity.name, "fluidic")
+    if string.find(entity.name, "fluidic")
         or string.find(entity.name, "storage%-tank")
-        or string.find(entity.name, "kr%-fluid%-storage"))
+        or string.find(entity.name, "fluid%-tank")
+        or string.find(entity.name, "kr%-fluid%-storage")
     then
         update_collision_mask(entity)
     end
 end
 
 -- add Fluidic Power switch
-for _, entity in pairs(data.raw["pump"]) do
-    if entity.name == "fluidic-power-switch" then
-        update_collision_mask(entity)
-    end
+if mods["FluidicPower"] then
+    update_collision_mask(data.raw["pump"]["fluidic-power-switch"])
+end
+
+-- containers are normally exempt from the foundation requirement
+if mods["LunarLandings"] then
+    update_collision_mask(data.raw["container"]["ll-landing-pad"])
 end
 
 -- add all furnaces in Industrial Revolution 3 (must have same collision mask as upgrade)
@@ -109,6 +114,11 @@ if mods["IndustrialRevolution3"] then
             update_collision_mask(entity)
         end
     end
+else
+    -- stone furnace is required to make a stone brick foundation
+    -- next_upgrade collision mask must match, so remove next upgrade
+    -- upgrade planner will now ignore them
+    data.raw["furnace"]["stone-furnace"].next_upgrade = nil
 end
 
 -- add turrets, except early-game turrets depending on settings
@@ -124,20 +134,4 @@ for _, entity in pairs(data.raw["ammo-turret"]) do
     else
         update_collision_mask(entity)
     end
-end
-
--- aai industry burner entities can not use the upgrade planner, next_upgrade's collision mask must match
-if mods["aai-industry"] then
-    data.raw["inserter"]["burner-inserter"].next_upgrade = nil
-    data.raw["lab"]["burner-lab"].next_upgrade = nil
-    data.raw["assembling-machine"]["burner-assembling-machine"].next_upgrade = nil
-end
-
--- skipped applying foundation requirement for LunarLandings entities in groups above, but do these specifically
-if mods["LunarLandings"] then
-    update_collision_mask(data.raw["container"]["ll-landing-pad"])
-    update_collision_mask(data.raw["assembling-machine"]["fuel-processor"])
-    update_collision_mask(data.raw["assembling-machine"]["ll-steam-condenser"])
-    update_collision_mask(data.raw["electric-energy-interface"]["ll-rtg"])
-    update_collision_mask(data.raw["rocket-silo"]["ll-rocket-silo-interstellar"])
 end
