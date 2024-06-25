@@ -41,6 +41,7 @@ for _, tile in pairs(data.raw["tile"]) do
     if not string.find(tile.name, "stone")
         and not string.find(tile.name, "concrete")
         and not string.find(tile.name, "plate")
+        and not string.find(tile.name, "foundation")
     then
         update_collision_mask(tile)
     end
@@ -50,7 +51,9 @@ end
 for _, prop in pairs(types_to_update) do
     for _, entity in pairs(data.raw[prop]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole")) then
-            update_collision_mask(entity)
+            if not string.find(entity.name, "ll%-", 1) then
+                update_collision_mask(entity)
+            end
         end
     end
 end
@@ -60,7 +63,9 @@ for _, prop in pairs(types_to_update_nonburner) do
     for _, entity in pairs(data.raw[prop]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole")) then
             if entity.energy_source.type ~= "burner" then
-                update_collision_mask(entity)
+                if not string.find(entity.name, "ll%-", 1) then
+                    update_collision_mask(entity)
+                end
             end
         end
     end
@@ -126,4 +131,13 @@ if mods["aai-industry"] then
     data.raw["inserter"]["burner-inserter"].next_upgrade = nil
     data.raw["lab"]["burner-lab"].next_upgrade = nil
     data.raw["assembling-machine"]["burner-assembling-machine"].next_upgrade = nil
+end
+
+-- skipped applying foundation requirement for LunarLandings entities in groups above, but do these specifically
+if mods["LunarLandings"] then
+    update_collision_mask(data.raw["container"]["ll-landing-pad"])
+    update_collision_mask(data.raw["assembling-machine"]["fuel-processor"])
+    update_collision_mask(data.raw["assembling-machine"]["ll-steam-condenser"])
+    update_collision_mask(data.raw["electric-energy-interface"]["ll-rtg"])
+    update_collision_mask(data.raw["rocket-silo"]["ll-rocket-silo-interstellar"])
 end
