@@ -12,6 +12,7 @@
     "? PowerOverload >= 1.4.8",
     "? IndustrialRevolution3 >= 3.1.23",
     "! LunarLandings",
+    "! aai-industry",
     "! buildings-require-foundation"
   ],
   "description": "Factories require foundations before construction"

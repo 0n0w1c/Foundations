@@ -6,6 +6,7 @@ Date: 2024-06-23
   Features:
     - Added support for Industrial Revolution 3
     - Added settings for turrets
+    - Added AAI Industry as incompatible
 
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.5
@@ -13,7 +14,7 @@ Date: 2024-06-23
   Bugfixes:
     - Removed beta support for Lunar Landings
   Features:
-    - Added Lunar Landings as incompatible mod
+    - Added Lunar Landings as incompatible
 
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.4
