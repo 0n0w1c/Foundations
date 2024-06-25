@@ -1,4 +1,6 @@
-Stone furnaces, pumps, pipes, belts, gun turrets, and small/medium power poles are excluded.  
+Note: Starting with version 0.0.8, burner entities now require a foundation. This includes the vanilla burner inserter.  
+
+Stone furnaces (foundation required with IR3), pumps, pipes, belts, gun turrets, and small/medium power poles are excluded.  
 However, factory entities require a foundation. Stone bricks work fine, so the cost is not so great.  
 Your factory will look better and you will travel faster, and somehow it just seems natural.  
 It increases the pleasure I get from the game, I hope it does the same for you.  
@@ -19,14 +21,14 @@ Added the foundation requirement for burner entities
 Added the foundation requirement for heat-pipes  
 Added the foundation requirement for roboports  
 Added the foundation requirement for fluid storage tanks  
-Made the foundation requirement for gun turrets optional in the startup settings - provided by StephenBarnes  
+The foundation requirement for gun turrets optional in the startup settings - provided by StephenBarnes  
 
 Known issues:  
 Blueprints that include both tiles and entities that require a foundation.  
 Build a foundation first, then apply the blueprint.  
 
 Limitations:  
-Burner entities will not be upgradable via the upgrade planner.  
+Stone furnaces are not upgradable via the upgrade planner (except with IR3).  
 Probably does not work well with mods that provide multiple surfaces.  
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
