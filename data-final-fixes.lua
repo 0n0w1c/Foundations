@@ -5,10 +5,10 @@ local collision_mask_util = require("__core__/lualib/collision-mask-util")
 
 local layer = collision_mask_util.get_first_unused_layer()
 
-local types_to_update = {"accumulator", "solar-panel", "lab", "radar", "rocket-silo", "boiler", "generator", "reactor", "train-stop",
+local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "train-stop",
                          "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch"}
 
-local types_to_update_nonburner = {"inserter", "furnace", "assembling-machine"}
+local types_to_update_nonburner = {"inserter", "furnace", "lab", "assembling-machine"}
 
 ------------------------------------------------------------------------------------------------------
 -- Define functions
@@ -119,4 +119,11 @@ for _, entity in pairs(data.raw["ammo-turret"]) do
     else
         update_collision_mask(entity)
     end
+end
+
+-- aai industry burner entities can not use the upgrade planner, next_upgrade's collision mask must match
+if mods["aai-industry"] then
+    data.raw["inserter"]["burner-inserter"].next_upgrade = nil
+    data.raw["lab"]["burner-lab"].next_upgrade = nil
+    data.raw["assembling-machine"]["burner-assembling-machine"].next_upgrade = nil
 end

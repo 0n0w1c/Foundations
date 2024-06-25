@@ -12,13 +12,17 @@ Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)
 Added support for [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
 Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3) - provided by StephenBarnes  
+Added supoprt for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 Added the foundation requirement for roboports  
 Added the foundation requirement for fluid storage tanks  
 Made the foundation requirement for gun turrets optional in the startup settings - provided by StephenBarnes  
 
-Known issue:  
+Known issues:  
 Blueprints that include both tiles and entities that require a foundation.  
 Build a foundation first, then apply the blueprint.  
+
+Limitations:
+Burner entities will not be upgradable via the upgrade planner.
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  
