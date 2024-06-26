@@ -102,6 +102,7 @@ end
 -- containers are normally exempt from the foundation requirement
 if mods["LunarLandings"] then
     update_collision_mask(data.raw["container"]["ll-landing-pad"])
+    update_collision_mask(data.raw["logistic-container"]["ll-mass-driver-requester"])
 end
 
 -- add all furnaces in Industrial Revolution 3 (must have same collision mask as upgrade)
