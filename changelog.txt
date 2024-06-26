@@ -1,20 +1,27 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.11
+Date: 25. 06. 2024
+  Bugfixes:
+    - Removed 0.0.0 entry in changelog as required for in-game display
+  Features:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 0.0.10
-Date: 25 May 2024
+Date: 25. 06. 2024
   Bugfixes:
     - Changed date format for in-game display of the changelog
   Features:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.9
-Date: 25 May 2024
+Date: 25. 06. 2024
   Bugfixes:
     - Fixed foundation requirement for (LL) mass driver requester
   Features:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.8
-Date: 25 May 2024
+Date: 25. 06. 2024
   Bugfixes:
     - None
   Features:
@@ -24,14 +31,14 @@ Date: 25 May 2024
     - Added support for Zithorian's Extra Storage Tanks
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.7
-Date: 25 May 2024
+Date: 25. 06. 2024
   Bugfixes:
     - None
   Features:
     - Added support for AAI Industry
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.6
-Date: 25 May 2024
+Date: 25. 06. 2024
   Bugfixes:
     - None
   Features:
@@ -40,38 +47,39 @@ Date: 25 May 2024
     - Added AAI Industry as incompatible
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.5
-Date: 23 May 2024
+Date: 23. 06. 2024
   Bugfixes:
     - Removed beta support for Lunar Landings
   Features:
     - Added Lunar Landings as incompatible
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.4
-Date: 22 May 2024
+Date: 22. 06. 2024
   Bugfixes:
     - Added Lunar Landings as an optional dependency
   Features:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.3
-Date: 22 May 2024
+Date: 22. 06. 2024
   Bugfixes:
     - Fixed bug with adding fluidic-power-switch
   Features:
     - Beta: Adding support for Lunar Landings
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.2
-Date: 21 May 2024
+Date: 21. 06. 2024
   Bugfixes:
     - None
   Features:
     - Added support for Power Overload
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.1
-Date: 20 May 2024
+Date: 20. 06. 2024
   Bugfixes:
     - None
   Features:
+    - Forked Buildings require foundation v0.1.1
     - Renamed mod to Foundations
     - Added support for Krastorio 2
     - Added support for Fluidic Power
@@ -79,8 +87,3 @@ Date: 20 May 2024
     - Added the foundation requirement for roboports
     - Added the foundation requirement for fluid storage tanks
     - Removed the foundation requirement for gun turrets
----------------------------------------------------------------------------------------------------
-Version: 0.0.0
-Date: 18. 06. 2024
-  Changes:
-    - Forked Buildings require foundation v0.1.1
