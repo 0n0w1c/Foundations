@@ -14,6 +14,7 @@
     "? aai-industry >= 0.5.22",
     "? LunarLandings >= 1.0.11",
     "? zithorian-extra-storage-tanks >= 0.1.1",
+    "? DeadlockLargerLamp >= 1.5.1",
     "! buildings-require-foundation"
   ],
   "description": "Factories require foundations before construction"
