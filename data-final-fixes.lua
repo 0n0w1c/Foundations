@@ -64,6 +64,7 @@ for _, prop in pairs(types_to_update_nonburner) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
            and entity.name ~= "ll-telescope"
            and entity.name ~= "stone-furnace"
+           and entity.name ~= "deadlock-copper-lamp"
         then
 --            if entity.energy_source.type ~= "burner" then
                 update_collision_mask(entity)
