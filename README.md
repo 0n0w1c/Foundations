@@ -14,9 +14,10 @@ Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)
 Added support for [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
 Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3) - provided by StephenBarnes  
-Added supoprt for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
+Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 Added support for [Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
+Added support for [Larger Lamps](https://mods.factorio.com/mod/DeadlockLargerLamp) - provided by StephenBarnes
 Added the foundation requirement for burner entities  
 Added the foundation requirement for heat-pipes  
 Added the foundation requirement for roboports  
