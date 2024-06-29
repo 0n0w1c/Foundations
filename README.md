@@ -24,7 +24,7 @@ The foundation requirement for gun turrets optional in the startup settings - pr
 
 Known issues:  
 Mining the foundation from underneeth an entity, destroys the entity.  
-Mine the entites first, then the foundation.  
+Mine the entities first, then the foundation.  
 
 Blueprints that include both tiles and entities that require a foundation.  
 Build a foundation first, then apply the blueprint.  
