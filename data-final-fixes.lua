@@ -7,7 +7,7 @@ local layer = collision_mask_util.get_first_unused_layer()
 
 local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop", "lamp",
                          "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
-                         "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker" }
+                         "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker"}
 
 local types_to_update_nonburner = {"inserter", "furnace", "lab", "assembling-machine", "burner-generator"}
 
