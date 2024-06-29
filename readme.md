@@ -1,5 +1,6 @@
 Warning: Do not remove the foundation before deconstructing the factory entities.  
 If you mine the foundation from underneeth an entity, it will be destroyed.  
+Or, I recommend installing [Simple Landfill Mining](https://mods.factorio.com/mod/simple_landfill_mining), but it too has minor caveats.  
 
 Stone furnaces (foundation required with IR3), pumps, pipes, belts, gun turrets, and small/medium power poles are excluded.  
 However, factory entities require a foundation. Stone bricks work fine, so the cost is not so great.  
@@ -25,7 +26,7 @@ The foundation requirement for gun turrets optional in the startup settings - pr
 Known issues:  
 Mining the foundation from underneeth an entity, destroys the entity.  
 Mine the entities first, then the foundation.  
-Or, I recommend installing [Simple Landfill Mining](https://mods.factorio.com/mod/simple_landfill_mining), but it too has minor caveats.  
+
 
 Blueprints that include both tiles and entities that require a foundation.  
 Build a foundation first, then apply the blueprint.  
