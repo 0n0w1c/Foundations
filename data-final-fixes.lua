@@ -115,10 +115,16 @@ if mods["IndustrialRevolution3"] then
         end
     end
 else
-    -- stone furnace is required to make a stone brick foundation
-    -- next_upgrade collision mask must match, so remove next upgrade
-    -- upgrade planner will now ignore them
-    data.raw["furnace"]["stone-furnace"].next_upgrade = nil
+    if mods["aai-industry"] then
+        -- aai industry adds stone tiles, require a foundation for stone furnace
+        -- upgradable via the upgrade planner
+        update_collision_mask(data.raw["furnace"]["stone-furnace"])
+    else
+        -- stone furnace is required to make a stone brick foundation
+        -- next_upgrade collision mask must match, so remove next upgrade
+        -- upgrade planner will now ignore them
+        data.raw["furnace"]["stone-furnace"].next_upgrade = nil
+    end
 end
 
 -- add turrets, except early-game turrets depending on settings

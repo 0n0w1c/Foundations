@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 29. 06. 2024
+  Bugfixes:
+    - None
+  Features:
+    - AAI Industry: Added the foundation requirement for stone furnaces
+    - Updated readme.md and mod page with warning concerning mining the foundation
+---------------------------------------------------------------------------------------------------
 Version: 0.1.0
 Date: 29. 06. 2024
   Bugfixes:
