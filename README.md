@@ -1,5 +1,5 @@
 #### Warning: Do not remove the foundation before deconstructing the factory entities.  
-#### If you mine the foundation from underneeth an entity, it will be destroyed.  
+If you mine the foundation from underneeth an entity, it will be destroyed.  
 
 Stone furnaces (foundation required with IR3), pumps, pipes, belts, gun turrets, and small/medium power poles are excluded.  
 However, factory entities require a foundation. Stone bricks work fine, so the cost is not so great.  
