@@ -28,7 +28,6 @@ Build a foundation first, then apply the blueprint.
 
 Limitations:  
 Stone furnaces are not upgradable via the upgrade planner (except with AAI Industry and IR3).  
-Probably does not work well with mods that provide multiple surfaces.  
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  
