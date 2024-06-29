@@ -5,8 +5,9 @@ local collision_mask_util = require("__core__/lualib/collision-mask-util")
 
 local layer = collision_mask_util.get_first_unused_layer()
 
-local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop",
-                         "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch"}
+local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop", "lamp",
+                         "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
+                         "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker" }
 
 local types_to_update_nonburner = {"inserter", "furnace", "lab", "assembling-machine", "burner-generator"}
 
@@ -64,11 +65,8 @@ for _, prop in pairs(types_to_update_nonburner) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
            and entity.name ~= "ll-telescope"
            and entity.name ~= "stone-furnace"
-           and entity.name ~= "deadlock-copper-lamp"
         then
---            if entity.energy_source.type ~= "burner" then
-                update_collision_mask(entity)
---            end
+            update_collision_mask(entity)
         end
     end
 end
@@ -76,7 +74,7 @@ end
 -- Electric poles
 for _, entity in pairs(data.raw["electric-pole"]) do
     local box = entity.selection_box
-    -- Only entities bigger than 1.5x1.5 tile
+    -- Only entities larger than 1.5x1.5 tile
     if (-box[1][1] + box[2][1]) > 1.5 and (-box[1][2] + box[2][2]) > 1.5 then
         if entity.name ~= "fish-pole" then
            update_collision_mask(entity)
