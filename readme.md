@@ -4,8 +4,7 @@ Or, I recommend installing [Simple Landfill Mining](https://mods.factorio.com/mo
 
 Stone furnaces (foundation required with IR3), pumps, pipes, belts, gun turrets, and small/medium power poles are excluded.  
 However, factory entities require a foundation. Stone bricks work fine, so the cost is not so great.  
-Your factory will look better, you will travel faster, and somehow it just seems natural.  
-It increases the pleasure I get from the game, I hope it does the same for you.  
+Your factory will look better, you will travel faster, and somehow it just seems natural.    
 
 Safe to add to an existing save, will not disturb what you have previously built. Only applies to new construction.  
 
