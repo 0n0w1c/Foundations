@@ -11,8 +11,8 @@ Features:
 Renamed to Foundations  
 Added the foundation requirement for several entities, see changelog.txt for details  
 The foundation requirement for gun turrets is optional in the startup settings - provided by StephenBarnes  
-The foundation requirement for stone furnaces is optional in the startup settings
-New characters will spawn with 4 stone bricks (as needed)
+The foundation requirement for stone furnaces is optional in the startup settings  
+New characters will spawn with 4 stone bricks (as needed)  
 
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
