@@ -36,7 +36,7 @@ Blueprints that include both tiles and entities that require a foundation.
 Build a foundation first, then apply the blueprint.  
 
 Limitations:  
-If the startup setting 'Foundation required for stone furnaces' is disabled, stone furnaces will not be upgradable via the upgrade planner.
+If the startup setting "Foundation required for stone furnaces" is disabled, stone furnaces will not be upgradable via the upgrade planner.
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  
