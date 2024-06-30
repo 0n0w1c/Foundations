@@ -33,9 +33,9 @@ end
 for _, type in pairs(types_to_update) do
     for _, entity in pairs(data.raw[type]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
-           and entity.name ~= "ll-arc-furnace-reactor" -- can not be mined?
-           and entity.name ~= "ll-telescope" -- can only be placed on luna mountain surface
-           and entity.name ~= "stone-furnace"
+            and entity.name ~= "ll-arc-furnace-reactor" -- can not be mined?
+            and entity.name ~= "ll-telescope" -- can only be placed on luna mountain surface
+            and entity.name ~= "stone-furnace"
         then
             update_collision_mask(entity)
         end
@@ -82,7 +82,7 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     -- Only entities larger than 1.5x1.5 tile
     if (-box[1][1] + box[2][1]) > 1.5 and (-box[1][2] + box[2][2]) > 1.5 then
         if entity.name ~= "fish-pole" then
-           update_collision_mask(entity)
+            update_collision_mask(entity)
         end
     end
 end
