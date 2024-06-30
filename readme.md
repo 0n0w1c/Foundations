@@ -30,7 +30,7 @@ Compatible:
 [Nuclear Overhaul](https://mods.factorio.com/mod/nuclear-overhaul)  
 
 Known issues:  
-Mining the foundation from underneeth an entity, destroys the entity.  
+Mining the foundation from underneeth an entity, destroys the entity. [not a bug](https://forums.factorio.com/viewtopic.php?f=23&t=77571)  
 Mine the entities first, then the foundation.  
 
 Blueprints that include both tiles and entities that require a foundation.  
