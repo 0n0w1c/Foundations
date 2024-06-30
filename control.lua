@@ -17,14 +17,14 @@ function(event)
 	local inventory = character.get_main_inventory()
 
 	if settings.startup["Foundations-required-stone-furnace"].value then
-		local give_stone_brick = true
-		for name, version in pairs(game.active_mods) do
-			if name == "aai-industry" or name == "IndustrialRevolution3" then
-				give_stone_brick = false
-			end
-		end
-		if give_stone_brick then
-		    inventory.insert{name="stone-brick", count = 4}
-		end
-	end
+        local give_stone_brick = true
+        for name, version in pairs(game.active_mods) do
+	        if name == "aai-industry" or name == "IndustrialRevolution3" then
+                give_stone_brick = false
+            end
+        end
+        if give_stone_brick then
+            inventory.insert{name="stone-brick", count = 4}
+        end
+    end
 end)
