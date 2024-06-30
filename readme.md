@@ -11,8 +11,8 @@ Safe to add to an existing save, will not disturb what you have previously built
 Features:  
 Renamed to Foundations  
 Added the foundation requirement for several entities, see changelog.txt for details  
-The foundation requirement for gun turrets optional in the startup settings - provided by StephenBarnes  
-The foundation requirement for stone furnaces optional in the startup settings
+The foundation requirement for gun turrets is optional in the startup settings - provided by StephenBarnes  
+The foundation requirement for stone furnaces is optional in the startup settings
 
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
