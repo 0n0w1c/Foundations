@@ -3,7 +3,7 @@ If you mine the foundation from underneath an entity, it will be destroyed.
 Or, I recommend installing [Simple Landfill Mining](https://mods.factorio.com/mod/simple_landfill_mining). It will prevent mining of the foundation from underneath entities, but it too has minor caveats.  
 
 Pumps, pipes, belts, splitters, and small/medium power poles are excluded, stone furnaces and gun turrets are optional.  
-Other factory entities require a foundation. Stone bricks work fine, so the cost is not so great.  
+Other factory entities require a foundation. Stone bricks work fine, so the cost is not too great.  
 Your factory will look better, you will travel faster, and somehow it just seems natural.    
 
 Safe to add to an existing save, will not disturb what you have previously built. Only applies to new construction.  
