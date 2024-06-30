@@ -14,14 +14,14 @@ local types_to_update_nonburner = {"inserter", "furnace", "lab", "assembling-mac
 ------------------------------------------------------------------------------------------------------
 -- Define functions
 ------------------------------------------------------------------------------------------------------
-function array_has_value(array, value)
-    for _, arr in pairs(array) do
-        if arr == value then
-            return true
-        end
-    end
-    return false
-end
+--function array_has_value(array, value)
+--    for _, arr in pairs(array) do
+--        if arr == value then
+--            return true
+--        end
+--    end
+--    return false
+--end
 
 function update_collision_mask(entity)
     if entity.collision_mask then
@@ -43,6 +43,7 @@ for _, tile in pairs(data.raw["tile"]) do
         and not string.find(tile.name, "concrete")
         and not string.find(tile.name, "plate")
         and not string.find(tile.name, "foundation")
+        and not string.find(tile.name, "dect%-")
     then
         update_collision_mask(tile)
     end

@@ -1,6 +1,6 @@
 {
   "name": "Foundations",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "title": "Foundations",
   "author": "0n0w1c",
   "factorio_version": "1.1",
@@ -15,6 +15,7 @@
     "? LunarLandings >= 1.0.11",
     "? zithorian-extra-storage-tanks >= 0.1.1",
     "? DeadlockLargerLamp >= 1.5.1",
+    "? Dectorio >= 0.12.6",
     "! buildings-require-foundation",
     "! StableFoundations"
   ],

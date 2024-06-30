@@ -19,6 +19,7 @@ Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)
 Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 Added support for [Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
 Added support for [Larger Lamps](https://mods.factorio.com/mod/DeadlockLargerLamp) - provided by StephenBarnes  
+Added support for [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 Added the foundation requirement for several entities, see changelog.txt for details  
 The foundation requirement for gun turrets optional in the startup settings - provided by StephenBarnes  
 
