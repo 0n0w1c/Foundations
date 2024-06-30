@@ -33,5 +33,5 @@ if mods["IndustrialRevolution3"] then
             default_value = false,
             order = '3',
         }
-})
+    })
 end
