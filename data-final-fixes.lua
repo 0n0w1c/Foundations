@@ -4,7 +4,7 @@ local layer = collision_mask_util.get_first_unused_layer()
 
 local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop", "lamp",
                          "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
-                         "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "container", "logistic-container",
+                         "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "logistic-container",
                          "inserter", "furnace", "lab", "assembling-machine", "burner-generator"}
 
 function update_collision_mask(entity)
@@ -29,43 +29,50 @@ for _, tile in pairs(data.raw["tile"]) do
     end
 end
 
--- regular entities by group
+-- entities by group
 for _, prop in pairs(types_to_update) do
     for _, entity in pairs(data.raw[prop]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
            and entity.name ~= "ll-arc-furnace-reactor" -- can not be mined?
            and entity.name ~= "ll-telescope" -- can only be placed on luna mountain tiles
-           and entity.name ~= "aai-big-ship-wreck-1"
-           and entity.name ~= "aai-big-ship-wreck-2"
-           and entity.name ~= "aai-big-ship-wreck-3"
-           and entity.name ~= "aai-medium-ship-wreck-1"
-           and entity.name ~= "aai-medium-ship-wreck-2"
-           and entity.name ~= "kr-crash-site-assembling-machine-1-repaired"
-           and entity.name ~= "kr-crash-site-assembling-machine-2-repaired"
-           and entity.name ~= "kr-crash-site-lab-repaired"
-           and entity.name ~= "kr-crash-site-generator"
-           and entity.name ~= "crash-site-spaceship"
-           and entity.name ~= "crash-site-chest-1"
-           and entity.name ~= "crash-site-chest-2"
-           and entity.name ~= "big-ship-wreck-1"
-           and entity.name ~= "big-ship-wreck-2"
-           and entity.name ~= "big-ship-wreck-3"
-           and entity.name ~= "crash-site-spaceship-wreck-big-1"
-           and entity.name ~= "crash-site-spaceship-wreck-big-2"
-           and entity.name ~= "crash-site-spaceship-wreck-medium-1"
-           and entity.name ~= "crash-site-spaceship-wreck-medium-2"
-           and entity.name ~= "crash-site-spaceship-wreck-medium-3"
-           and entity.name ~= "wood-pallet"
-           and entity.name ~= "tin-pallet"
-           and entity.name ~= "wooden-chest"
-           and entity.name ~= "iron-chest"
-           and entity.name ~= "steel-chest"
-           and entity.name ~= "tin-chest"
-           and entity.name ~= "bronze-chest"
            and entity.name ~= "stone-furnace"
         then
             update_collision_mask(entity)
         end
+    end
+end
+
+-- containers
+for _, entity in pairs(data.raw["container"]) do
+    if entity.name ~= "aai-big-ship-wreck-1"
+        and entity.name ~= "aai-big-ship-wreck-2"
+        and entity.name ~= "aai-big-ship-wreck-3"
+        and entity.name ~= "aai-medium-ship-wreck-1"
+        and entity.name ~= "aai-medium-ship-wreck-2"
+        and entity.name ~= "kr-crash-site-assembling-machine-1-repaired"
+        and entity.name ~= "kr-crash-site-assembling-machine-2-repaired"
+        and entity.name ~= "kr-crash-site-lab-repaired"
+        and entity.name ~= "kr-crash-site-generator"
+        and entity.name ~= "crash-site-spaceship"
+        and entity.name ~= "crash-site-chest-1"
+        and entity.name ~= "crash-site-chest-2"
+        and entity.name ~= "big-ship-wreck-1"
+        and entity.name ~= "big-ship-wreck-2"
+        and entity.name ~= "big-ship-wreck-3"
+        and entity.name ~= "crash-site-spaceship-wreck-big-1"
+        and entity.name ~= "crash-site-spaceship-wreck-big-2"
+        and entity.name ~= "crash-site-spaceship-wreck-medium-1"
+        and entity.name ~= "crash-site-spaceship-wreck-medium-2"
+        and entity.name ~= "crash-site-spaceship-wreck-medium-3"
+        and entity.name ~= "wood-pallet"
+        and entity.name ~= "tin-pallet"
+        and entity.name ~= "wooden-chest"
+        and entity.name ~= "iron-chest"
+        and entity.name ~= "steel-chest"
+        and entity.name ~= "tin-chest"
+        and entity.name ~= "bronze-chest"
+    then
+        update_collision_mask(entity)
     end
 end
 
@@ -80,20 +87,18 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     end
 end
 
--- add fluid storage tanks and Fluidic Power accumulators
+-- fluid storage tanks and Fluidic Power accumulators
 for _, entity in pairs(data.raw["storage-tank"]) do
     if string.find(entity.name, "fluidic")
         or string.find(entity.name, "storage%-tank")
         or string.find(entity.name, "fluid%-tank")
         or string.find(entity.name, "kr%-fluid%-storage")
---  IR3 pipe buffers
---        or entity.name == "small-tank"
---        or entity.name == "small-tank-steam"
     then
         update_collision_mask(entity)
     end
 end
 
+-- unique entities
 if mods["FluidicPower"] then
     update_collision_mask(data.raw["pump"]["fluidic-power-switch"])
 end
@@ -103,8 +108,8 @@ if mods["IndustrialRevolution3"] then
     update_collision_mask(data.raw["land-mine"]["transfer-plate-2x2"])
 end
 
-if settings.startup["Foundations-required-stone-furnace"].value == true
-then
+-- stone furnace
+if settings.startup["Foundations-required-stone-furnace"].value then
     if data.raw["furnace"]["stone-furnace"] then
         update_collision_mask(data.raw["furnace"]["stone-furnace"])
     end
@@ -125,7 +130,7 @@ else
     end
 end
 
--- add turrets, except early-game turrets depending on settings
+-- turrets, except early-game turrets depending on settings
 for _, entity in pairs(data.raw["ammo-turret"]) do
     if entity.name == "gun-turret" then
         if settings.startup["Foundations-required-gun-turret"].value then
