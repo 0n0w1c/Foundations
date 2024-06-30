@@ -116,7 +116,7 @@ if settings.startup["Foundations-required-stone-furnace"].value then
     -- some mods (K2) switch types
     if data.raw["assembling-machine"]["stone-furnace"] then
         update_collision_mask(data.raw["assembling-machine"]["stone-furnace"])
-    end    
+    end
 else
     -- stone furnace is required to make a stone brick foundation
     -- next_upgrade collision mask must match, so remove next upgrade
