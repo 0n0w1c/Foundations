@@ -34,7 +34,7 @@ for _, type in pairs(types_to_update) do
     for _, entity in pairs(data.raw[type]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
            and entity.name ~= "ll-arc-furnace-reactor" -- can not be mined?
-           and entity.name ~= "ll-telescope" -- can only be placed on luna mountain tiles
+           and entity.name ~= "ll-telescope" -- can only be placed on luna mountain surface
            and entity.name ~= "stone-furnace"
         then
             update_collision_mask(entity)
