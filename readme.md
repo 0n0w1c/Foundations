@@ -1,5 +1,5 @@
 Warning: Do not remove the foundation before deconstructing the factory entities.  
-If you mine the foundation from underneath an entity, it will be destroyed.  
+If you mine the foundation from underneath an entity, it will not be returned to your inventory, it will be erased from the game.  
 Or, I recommend installing [Simple Landfill Mining](https://mods.factorio.com/mod/simple_landfill_mining). It will prevent mining of the foundation from underneath entities.  
 
 Pumps, pipes, belts, splitters, and small/medium power poles are excluded, stone furnaces and gun turrets are optional.  
