@@ -22,6 +22,7 @@ Added support for [Larger Lamps](https://mods.factorio.com/mod/DeadlockLargerLam
 Added support for [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 Added the foundation requirement for several entities, see changelog.txt for details  
 The foundation requirement for gun turrets optional in the startup settings - provided by StephenBarnes  
+The foundation requirement for stone furnaces optional in the startup settings
 
 Known issues:  
 Mining the foundation from underneeth an entity, destroys the entity.  
@@ -31,7 +32,7 @@ Blueprints that include both tiles and entities that require a foundation.
 Build a foundation first, then apply the blueprint.  
 
 Limitations:  
-Stone furnaces are not upgradable via the upgrade planner (except with AAI Industry and IR3).  
+If the startup setting 'Foundation required for stone furnaces' is disabled, stone furnaces will not be upgradable via the upgrade planner.
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  

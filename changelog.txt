@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 30. 06. 2024
+  Bugfixes:
+    - None
+  Features:
+    - Added support for containers
+    - Added support for AAI Industry and Krastorio 2 crash site entities
+    - Added startup setting for stone furnace foundation requirement
+    - Added four stone bricks to character inventory upon character creation, as required
+---------------------------------------------------------------------------------------------------
 Version: 0.1.2
 Date: 29. 06. 2024
   Bugfixes:

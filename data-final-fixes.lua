@@ -33,8 +33,30 @@ end
 for _, prop in pairs(types_to_update) do
     for _, entity in pairs(data.raw[prop]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
-           and entity.name ~= "ll-arc-furnace-reactor"
-           and entity.name ~= "ll-telescope"
+           and entity.name ~= "ll-arc-furnace-reactor" -- can not be mined?
+           and entity.name ~= "ll-telescope" -- can only be placed on luna mountain tiles
+           and entity.name ~= "aai-big-ship-wreck-1"
+           and entity.name ~= "aai-big-ship-wreck-2"
+           and entity.name ~= "aai-big-ship-wreck-3"
+           and entity.name ~= "aai-medium-ship-wreck-1"
+           and entity.name ~= "aai-medium-ship-wreck-2"
+           and entity.name ~= "kr-crash-site-assembling-machine-1-repaired"
+           and entity.name ~= "kr-crash-site-assembling-machine-2-repaired"
+           and entity.name ~= "kr-crash-site-lab-repaired"
+           and entity.name ~= "kr-crash-site-generator"
+           and entity.name ~= "crash-site-spaceship"
+           and entity.name ~= "crash-site-chest-1"
+           and entity.name ~= "crash-site-chest-2"
+           and entity.name ~= "big-ship-wreck-1"
+           and entity.name ~= "big-ship-wreck-2"
+           and entity.name ~= "big-ship-wreck-3"
+           and entity.name ~= "crash-site-spaceship-wreck-big-1"
+           and entity.name ~= "crash-site-spaceship-wreck-big-2"
+           and entity.name ~= "crash-site-spaceship-wreck-medium-1"
+           and entity.name ~= "crash-site-spaceship-wreck-medium-2"
+           and entity.name ~= "crash-site-spaceship-wreck-medium-3"
+           and entity.name ~= "wood-pallet"
+           and entity.name ~= "tin-pallet"
            and entity.name ~= "wooden-chest"
            and entity.name ~= "iron-chest"
            and entity.name ~= "steel-chest"
@@ -64,19 +86,32 @@ for _, entity in pairs(data.raw["storage-tank"]) do
         or string.find(entity.name, "storage%-tank")
         or string.find(entity.name, "fluid%-tank")
         or string.find(entity.name, "kr%-fluid%-storage")
+--  IR3 pipe buffers
+--        or entity.name == "small-tank"
+--        or entity.name == "small-tank-steam"
     then
         update_collision_mask(entity)
     end
 end
 
--- add Fluidic Power switch
 if mods["FluidicPower"] then
     update_collision_mask(data.raw["pump"]["fluidic-power-switch"])
 end
 
--- add stone furnace with these mods
-if mods["aai-industry"] or mods ["IndustrialRevolution3"] then
-    update_collision_mask(data.raw["furnace"]["stone-furnace"])
+if mods["IndustrialRevolution3"] then
+    update_collision_mask(data.raw["land-mine"]["transfer-plate"])
+    update_collision_mask(data.raw["land-mine"]["transfer-plate-2x2"])
+end
+
+if settings.startup["Foundations-required-stone-furnace"].value == true
+then
+    if data.raw["furnace"]["stone-furnace"] then
+        update_collision_mask(data.raw["furnace"]["stone-furnace"])
+    end
+    -- some mods (K2) switch types
+    if data.raw["assembling-machine"]["stone-furnace"] then
+        update_collision_mask(data.raw["assembling-machine"]["stone-furnace"])
+    end    
 else
     -- stone furnace is required to make a stone brick foundation
     -- next_upgrade collision mask must match, so remove next upgrade
@@ -93,11 +128,11 @@ end
 -- add turrets, except early-game turrets depending on settings
 for _, entity in pairs(data.raw["ammo-turret"]) do
     if entity.name == "gun-turret" then
-        if settings.startup["Foundations-gun-turret-needs-foundation"].value then
+        if settings.startup["Foundations-required-gun-turret"].value then
             update_collision_mask(entity)
         end
     elseif entity.name == "scattergun-turret" then
-        if settings.startup["Foundations-IR3-scattergun-turret-needs-foundation"].value then
+        if settings.startup["Foundations-required-IR3-scattergun-turret"].value then
             update_collision_mask(entity)
         end
     else
