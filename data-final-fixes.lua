@@ -1,6 +1,3 @@
-------------------------------------------------------------------------------------------------------
--- Get local variables
-------------------------------------------------------------------------------------------------------
 local collision_mask_util = require("__core__/lualib/collision-mask-util")
 
 local layer = collision_mask_util.get_first_unused_layer()
@@ -9,18 +6,6 @@ local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "
                          "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
                          "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "container", "logistic-container",
                          "inserter", "furnace", "lab", "assembling-machine", "burner-generator"}
-
-------------------------------------------------------------------------------------------------------
--- Define functions
-------------------------------------------------------------------------------------------------------
---function array_has_value(array, value)
---    for _, arr in pairs(array) do
---        if arr == value then
---            return true
---        end
---    end
---    return false
---end
 
 function update_collision_mask(entity)
     if entity.collision_mask then
@@ -32,11 +17,7 @@ function update_collision_mask(entity)
     end
 end
 
-------------------------------------------------------------------------------------------------------
--- Update prototypes
-------------------------------------------------------------------------------------------------------
-
--- Tiles
+-- tiles
 for _, tile in pairs(data.raw["tile"]) do
     if not string.find(tile.name, "stone")
         and not string.find(tile.name, "concrete")
@@ -48,7 +29,7 @@ for _, tile in pairs(data.raw["tile"]) do
     end
 end
 
--- Regular entities by group
+-- regular entities by group
 for _, prop in pairs(types_to_update) do
     for _, entity in pairs(data.raw[prop]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
@@ -57,6 +38,8 @@ for _, prop in pairs(types_to_update) do
            and entity.name ~= "wooden-chest"
            and entity.name ~= "iron-chest"
            and entity.name ~= "steel-chest"
+           and entity.name ~= "tin-chest"
+           and entity.name ~= "bronze-chest"
            and entity.name ~= "stone-furnace"
         then
             update_collision_mask(entity)
@@ -64,7 +47,7 @@ for _, prop in pairs(types_to_update) do
     end
 end
 
--- Electric poles
+-- electric poles
 for _, entity in pairs(data.raw["electric-pole"]) do
     local box = entity.selection_box
     -- Only entities larger than 1.5x1.5 tile
@@ -98,7 +81,13 @@ else
     -- stone furnace is required to make a stone brick foundation
     -- next_upgrade collision mask must match, so remove next upgrade
     -- upgrade planner will now ignore them
-    data.raw["furnace"]["stone-furnace"].next_upgrade = nil
+    if data.raw["furnace"]["stone-furnace"] then
+        data.raw["furnace"]["stone-furnace"].next_upgrade = nil
+    end
+    -- some mods (K2) switch types
+    if data.raw["assembling-machine"]["stone-furnace"] then
+        data.raw["assembling-machine"]["stone-furnace"].next_upgrade = nil
+    end
 end
 
 -- add turrets, except early-game turrets depending on settings
