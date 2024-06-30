@@ -2,7 +2,7 @@
 Version: 0.2.1
 Date: 30. 06. 2024
   Bugfixes:
-    - Refactored container supoprt and corrected a file format issue
+    - Refactored container support and corrected a file format issue
   Features:
     - None
 ---------------------------------------------------------------------------------------------------
