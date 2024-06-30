@@ -5,13 +5,13 @@ function(event)
 
 	-- If cutscene character is null, try regular character
 	if character == nil then
-		character = player.character
+        character = player.character
 	end
 
 	-- If still no character, then in Sandbox mode
 	if character == nil then
-		player.print("You are in Sandbox mode, no soup for you!")
-		return
+        player.print("You are in Sandbox mode, no soup for you!")
+        return
 	end
 
 	local inventory = character.get_main_inventory()
