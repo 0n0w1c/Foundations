@@ -14,7 +14,7 @@ function(event)
 		return
 	end
 
-    local inventory = character.get_main_inventory()
+	local inventory = character.get_main_inventory()
 
 	if settings.startup["Foundations-required-stone-furnace"].value then
 		local give_stone_brick = true
