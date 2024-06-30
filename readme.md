@@ -23,10 +23,10 @@ Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)
 Added support for [Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
 Added support for [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 
-Compatible:
+Compatible:  
 [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 [Larger Lamps](https://mods.factorio.com/mod/DeadlockLargerLamp)  
-[Nuclear Overhaul](https://mods.factorio.com/mod/nuclear-overhaul)
+[Nuclear Overhaul](https://mods.factorio.com/mod/nuclear-overhaul)  
 
 Known issues:  
 Mining the foundation from underneeth an entity, destroys the entity.  
