@@ -29,7 +29,7 @@ for _, tile in pairs(data.raw["tile"]) do
     end
 end
 
--- entitiy types without much special handling
+-- entity types without much special handling
 for _, type in pairs(types_to_update) do
     for _, entity in pairs(data.raw[type]) do
         if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
