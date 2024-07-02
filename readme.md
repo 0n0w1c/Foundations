@@ -11,14 +11,14 @@ Safe to add to an existing save, will not disturb what you have previously built
 Features:  
 Renamed to Foundations  
 Added the foundation requirement for several entities, see changelog.txt for details  
-The foundation requirement for gun turrets is optional in the startup settings - provided by StephenBarnes  
+The foundation requirement for gun turrets is optional in the startup settings - provided by [StephenB](https://mods.factorio.com/user/StephenB)  
 The foundation requirement for stone furnaces is optional in the startup settings  
 New characters will spawn with 4 stone bricks (if needed)  
 
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
-Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3) - provided by StephenBarnes  
+Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3) - provided by [StephenB](https://mods.factorio.com/user/StephenB)  
 Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 Added support for [Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
