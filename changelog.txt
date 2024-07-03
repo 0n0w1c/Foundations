@@ -11,7 +11,7 @@ Date: 03. 07. 2024
   Bugfixes:
     - None
   Features:
-    - Prevent the mining of foundation tiles from under entities, to prevent entity loss
+    - Prevent the mining of foundation tiles from underneath entities, to prevent entity loss
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.2
 Date: 02. 07. 2024
