@@ -14,7 +14,7 @@ Added the foundation requirement for several entities, see changelog.txt for det
 The foundation requirement for gun turrets is optional in the startup settings  
 The foundation requirement for stone furnaces is optional in the startup settings  
 New characters will spawn with 4 stone bricks (if needed)  
-Inhibits the mining of foundation tiles from underneath entities, to prevent entity loss
+Inhibits the mining of foundation tiles from underneath constructed entities, to prevent entity loss
 
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
