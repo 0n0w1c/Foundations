@@ -1,7 +1,4 @@
-Warning: Do not remove the foundation before deconstructing the factory entities.  
-
-If you mine the foundation from underneath an entity, the entity will not be returned to your inventory, rather it will be erased from the game.  
-I highly recommend installing [Simple Landfill Mining](https://mods.factorio.com/mod/simple_landfill_mining), to prevent the mining of the foundation from underneath entities. Make sure to enable the startup setting "Recover mined landfill", if you want the foundation to be returned to your inventory. 
+Now inhibits the mining of the foundation tiles from under constructed entities!
 
 Pumps, pipes, belts, splitters, rails, and small/medium power poles are excluded, stone furnaces and gun turrets are optional. Other factory entities require a foundation. Stone bricks work fine, so the cost is not too great.  
 Your factory will look better, you will travel faster, and somehow it just seems natural.    
@@ -17,6 +14,7 @@ Added the foundation requirement for several entities, see changelog.txt for det
 The foundation requirement for gun turrets is optional in the startup settings  
 The foundation requirement for stone furnaces is optional in the startup settings  
 New characters will spawn with 4 stone bricks (if needed)  
+Inhibits the mining of foundation tiles from under entities, to prevent entity loss
 
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
@@ -33,9 +31,6 @@ Compatible:
 [Nuclear Overhaul](https://mods.factorio.com/mod/nuclear-overhaul)  
 
 Known issues:  
-Mining the foundation from underneath an entity, destroys the entity ([not a bug](https://forums.factorio.com/viewtopic.php?f=23&t=77571)).  
-Mine the entities first, then the foundation.  
-
 Blueprints that include both tiles and entities that require a foundation.  
 Build a foundation first, then apply the blueprint.  
 
