@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 03. 07. 2024
+  Bugfixes:
+    - Fixed the bug allowing the foundation to be mined from underneath factory entities
+  Features:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 03. 07. 2024
   Bugfixes:

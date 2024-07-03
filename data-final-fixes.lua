@@ -19,6 +19,10 @@ end
 
 -- tiles
 for _, tile in pairs(data.raw["tile"]) do
+    -- prevent the mining of tiles from underneath entities requiring a foundation
+    -- which in turn, prevents the entity from being voided
+    tile.check_collision_with_entities = true
+
     if string.find(tile.name, "stone")
         or string.find(tile.name, "concrete")
         or string.find(tile.name, "plate")
@@ -26,8 +30,6 @@ for _, tile in pairs(data.raw["tile"]) do
         or string.find(tile.name, "dect%-")
     then
         -- tile is a foundation
-        -- prevent the mining of foundations from under entities
-        tile.check_collision_with_entities = true
     else
         -- not a foundation
         update_collision_mask(tile)
