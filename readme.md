@@ -1,4 +1,4 @@
-Now inhibits the mining of the foundation tiles from underneath constructed entities!
+Now inhibits the mining of foundation tiles from underneath constructed entities!
 
 Pumps, pipes, belts, splitters, rails, and small/medium power poles are excluded, stone furnaces and gun turrets are optional. Other factory entities require a foundation. Stone bricks work fine, so the cost is not too great.  
 Your factory will look better, you will travel faster, and somehow it just seems natural.    
