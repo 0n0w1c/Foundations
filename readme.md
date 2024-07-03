@@ -1,4 +1,4 @@
-Now inhibits the mining of foundation tiles from underneath constructed entities that require a foundation!
+Now inhibits the mining of foundation tiles from underneath factory entities that require a foundation!
 
 Pumps, pipes, belts, splitters, rails, and small/medium power poles are excluded, stone furnaces and gun turrets are optional. Other factory entities require a foundation. Stone bricks work fine, so the cost is not too great.  
 Your factory will look better, you will travel faster, and somehow it just seems natural.    
@@ -14,7 +14,7 @@ Added the foundation requirement for several entities, see changelog.txt for det
 The foundation requirement for gun turrets is optional in the startup settings  
 The foundation requirement for stone furnaces is optional in the startup settings  
 New characters will spawn with 4 stone bricks (if needed)  
-Inhibits the mining of foundation tiles from underneath constructed entities, to prevent entity loss
+Inhibits the mining of foundation tiles from underneath factory entities, to prevent entity loss
 
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
@@ -36,7 +36,7 @@ Build a foundation first, then apply the blueprint.
 
 Limitations:  
 If the startup setting "Foundation required for stone furnaces" is disabled, stone furnaces will not be upgradable via the upgrade planner.  
-May not be compatible with mods that construct factory entities on character creation (cut scenes), unless support has been added.  
+May not be compatible with mods that construct factory entities upon character creation (cut scenes), unless support has been added.  
 
 Fork of [Buildings require foundation v0.1.1](https://mods.factorio.com/mod/buildings-require-foundation)  
 Authored by Subjectd_31415 under the GNU GPL3  
