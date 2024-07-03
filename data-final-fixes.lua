@@ -17,14 +17,17 @@ function update_collision_mask(entity)
     end
 end
 
--- foundations
+-- tiles
 for _, tile in pairs(data.raw["tile"]) do
-    if not string.find(tile.name, "stone")
-        and not string.find(tile.name, "concrete")
-        and not string.find(tile.name, "plate")
-        and not string.find(tile.name, "foundation")
-        and not string.find(tile.name, "dect%-")
+    if string.find(tile.name, "stone")
+        or string.find(tile.name, "concrete")
+        or string.find(tile.name, "plate")
+        or string.find(tile.name, "foundation")
+        or string.find(tile.name, "dect%-")
     then
+        -- tile is a foundation
+    else
+        -- not a foundation
         update_collision_mask(tile)
     end
 end
