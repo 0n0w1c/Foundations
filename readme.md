@@ -19,7 +19,7 @@ Inhibits the mining of foundation tiles from underneath factory entities, to pre
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
-Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)
+Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
 Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 Added support for [Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
