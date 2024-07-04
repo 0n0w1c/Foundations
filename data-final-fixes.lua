@@ -161,9 +161,12 @@ end
 
 -- electric pole
 for _, entity in pairs(data.raw["electric-pole"]) do
-    local box = entity.selection_box
-    -- Only entities larger than 1.5x1.5 tile
-    if (-box[1][1] + box[2][1]) > 1.5 and (-box[1][2] + box[2][2]) > 1.5 then
+    local selection_box = entity.selection_box
+    local width = math.ceil(selection_box and (math.abs(selection_box[2][1]) + math.abs(selection_box[1][1])) or 0)
+    local height = math.ceil(selection_box and (math.abs(selection_box[2][2]) + math.abs(selection_box[1][2])) or 0)
+
+    -- only electric poles 2x2 and larger
+    if width >= 2 and height >= 2 then
         if not in_list(excluded_from_electrical_poles, entity.name) then
             update_collision_mask(entity)
         end
