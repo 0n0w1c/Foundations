@@ -6,6 +6,7 @@ Date: 04. 07. 2024
   Features:
     - Added support for Flow Control
     - Added support for Fluid Level Indicator
+    - Added support for Cargo Ships floating power pole
     - Removed support for Fluidic Power
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.2
