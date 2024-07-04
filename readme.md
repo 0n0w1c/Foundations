@@ -25,7 +25,6 @@ Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
 Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 
 Compatible:  
-[Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 [Larger Lamps](https://mods.factorio.com/mod/DeadlockLargerLamp)  
 [Nuclear Overhaul](https://mods.factorio.com/mod/nuclear-overhaul)  
 [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
