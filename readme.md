@@ -5,7 +5,7 @@ Your factory will look better, you will travel faster, and somehow it just seems
 
 Safe to add to an existing save, will not disturb what you have previously built. Only applies to new construction.  
 
-Contributers:  
+Contributors:  
 [StephenB](https://mods.factorio.com/user/StephenB)  
 
 Features:  
