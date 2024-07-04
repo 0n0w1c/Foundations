@@ -191,7 +191,7 @@ for _, entity in pairs(data.raw["storage-tank"]) do
     end
 end
 
--- unique items
+-- unique entities
 if mods["IndustrialRevolution3"] then
     update_collision_mask(data.raw["land-mine"]["transfer-plate"])
     update_collision_mask(data.raw["land-mine"]["transfer-plate-2x2"])
