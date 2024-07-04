@@ -11,8 +11,8 @@ local foundations = {
 }
 
 local types_to_update = {
-    "accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop", "lamp",
-    "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
+    "accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "lamp",
+    "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface",
     "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "logistic-container",
     "inserter", "furnace", "lab", "assembling-machine", "burner-generator"
 }
@@ -20,12 +20,6 @@ local types_to_update = {
 local excluded_from_types = {
     "stone-furnace",    -- special handling below
     "ll-telescope",     -- can only be placed on luna mountain surface
-    "port",             -- cargo ships, train stop
-    "bridge_base",      -- cargo ships, train stop
-    "bridge_north",     -- cargo ships, power-switch
-    "bridge_south",     -- cargo ships, power-switch
-    "bridge_east",      -- cargo ships, power-switch
-    "bridge_west"       -- cargo ships, power-switch
 }
 
 local excluded_from_containers = {
@@ -64,6 +58,18 @@ local excluded_from_containers = {
 local excluded_from_electrical_poles = {
     "fish-pole",
     "floating-electric-pole"
+}
+
+local excluded_from_power_switches = {
+    "bridge_north",
+    "bridge_south",
+    "bridge_east",
+    "bridge_west"
+}
+
+local excluded_from_train_stops = {
+    "port",
+    "bridge_base"
 }
 
 local excluded_from_storage_tanks = {
@@ -105,7 +111,7 @@ local function update_collision_mask(entity)
     end
 end
 
--- tiles
+-- tile
 for _, tile in pairs(data.raw["tile"]) do
     -- prevent the mining of tiles from underneath entities requiring a foundation
     -- which in turn, prevents the entity from being voided
@@ -116,7 +122,7 @@ for _, tile in pairs(data.raw["tile"]) do
     end
 end
 
--- entity types without much special handling
+-- entity types with little special handling required
 for _, type in pairs(types_to_update) do
     for _, entity in pairs(data.raw[type]) do
         if not in_list(excluded_from_types, entity.name) then
@@ -125,14 +131,14 @@ for _, type in pairs(types_to_update) do
     end
 end
 
--- containers
+-- container
 for _, entity in pairs(data.raw["container"]) do
     if not in_list(excluded_from_containers, entity.name) then
         update_collision_mask(entity)
     end
 end
 
--- electric poles
+-- electric pole
 for _, entity in pairs(data.raw["electric-pole"]) do
     local box = entity.selection_box
     -- Only entities larger than 1.5x1.5 tile
@@ -143,7 +149,21 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     end
 end
 
--- fluid storage tanks
+-- power switch
+for _, entity in pairs(data.raw["power-switch"]) do
+    if not in_list(excluded_from_power_switches, entity.name) then
+        update_collision_mask(entity)
+    end
+end
+
+-- train stop
+for _, entity in pairs(data.raw["train-stop"]) do
+    if not in_list(excluded_from_train_stops, entity.name) then
+        update_collision_mask(entity)
+    end
+end
+
+-- storage tank
 for _, entity in pairs(data.raw["storage-tank"]) do
     if not in_list(excluded_from_storage_tanks, entity.name) then
         update_collision_mask(entity)
