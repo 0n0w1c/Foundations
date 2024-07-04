@@ -19,7 +19,9 @@ local types_to_update = {
 
 local excluded_from_types = {
     "stone-furnace",    -- special handling below
-    "ll-telescope"      -- can only be placed on luna mountain surface
+    "ll-telescope",     -- can only be placed on luna mountain surface
+    "port",             -- cargo ships
+    "bridge_base"       -- cargo ships
 }
 
 local excluded_from_containers = {
