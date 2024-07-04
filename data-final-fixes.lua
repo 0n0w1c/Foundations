@@ -104,7 +104,7 @@ local excluded_from_storage_tanks = {
     "fluid-level-indicator-straight"
 }
 
-function round(number, decimal_places)
+local function round(number, decimal_places)
     local multiplier = 10^(decimal_places or 0)
     return math.floor(number * multiplier + 0.5) / multiplier
 end
