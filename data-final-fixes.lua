@@ -22,6 +22,55 @@ local excluded_from_types = {
     "ll-telescope"      -- can only be placed on luna mountain surface
 }
 
+local excluded_from_containers = {
+    "aai-big-ship-wreck-1",
+    "aai-big-ship-wreck-2",
+    "aai-big-ship-wreck-3",
+    "aai-medium-ship-wreck-1",
+    "aai-medium-ship-wreck-2",
+    "kr-crash-site-assembling-machine-1-repaired",
+    "kr-crash-site-assembling-machine-2-repaired",
+    "kr-crash-site-lab-repaired",
+    "kr-crash-site-generator",
+    "crash-site-spaceship",
+    "crash-site-chest-1",
+    "crash-site-chest-2",
+    "big-ship-wreck-1",
+    "big-ship-wreck-2",
+    "big-ship-wreck-3",
+    "crash-site-spaceship-wreck-big-1",
+    "crash-site-spaceship-wreck-big-2",
+    "crash-site-spaceship-wreck-medium-1",
+    "crash-site-spaceship-wreck-medium-2",
+    "crash-site-spaceship-wreck-medium-3",
+    "factorio-logo-11tiles",
+    "factorio-logo-16tiles",
+    "factorio-logo-22tiles",
+    "wood-pallet",
+    "tin-pallet",
+    "wooden-chest",
+    "iron-chest",
+    "steel-chest",
+    "tin-chest",
+    "bronze-chest"
+}
+
+local excluded_from_electrical_poles = {
+    "fish-pole",
+    "floating-electric-pole"
+}
+
+local excluded_from_storage_tanks = {
+    "check-value",
+    "overflow-valve",
+    "underflow-valve",
+    "pipe-elbow",
+    "pipe-junction",
+    "pipe-straight",
+    "fluid-level-indicator",
+    "fluid-level-indicator-straight"
+}
+
 local function is_foundation(tile_name)
     for _, tile in pairs(foundations) do
         if string.find(tile_name, tile) then
@@ -64,8 +113,7 @@ end
 -- entity types without much special handling
 for _, type in pairs(types_to_update) do
     for _, entity in pairs(data.raw[type]) do
-        if not in_list(excluded_from_types, entity.name)
-        then
+        if not in_list(excluded_from_types, entity.name) then
             update_collision_mask(entity)
         end
     end
@@ -73,37 +121,7 @@ end
 
 -- containers
 for _, entity in pairs(data.raw["container"]) do
-    if entity.name ~= "aai-big-ship-wreck-1"
-        and entity.name ~= "aai-big-ship-wreck-2"
-        and entity.name ~= "aai-big-ship-wreck-3"
-        and entity.name ~= "aai-medium-ship-wreck-1"
-        and entity.name ~= "aai-medium-ship-wreck-2"
-        and entity.name ~= "kr-crash-site-assembling-machine-1-repaired"
-        and entity.name ~= "kr-crash-site-assembling-machine-2-repaired"
-        and entity.name ~= "kr-crash-site-lab-repaired"
-        and entity.name ~= "kr-crash-site-generator"
-        and entity.name ~= "crash-site-spaceship"
-        and entity.name ~= "crash-site-chest-1"
-        and entity.name ~= "crash-site-chest-2"
-        and entity.name ~= "big-ship-wreck-1"
-        and entity.name ~= "big-ship-wreck-2"
-        and entity.name ~= "big-ship-wreck-3"
-        and entity.name ~= "crash-site-spaceship-wreck-big-1"
-        and entity.name ~= "crash-site-spaceship-wreck-big-2"
-        and entity.name ~= "crash-site-spaceship-wreck-medium-1"
-        and entity.name ~= "crash-site-spaceship-wreck-medium-2"
-        and entity.name ~= "crash-site-spaceship-wreck-medium-3"
-        and entity.name ~= "factorio-logo-11tiles"
-        and entity.name ~= "factorio-logo-16tiles"
-        and entity.name ~= "factorio-logo-22tiles"
-        and entity.name ~= "wood-pallet"
-        and entity.name ~= "tin-pallet"
-        and entity.name ~= "wooden-chest"
-        and entity.name ~= "iron-chest"
-        and entity.name ~= "steel-chest"
-        and entity.name ~= "tin-chest"
-        and entity.name ~= "bronze-chest"
-    then
+    if not in_list(excluded_from_containers, entity.name) then
         update_collision_mask(entity)
     end
 end
@@ -113,9 +131,7 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     local box = entity.selection_box
     -- Only entities larger than 1.5x1.5 tile
     if (-box[1][1] + box[2][1]) > 1.5 and (-box[1][2] + box[2][2]) > 1.5 then
-        if entity.name ~= "fish-pole"
-            and entity.name ~= "floating-electric-pole"
-        then
+        if not in_list(excluded_from_electrical_poles, entity.name) then
             update_collision_mask(entity)
         end
     end
@@ -123,20 +139,12 @@ end
 
 -- fluid storage tanks
 for _, entity in pairs(data.raw["storage-tank"]) do
-    -- exclude Flow Control and Fluid Level Indicator
-    if entity.name ~= "check-value"
-        and entity.name ~= "overflow-valve"
-        and entity.name ~= "underflow-valve"
-        and entity.name ~= "pipe-elbow"
-        and entity.name ~= "pipe-junction"
-        and entity.name ~= "pipe-straight"
-        and entity.name ~= "fluid-level-indicator"
-        and entity.name ~= "fluid-level-indicator-straight"
-    then
+    if not in_list(excluded_from_storage_tanks, entity.name) then
         update_collision_mask(entity)
     end
 end
 
+-- unique items
 if mods["IndustrialRevolution3"] then
     update_collision_mask(data.raw["land-mine"]["transfer-plate"])
     update_collision_mask(data.raw["land-mine"]["transfer-plate-2x2"])
