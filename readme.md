@@ -16,6 +16,7 @@ New characters will spawn with 4 stone bricks (if needed)
 Inhibits the mining of foundation tiles from underneath factory entities, to prevent entity loss
 
 Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
+Added support for [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)  
 Added support for [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
 Added support for [Flow Control](https://mods.factorio.com/mod/Flow%20Control)  
