@@ -11,10 +11,31 @@ local foundations = {
 }
 
 local types_to_update = {
-    "accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "lamp",
-    "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface",
-    "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "logistic-container",
-    "inserter", "furnace", "lab", "assembling-machine", "burner-generator"
+    "accumulator",
+    "arithmetic-combinator",
+    "artillery-turret",
+    "assembling-machine",
+    "beacon",
+    "boiler",
+    "burner-generator",
+    "constant-combinator",
+    "decider-combinator",
+    "electric-energy-interface",
+    "electric-turret",
+    "fluid-turret",
+    "furnace",
+    "generator",
+    "heat-pipe",
+    "inserter",
+    "lab",
+    "lamp",
+    "logistic-container",
+    "programmable-speaker",
+    "radar",
+    "reactor",
+    "roboport",
+    "rocket-silo",
+    "solar-panel"
 }
 
 local excluded_from_types = {
