@@ -9,7 +9,6 @@ Contributers:
 [StephenB](https://mods.factorio.com/user/StephenB)  
 
 Features:  
-Renamed to Foundations  
 Added the foundation requirement for several entities, see changelog.txt for details  
 The foundation requirement for gun turrets is optional in the startup settings  
 The foundation requirement for stone furnaces is optional in the startup settings  
