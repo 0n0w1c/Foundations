@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 04. 07. 2024
+  Bugfixes:
+    - None
+  Features:
+    - Added support for Flow Control
+    - Added support for Fluid Level Indicator
+    - Removed support for Fluidic Power
+---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 03. 07. 2024
   Bugfixes:

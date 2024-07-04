@@ -15,19 +15,21 @@ The foundation requirement for stone furnaces is optional in the startup setting
 New characters will spawn with 4 stone bricks (if needed)  
 Inhibits the mining of foundation tiles from underneath factory entities, to prevent entity loss
 
-Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
-Added support for [Fluidic Power](https://mods.factorio.com/mod/FluidicPower)  
-Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
-Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
 Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
-Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
-Added support for [Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
 Added support for [Dectorio](https://mods.factorio.com/mod/Dectorio)  
+Added support for [Fish Pole](https://mods.factorio.com/mod/fish-pole)  
+Added support for [Flow Control](https://mods.factorio.com/mod/Flow%20Control)  
+Added support for [Fluid Level Indicator](https://mods.factorio.com/mod/Fluid-level-indicator)  
+Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
+Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
+Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
 
 Compatible:  
 [Power Overload](https://mods.factorio.com/mod/PowerOverload)  
 [Larger Lamps](https://mods.factorio.com/mod/DeadlockLargerLamp)  
 [Nuclear Overhaul](https://mods.factorio.com/mod/nuclear-overhaul)  
+[Power Overload](https://mods.factorio.com/mod/PowerOverload)  
+[Zithorian's Extra Storage Tanks](https://mods.factorio.com/mod/zithorian-extra-storage-tanks)  
 
 Known issues:  
 Blueprints that include both tiles and entities that require a foundation.  

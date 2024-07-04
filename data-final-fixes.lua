@@ -2,12 +2,45 @@ local collision_mask_util = require("__core__/lualib/collision-mask-util")
 
 local layer = collision_mask_util.get_first_unused_layer()
 
-local types_to_update = {"accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop", "lamp",
-                         "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
-                         "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "logistic-container",
-                         "inserter", "furnace", "lab", "assembling-machine", "burner-generator"}
+local foundations = {
+    "concrete",
+    "stone",
+    "plate",
+    "foundation",
+    "dect%-"
+}
 
-function update_collision_mask(entity)
+local types_to_update = {
+    "accumulator", "solar-panel", "radar", "rocket-silo", "boiler", "generator", "reactor", "heat-pipe", "train-stop", "lamp",
+    "beacon", "electric-turret", "fluid-turret", "artillery-turret", "roboport", "electric-energy-interface", "power-switch",
+    "constant-combinator", "arithmetic-combinator", "decider-combinator", "programmable-speaker", "logistic-container",
+    "inserter", "furnace", "lab", "assembling-machine", "burner-generator"
+}
+
+local excluded_from_types = {
+    "stone-furnace",    -- special handling below
+    "ll-telescope"      -- can only be placed on luna mountain surface
+}
+
+local function is_foundation(tile_name)
+    for _, tile in pairs(foundations) do
+        if string.find(tile_name, tile) then
+            return true
+        end
+    end
+    return false
+end
+
+local function in_list(list, item)
+    for _, value in pairs(list) do
+        if value == item then
+            return true
+        end
+    end
+    return false
+end
+
+local function update_collision_mask(entity)
     if entity.collision_mask then
         table.insert(entity.collision_mask, layer)
     else
@@ -23,15 +56,7 @@ for _, tile in pairs(data.raw["tile"]) do
     -- which in turn, prevents the entity from being voided
     tile.check_collision_with_entities = true
 
-    if string.find(tile.name, "stone")
-        or string.find(tile.name, "concrete")
-        or string.find(tile.name, "plate")
-        or string.find(tile.name, "foundation")
-        or string.find(tile.name, "dect%-")
-    then
-        -- tile is a foundation
-    else
-        -- not a foundation
+    if not is_foundation(tile.name) then
         update_collision_mask(tile)
     end
 end
@@ -39,9 +64,7 @@ end
 -- entity types without much special handling
 for _, type in pairs(types_to_update) do
     for _, entity in pairs(data.raw[type]) do
-        if not (string.find(entity.name, "fluidic") and string.find(entity.name, "pole"))
-            and entity.name ~= "ll-telescope"  -- can only be placed on luna mountain surface
-            and entity.name ~= "stone-furnace" -- special handling below
+        if not in_list(excluded_from_types, entity.name)
         then
             update_collision_mask(entity)
         end
@@ -70,6 +93,9 @@ for _, entity in pairs(data.raw["container"]) do
         and entity.name ~= "crash-site-spaceship-wreck-medium-1"
         and entity.name ~= "crash-site-spaceship-wreck-medium-2"
         and entity.name ~= "crash-site-spaceship-wreck-medium-3"
+        and entity.name ~= "factorio-logo-11tiles"
+        and entity.name ~= "factorio-logo-16tiles"
+        and entity.name ~= "factorio-logo-22tiles"
         and entity.name ~= "wood-pallet"
         and entity.name ~= "tin-pallet"
         and entity.name ~= "wooden-chest"
@@ -87,26 +113,28 @@ for _, entity in pairs(data.raw["electric-pole"]) do
     local box = entity.selection_box
     -- Only entities larger than 1.5x1.5 tile
     if (-box[1][1] + box[2][1]) > 1.5 and (-box[1][2] + box[2][2]) > 1.5 then
-        if entity.name ~= "fish-pole" then
+        if entity.name ~= "fish-pole"
+            and entity.name ~= "floating-electric-pole"
+        then
             update_collision_mask(entity)
         end
     end
 end
 
--- fluid storage tanks and Fluidic Power accumulators
+-- fluid storage tanks
 for _, entity in pairs(data.raw["storage-tank"]) do
-    if string.find(entity.name, "fluidic")
-        or string.find(entity.name, "storage%-tank")
-        or string.find(entity.name, "fluid%-tank")
-        or string.find(entity.name, "kr%-fluid%-storage")
+    -- exclude Flow Control and Fluid Level Indicator
+    if entity.name ~= "check-value"
+        and entity.name ~= "overflow-valve"
+        and entity.name ~= "underflow-valve"
+        and entity.name ~= "pipe-elbow"
+        and entity.name ~= "pipe-junction"
+        and entity.name ~= "pipe-straight"
+        and entity.name ~= "fluid-level-indicator"
+        and entity.name ~= "fluid-level-indicator-straight"
     then
         update_collision_mask(entity)
     end
-end
-
--- unique entities
-if mods["FluidicPower"] then
-    update_collision_mask(data.raw["pump"]["fluidic-power-switch"])
 end
 
 if mods["IndustrialRevolution3"] then
