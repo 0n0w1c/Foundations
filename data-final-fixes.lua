@@ -104,6 +104,11 @@ local excluded_from_storage_tanks = {
     "fluid-level-indicator-straight"
 }
 
+function round(number, decimal_places)
+    local multiplier = 10^(decimal_places or 0)
+    return math.floor(number * multiplier + 0.5) / multiplier
+end
+
 local function is_foundation(tile_name)
     for _, tile in pairs(foundations) do
         if string.find(tile_name, tile) then
@@ -162,8 +167,8 @@ end
 -- electric pole
 for _, entity in pairs(data.raw["electric-pole"]) do
     local selection_box = entity.selection_box
-    local width = math.ceil(selection_box and (math.abs(selection_box[2][1]) + math.abs(selection_box[1][1])) or 0)
-    local height = math.ceil(selection_box and (math.abs(selection_box[2][2]) + math.abs(selection_box[1][2])) or 0)
+    local width = round(math.abs(selection_box[2][1]) + math.abs(selection_box[1][1]), 0) or 0
+    local height = round(math.abs(selection_box[2][2]) + math.abs(selection_box[1][2]), 0) or 0
 
     -- only electric poles 2x2 and larger
     if width >= 2 and height >= 2 then
