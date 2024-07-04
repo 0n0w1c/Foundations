@@ -21,7 +21,11 @@ local excluded_from_types = {
     "stone-furnace",    -- special handling below
     "ll-telescope",     -- can only be placed on luna mountain surface
     "port",             -- cargo ships, train stop
-    "bridge_base"       -- cargo ships, also train stop
+    "bridge_base",      -- cargo ships, train stop
+    "bridge_north",     -- cargo ships, power-switch
+    "bridge_south",     -- cargo ships, power-switch
+    "bridge_east",      -- cargo ships, power-switch
+    "bridge_west"       -- cargo ships, power-switch
 }
 
 local excluded_from_containers = {
