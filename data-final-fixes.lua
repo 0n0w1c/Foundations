@@ -104,11 +104,11 @@ local excluded_from_storage_tanks = {
     "fluid-level-indicator-straight"
 }
 
-local function round(number, decimal_places)
-    if decimal_places then
-        decimal_places = math.abs(math.floor(decimal_places))
+local function round(number, precision)
+    if precision then
+        precision = math.abs(math.floor(precision))
     end
-    local multiplier = 10^(decimal_places or 0)
+    local multiplier = 10^(precision or 0)
     return math.floor(number * multiplier + 0.5) / multiplier
 end
 
