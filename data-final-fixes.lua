@@ -105,7 +105,7 @@ local excluded_from_storage_tanks = {
 }
 
 local function round(number, decimal_places)
-    local multiplier = 10^(decimal_places or 0)
+    local multiplier = 10^(math.abs(decimal_places) or 0)
     return math.floor(number * multiplier + 0.5) / multiplier
 end
 
