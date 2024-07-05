@@ -133,9 +133,18 @@ local function is_foundation(tile_name)
     return false
 end
 
-local function in_list(list, wanted)
+local function matches_list(list, want)
     for _, item in pairs(list) do
-        if item == wanted then
+        if string.find(want, item) then
+            return true
+        end
+    end
+    return false
+end
+
+local function in_list(list, want)
+    for _, item in pairs(list) do
+        if item == want then
             return true
         end
     end
@@ -158,7 +167,8 @@ for _, tile in pairs(data.raw["tile"]) do
     -- which in turn, prevents the entity from being voided
     tile.check_collision_with_entities = true
 
-    if not is_foundation(tile.name) then
+--    if not is_foundation(tile.name) then
+    if not matches_list(foundations, tile.name) then
         update_collision_mask(tile)
     end
 end
