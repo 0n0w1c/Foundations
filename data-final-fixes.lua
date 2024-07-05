@@ -115,9 +115,9 @@ local function is_foundation(tile_name)
     return false
 end
 
-local function in_list(list, item)
-    for _, value in pairs(list) do
-        if value == item then
+local function in_list(list, wanted)
+    for _, item in pairs(list) do
+        if item == wanted then
             return true
         end
     end
@@ -163,14 +163,14 @@ end
 
 -- electric pole
 for _, entity in pairs(data.raw["electric-pole"]) do
-    local collision_box = entity.collision_box
-    if not collision_box then
-        collision_box = entity.selection_box
+    local box = entity.collision_box
+    if not box then
+        box = entity.selection_box
     end
-    if collision_box then
-        local width = math.ceil(math.abs(collision_box[2][1]) + math.abs(collision_box[1][1])) or 0
-        local height = math.ceil(math.abs(collision_box[2][2]) + math.abs(collision_box[1][2])) or 0
-        if width >= 2 and height >= 2 then
+    if box then
+        local height = math.ceil(math.abs(box[2][2]) + math.abs(box[1][2])) or 0
+        local width = math.ceil(math.abs(box[2][1]) + math.abs(box[1][1])) or 0
+        if height >= 2 or width >= 2 then
             if not in_list(excluded_from_electrical_poles, entity.name) then
                 update_collision_mask(entity)
             end
