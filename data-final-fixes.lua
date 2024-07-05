@@ -124,15 +124,6 @@ local excluded_from_storage_tanks = {
 --    "se-spaceship-clamp-place"
 }
 
-local function is_foundation(tile_name)
-    for _, tile in pairs(foundations) do
-        if string.find(tile_name, tile) then
-            return true
-        end
-    end
-    return false
-end
-
 local function matches_list(list, want)
     for _, item in pairs(list) do
         if string.find(want, item) then
@@ -167,7 +158,6 @@ for _, tile in pairs(data.raw["tile"]) do
     -- which in turn, prevents the entity from being voided
     tile.check_collision_with_entities = true
 
---    if not is_foundation(tile.name) then
     if not matches_list(foundations, tile.name) then
         update_collision_mask(tile)
     end
