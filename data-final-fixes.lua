@@ -106,14 +106,6 @@ local excluded_from_storage_tanks = {
     "fluid-level-indicator-straight"
 }
 
-local function round(number, decimal_places)
-    if decimal_places then
-        decimal_places = math.abs(math.floor(decimal_places))
-    end
-    local multiplier = 10^(decimal_places or 0)
-    return math.floor(number * multiplier + 0.5) / multiplier
-end
-
 local function is_foundation(tile_name)
     for _, tile in pairs(foundations) do
         if string.find(tile_name, tile) then
@@ -176,10 +168,8 @@ for _, entity in pairs(data.raw["electric-pole"]) do
         collision_box = entity.selection_box
     end
     if collision_box then
-        local width = round(math.abs(collision_box[2][1]) + math.abs(collision_box[1][1]), 0) or 0
-        local height = round(math.abs(collision_box[2][2]) + math.abs(collision_box[1][2]), 0) or 0
-
-        -- only electric poles 2x2 and larger
+        local width = math.ceil(math.abs(collision_box[2][1]) + math.abs(collision_box[1][1])) or 0
+        local height = math.ceil(math.abs(collision_box[2][2]) + math.abs(collision_box[1][2])) or 0
         if width >= 2 and height >= 2 then
             if not in_list(excluded_from_electrical_poles, entity.name) then
                 update_collision_mask(entity)
