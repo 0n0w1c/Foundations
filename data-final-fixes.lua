@@ -81,7 +81,7 @@ local excluded_from_containers = {
 
 local excluded_from_electrical_poles = {
     "fish-pole",
-    "floating-electric-pole",
+    "floating-electric-pole"
 --    "se-spaceship-clamp-power-pole-internal",
 --    "se-spaceship-clamp-power-pole-external-west",
 --    "se-spaceship-clamp-power-pole-external-east"
@@ -120,7 +120,7 @@ local excluded_from_storage_tanks = {
     "se-space-pipe-long-j-5",
     "se-space-pipe-long-j-7",
     "se-space-pipe-long-s-9",
-    "se-space-pipe-long-s-15",
+    "se-space-pipe-long-s-15"
 --    "se-spaceship-clamp-place"
 }
 

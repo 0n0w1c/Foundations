@@ -24,7 +24,7 @@ Added support for [Fluid Level Indicator](https://mods.factorio.com/mod/Fluid-le
 Added support for [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
 Added support for [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
 Added support for [Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
-Added preliminary support for [Space Exploration](https://mods.factorio.com/mod/space-exploration)  
+Added Beta support for [Space Exploration](https://mods.factorio.com/mod/space-exploration)  
 
 Compatible:  
 [AAI Containers & Warehouses](https://mods.factorio.com/mod/aai-containers)  
