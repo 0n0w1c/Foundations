@@ -31,6 +31,7 @@ local types_to_update = {
     "inserter",
     "lab",
     "lamp",
+    "linked-container",
     "logistic-container",
     "programmable-speaker",
     "radar",
@@ -80,7 +81,10 @@ local excluded_from_containers = {
 
 local excluded_from_electrical_poles = {
     "fish-pole",
-    "floating-electric-pole"
+    "floating-electric-pole",
+--    "se-spaceship-clamp-power-pole-internal",
+--    "se-spaceship-clamp-power-pole-external-west",
+--    "se-spaceship-clamp-power-pole-external-east"
 }
 
 local excluded_from_power_switches = {
@@ -103,7 +107,21 @@ local excluded_from_storage_tanks = {
     "pipe-junction",
     "pipe-straight",
     "fluid-level-indicator",
-    "fluid-level-indicator-straight"
+    "fluid-level-indicator-straight",
+--    "se-condenser-turbine-tank",
+    "se-gate-tank-input",
+    "se-gate-tank-output",
+--    "se-rocket-launch-pad-tank",
+--    "se-spaceship-rocket-booster-tank",
+--    "se-spaceship-ion-booster-tank",
+--    "se-spaceship-antimatter-booster-tank",
+--    "se-big-turbine-tank",
+    "se-space-pipe-long-j-3",
+    "se-space-pipe-long-j-5",
+    "se-space-pipe-long-j-7",
+    "se-space-pipe-long-s-9",
+    "se-space-pipe-long-s-15",
+--    "se-spaceship-clamp-place"
 }
 
 local function is_foundation(tile_name)
@@ -204,6 +222,10 @@ if mods["IndustrialRevolution3"] then
     update_collision_mask(data.raw["land-mine"]["transfer-plate"])
     update_collision_mask(data.raw["land-mine"]["transfer-plate-2x2"])
 end
+
+--if mods["space-exploration"] then
+--    update_collision_mask(data.raw["linked-container"]["se-linked-container"])
+--end
 
 -- stone furnace
 if settings.startup["Foundations-required-stone-furnace"].value then
