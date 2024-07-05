@@ -7,7 +7,9 @@ local foundations = {
     "stone",
     "plate",
     "foundation",
-    "dect%-"
+    "dect%-",
+    "floor",
+    "platform"
 }
 
 local types_to_update = {
@@ -169,14 +171,19 @@ end
 
 -- electric pole
 for _, entity in pairs(data.raw["electric-pole"]) do
-    local selection_box = entity.selection_box
-    local width = round(math.abs(selection_box[2][1]) + math.abs(selection_box[1][1]), 0) or 0
-    local height = round(math.abs(selection_box[2][2]) + math.abs(selection_box[1][2]), 0) or 0
+    local collision_box = entity.collision_box
+    if not collision_box then
+        collision_box = entity.selection_box
+    end
+    if collision_box then
+        local width = round(math.abs(collision_box[2][1]) + math.abs(collision_box[1][1]), 0) or 0
+        local height = round(math.abs(collision_box[2][2]) + math.abs(collision_box[1][2]), 0) or 0
 
-    -- only electric poles 2x2 and larger
-    if width >= 2 and height >= 2 then
-        if not in_list(excluded_from_electrical_poles, entity.name) then
-            update_collision_mask(entity)
+        -- only electric poles 2x2 and larger
+        if width >= 2 and height >= 2 then
+            if not in_list(excluded_from_electrical_poles, entity.name) then
+                update_collision_mask(entity)
+            end
         end
     end
 end
