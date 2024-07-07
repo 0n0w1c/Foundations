@@ -175,7 +175,9 @@ end
 -- container
 for _, entity in pairs(data.raw["container"]) do
     if not in_list(excluded_from_containers, entity.name) then
-        update_collision_mask(entity)
+        if not string.find(entity.name, "WideChests_") then
+            update_collision_mask(entity)
+        end
     end
 end
 
