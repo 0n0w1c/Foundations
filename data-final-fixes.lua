@@ -1,4 +1,5 @@
 local collision_mask_util = require("__core__/lualib/collision-mask-util")
+local required_electric_poles = settings.startup["Foundations-required-electric-poles"].value
 
 local layer = collision_mask_util.get_first_unused_layer()
 
@@ -182,17 +183,19 @@ for _, entity in pairs(data.raw["container"]) do
 end
 
 -- electric pole
-for _, entity in pairs(data.raw["electric-pole"]) do
-    local box = entity.collision_box
-    if not box then
-        box = entity.selection_box
-    end
-    if box then
-        local height = math.ceil(math.abs(box[2][2]) + math.abs(box[1][2])) or 0
-        local width = math.ceil(math.abs(box[2][1]) + math.abs(box[1][1])) or 0
-        if height >= 2 or width >= 2 then
-            if not in_list(excluded_from_electrical_poles, entity.name) then
-                update_collision_mask(entity)
+if required_electric_poles then
+    for _, entity in pairs(data.raw["electric-pole"]) do
+        local box = entity.collision_box
+        if not box then
+            box = entity.selection_box
+        end
+        if box then
+            local height = math.ceil(math.abs(box[2][2]) + math.abs(box[1][2])) or 0
+            local width = math.ceil(math.abs(box[2][1]) + math.abs(box[1][1])) or 0
+            if height >= 2 or width >= 2 then
+                if not in_list(excluded_from_electrical_poles, entity.name) then
+                    update_collision_mask(entity)
+                end
             end
         end
     end

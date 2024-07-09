@@ -12,8 +12,9 @@ Features:
 Added the foundation requirement for several entities, see changelog.txt for details  
 The foundation requirement for gun turrets is optional in the startup settings  
 The foundation requirement for stone furnaces is optional in the startup settings  
+The foundation requirement for large electric poles and substations is optional in the startup settings  
 New characters will spawn with 4 stone bricks (if needed)  
-Inhibits the mining of foundation tiles from underneath factory entities, to prevent entity loss
+Inhibits the mining of foundation tiles from underneath factory entities, to prevent entity loss  
 
 Added support for [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 Added support for [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)  

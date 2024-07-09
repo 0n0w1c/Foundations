@@ -24,6 +24,16 @@ data:extend({
     }
 })
 
+data:extend({
+    {
+        type = "bool-setting",
+        name = "Foundations-required-electric-poles",
+        setting_type = "startup",
+        default_value = true,
+        order = '3',
+    }
+})
+
 if mods["IndustrialRevolution3"] then
     data:extend({
         {
@@ -31,7 +41,7 @@ if mods["IndustrialRevolution3"] then
             name = "Foundations-required-IR3-scattergun-turret",
             setting_type = "startup",
             default_value = false,
-            order = '3',
+            order = '4',
         }
     })
 end

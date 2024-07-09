@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.11
+Date: 09. 07. 2024
+  Bugfixes:
+    - None
+  Features:
+    - Added startup setting to make the foundation requirement optional for large electic poles and
+      substations
+---------------------------------------------------------------------------------------------------
 Version: 1.0.10
 Date: 07. 07. 2024
   Bugfixes:
