@@ -17,9 +17,9 @@ data:extend({
 data:extend({
     {
         type = "bool-setting",
-        name = "Foundations-required-gun-turret",
+        name = "Foundations-required-electric-poles",
         setting_type = "startup",
-        default_value = false,
+        default_value = true,
         order = '2',
     }
 })
@@ -27,9 +27,9 @@ data:extend({
 data:extend({
     {
         type = "bool-setting",
-        name = "Foundations-required-electric-poles",
+        name = "Foundations-required-gun-turret",
         setting_type = "startup",
-        default_value = true,
+        default_value = false,
         order = '3',
     }
 })
