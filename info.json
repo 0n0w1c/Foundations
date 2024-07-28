@@ -1,24 +1,16 @@
 {
   "name": "Foundations",
-  "version": "1.0.11",
+  "version": "2.0.0",
   "title": "Foundations",
   "author": "0n0w1c",
   "factorio_version": "1.1",
   "dependencies": [
     "base >= 1.1",
     "? aai-industry >= 0.5.22",
-    "? cargo-ships >= 0.2.7",
     "? Dectorio >= 0.12.6",
-    "? fish-pole >= 1.0.7",
-    "? Flow Control >= 3.1.4",
-    "? Fluid-level-indicator >= 0.8.4",
-    "? IndustrialRevolution3 >= 3.1.23",
     "? Krastorio2 >= 1.3.24",
     "? LunarLandings >= 1.0.11",
-    "? space-exploration >= 0.6.137",
-    "? WideChests >= 5.2.1",
-    "! buildings-require-foundation",
-    "! StableFoundations"
+    "? space-exploration >= 0.6.138"
   ],
-  "description": "Factories require foundations before construction"
+  "description": "Lays tiles (Foundations) under most everything, button controlled"
 }
