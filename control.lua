@@ -2,26 +2,25 @@ local mod_gui = require("mod-gui")
 local this_mod = "Foundations"
 local player_index = 1
 
-local exclusion_list = {}
-local exclusion_type_list = {}
-
 -- exclude specific names
-local function load_exclusion_list()
-    exclusion_list = {
+local function load_exclusion_name_list()
+    global.exclusion_name_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true
     }
 
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
-        exclusion_list["small-electric-pole"] = true
-        exclusion_list["medium-electric-pole"] = true
+        global.exclusion_name_list["small-electric-pole"] = true
+        global.exclusion_name_list["medium-electric-pole"] = true
+        -- aai industry
+        global.exclusion_name_list["small-iron-electric-pole"] = true
     end
 end
 
 -- exclude specific types
 local function load_exclusion_type_list()
 
-    exclusion_type_list = {
+    global.exclusion_type_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
         ["car"] = true,
@@ -32,23 +31,23 @@ local function load_exclusion_type_list()
     }
 
     if settings.global["Foundations-exclude-inserters"].value then
-        exclusion_type_list["inserter"] = true
+        global.exclusion_type_list["inserter"] = true
     end
 
     if settings.global["Foundations-exclude-belts"].value then
-        exclusion_type_list["transport-belt"] = true
-        exclusion_type_list["underground-belt"] = true
-        exclusion_type_list["splitter"] = true
-        exclusion_type_list["loader"] = true
+        global.exclusion_type_list["transport-belt"] = true
+        global.exclusion_type_list["underground-belt"] = true
+        global.exclusion_type_list["splitter"] = true
+        global.exclusion_type_list["loader"] = true
     end
 end
 
 -- check if an entity is excluded based on name or type
 local function entity_excluded(entity)
-    if exclusion_list[entity.name] then
+    if global.exclusion_name_list[entity.name] then
         return true
     end
-    if exclusion_type_list[entity.type] then
+    if global.exclusion_type_list[entity.type] then
         return true
     end
     return false
@@ -89,7 +88,7 @@ end
 local function load_global_data()
     global.foundation = global.foundation or "disabled"
 
-    load_exclusion_list()
+    load_exclusion_name_list()
     load_exclusion_type_list()
 
     -- start fresh, tiles could be added or removed
@@ -437,6 +436,8 @@ local function on_init()
     global.tile_names = global.tile_names or {"disabled"}
     global.tile_names_index = global.tile_names_index or 1
     global.foundation = global.foundation or global.tile_names[global.tile_names_index]
+    global.exclusion_name_list = {}
+    global.exclusion_type_list = {}
 
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
