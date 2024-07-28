@@ -1,4 +1,4 @@
-Complete reimagining, version 2 operates under a completely different premise!  
+#### Complete reimagining, version 2 operates under a completely different premise!  
 Support added for AAI Industry, Dectorio, Krastorio 2, Lunar Landings, and Space Exploration  
 
 ![pic 1](/pic1.png)  
@@ -12,10 +12,13 @@ Run-time settings (Map tab) for each foudnation tile, especially relavent for De
 Foundation tiles can now be mined from underneath entities  
 Foundation tiles are not placed on water or resource tiles  
 
-Suggested:  
+#### Suggested:  
 [Floor Placer](https://mods.factorio.com/mod/floor-placer/metrics)  
 
-Supported:
+Limitations:  
+Not compatible with multi-player mode, single-user mode only.  
+
+#### Supported:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
