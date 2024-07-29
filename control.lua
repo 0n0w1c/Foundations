@@ -27,6 +27,9 @@ local function load_exclusion_type_list()
         ["cargo-wagon"] = true,
         ["fluid-wagon"] = true,
         ["locomotive"] = true,
+        ["rail-planner"] = true,
+        ["rail-signal"] = true,
+        ["rail-chain-signal"] = true,
         ["spider-vehicle"] = true
     }
 
@@ -298,22 +301,18 @@ local function place_foundation_under_entity(event)
     local position = entity.position
     local player = game.players[player_index]
     local tile_name = global.tile_names and global.tile_names[global.tile_names_index]
-
     -- if no tile_name is available, early exit
     if not tile_name then
         return
     end
-
     -- if disabled, early exit
     if global.tile_names_index == 1 then
         return
     end
-
     -- if the entity excluded, early exit
     if entity_excluded(entity) then
         return
     end
-
     -- get entity bounds
     local bounds = get_entity_bounds(entity)
     local area = {}
@@ -356,11 +355,20 @@ local function place_foundation_under_entity(event)
     if not player_has_sufficient_tiles(player, tile_name, #tiles_to_place) then
         -- if insufficient tiles, prevent placement and return entity to player inventory
         if entity.type == "entity-ghost" or entity.type == "tile-ghost" then
-            entity.destroy()
-            return
+            -- do not return these to player inventory
         else
-            player.insert{name = entity.name, count = 1}
+            -- hot fix: needs better
+            -- rails change item name when placed
+            local new_entity = entity.name
+            if entity.name == "curved-rail" or entity.name == "straight-rail" then
+                new_entity = "rail"
+            end
+            player.insert{name = new_entity, count = 1}
         end
+
+        -- entity is not to be placed
+        entity.destroy()
+        return
     end
 
     -- place the tiles
