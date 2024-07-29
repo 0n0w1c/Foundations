@@ -4,9 +4,13 @@ local player_index = 1
 
 -- exclude specific names
 local function load_exclusion_name_list()
+    global.exclusion_name_list = global.exclusion_name_list or {}
+
     global.exclusion_name_list = {
         ["entity-ghost"] = true,
-        ["tile-ghost"] = true
+        ["tile-ghost"] = true,
+        ["straight-rail"] = true,
+        ["curved-rail"] = true
     }
 
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
@@ -19,6 +23,7 @@ end
 
 -- exclude specific types
 local function load_exclusion_type_list()
+    global.exclusion_type_list = global.exclusion_type_list or {}
 
     global.exclusion_type_list = {
         ["entity-ghost"] = true,
@@ -345,13 +350,11 @@ local function place_foundation_under_entity(event)
                 if tile_in_global_tile_names(current_tile.name) then
                     table.insert(tiles_to_return, return_item)
                 end
+                table.insert(tiles_to_place, {name = tile_name, position = {x = x, y = y}})
             end
-            -- prepare to place the tile
-            table.insert(tiles_to_place, {name = tile_name, position = {x = x, y = y}})
         end
     end
 
-    -- check if the player has sufficient tiles
     if not player_has_sufficient_tiles(player, tile_name, #tiles_to_place) then
         -- if insufficient tiles, prevent placement and return entity to player inventory
         if entity.type == "entity-ghost" or entity.type == "tile-ghost" then
@@ -374,9 +377,11 @@ local function place_foundation_under_entity(event)
     -- place the tiles
     surface.set_tiles(tiles_to_place)
 
-    -- remove tiles from player inventory
-    local item_name = global.tile_to_item[tile_name]
-    player.remove_item{name = item_name, count = #tiles_to_place}
+    -- if tiles placed, remove tiles from player inventory
+    if #tiles_to_place > 0 then
+        local item_name = global.tile_to_item[tile_name]
+        player.remove_item{name = item_name, count = #tiles_to_place}
+    end
 
     -- return replaced tiles to player inventory
     for _, tile in pairs(tiles_to_return) do
@@ -444,8 +449,8 @@ local function on_init()
     global.tile_names = global.tile_names or {"disabled"}
     global.tile_names_index = global.tile_names_index or 1
     global.foundation = global.foundation or global.tile_names[global.tile_names_index]
-    global.exclusion_name_list = {}
-    global.exclusion_type_list = {}
+    global.exclusion_name_list = global.exclusion_name_list or {}
+    global.exclusion_type_list = global.exclusion_type_list or {}
 
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
