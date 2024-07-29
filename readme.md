@@ -16,7 +16,7 @@ Foundation tiles are not placed on water or resource tiles
 [Floor Placer](https://mods.factorio.com/mod/floor-placer/metrics)  
 
 Limitations:  
-Not compatible with multi-player mode, single-user mode only.  
+Not compatible with multi-player mode, single-player mode only.  
 
 #### Supported:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
