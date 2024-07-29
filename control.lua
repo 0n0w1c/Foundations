@@ -9,6 +9,7 @@ local function load_exclusion_name_list()
     global.exclusion_name_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
+        ["offshore-pump"] = true,
         ["straight-rail"] = true,
         ["curved-rail"] = true
     }
@@ -28,6 +29,7 @@ local function load_exclusion_type_list()
     global.exclusion_type_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
+        ["offshore-pump"] = true,
         ["car"] = true,
         ["cargo-wagon"] = true,
         ["fluid-wagon"] = true,
@@ -91,6 +93,15 @@ local function add_to_tables(tile, item)
             global.tile_to_item[tile] = item
         end
     end
+end
+
+local function has_collision_mask(collision_mask, mask)
+    for _, layer in pairs(collision_mask) do
+        if layer == mask then
+            return true
+        end
+    end
+    return false
 end
 
 local function load_global_data()
@@ -338,18 +349,23 @@ local function place_foundation_under_entity(event)
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local current_tile = surface.get_tile(x, y)
-            -- check if the tile is a water tile or a resource tile
-            if current_tile.prototype.collision_mask["water-tile"] or current_tile.prototype.collision_mask["resource"] then
+            local search_area = {{x, y}, {x + 1, y + 1}}
+            local entities = surface.find_entities_filtered({area = search_area, type = "resource"})
+
+            -- check if the tile is a water tile or a resource tile, exit
+            if has_collision_mask(current_tile.prototype.collision_mask, "water-tile") or #entities > 0 then
                 return
             end
+            
             -- track the current tile to return it to the player
             if current_tile.name ~= tile_name then
                 local return_item = {name = current_tile.name, count = 1}
                 local item_name = global.tile_to_item[current_tile.name]
                 return_item.name = item_name
-                if tile_in_global_tile_names(current_tile.name) then
+                -- do better here... tiles that are not in the list?
+--                if tile_in_global_tile_names(current_tile.name) then
                     table.insert(tiles_to_return, return_item)
-                end
+--                end
                 table.insert(tiles_to_place, {name = tile_name, position = {x = x, y = y}})
             end
         end
@@ -375,7 +391,9 @@ local function place_foundation_under_entity(event)
     end
 
     -- place the tiles
-    surface.set_tiles(tiles_to_place)
+    if #tiles_to_place > 0 then
+        surface.set_tiles(tiles_to_place)
+    end
 
     -- if tiles placed, remove tiles from player inventory
     if #tiles_to_place > 0 then
