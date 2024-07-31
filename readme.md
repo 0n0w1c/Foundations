@@ -7,7 +7,7 @@ Support added for AAI Industry, Dectorio, Krastorio 2, Lunar Landings, and Space
 
 Removed the "requirement" for a foundation, the mod now lays the selected foundation  
 A button has been added for selecting the foundation and for disabling foundations  
-Construction is limited by the tiles in the player's inventory, when a foundation is selected  
+When a foundation is selected, construction is limited by the tiles in the player's inventory  
 Run-time settings (Map tab) for each foundation tile, especially relevent for Dectorio users  
 Foundation tiles can now be mined from underneath entities  
 Foundation tiles are not placed on water or resource tiles  
