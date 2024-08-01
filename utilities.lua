@@ -141,11 +141,21 @@ function load_tiles(entity, area, tile_name)
             local search_area = {{x, y}, {x + 1, y + 1}}
             local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
 
-            -- check if the tile is a water tile or tile has resources, exit
-            -- what about shallow or muddy water?
-            if has_collision_mask(current_tile.prototype.collision_mask, "water-tile") or #resources > 0 then
+            -- no tiles to be placed on resources
+            if #resources > 0 then
                 return
             end
+
+            -- check if the tile is a water tile
+            -- what about shallow or muddy water?
+            if has_collision_mask(current_tile.prototype.collision_mask, "water-tile") then
+                return
+            end
+
+            -- ground tiles, grass-1, water
+--            if not current_tile.prototype.mineable_properties.mineable then
+--                return
+--            end
 
             -- track the current tile to return it to the player
             if current_tile.name ~= tile_name then

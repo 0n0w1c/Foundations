@@ -10,7 +10,7 @@ A button has been added for selecting the foundation and for disabling foundatio
 When a foundation is selected, construction is limited by the tiles in the player's inventory  
 Run-time settings (Map tab) for each foundation tile, especially relevent for Dectorio users  
 Foundation tiles can now be mined from underneath entities  
-Foundation tiles are not placed on water or resource tiles  
+Run-time setting to mine the Foundation tiles when an entity is mined
 
 #### Suggested:  
 [Floor Placer](https://mods.factorio.com/mod/floor-placer/metrics)  

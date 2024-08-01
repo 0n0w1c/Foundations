@@ -30,28 +30,30 @@ local function place_foundation_under_entity(event)
     local area = get_area_under_entity(entity)
     local tiles_to_place, tiles_to_return = load_tiles(entity, area, tile_name)
 
-    -- if not enough tiles, destroy the entity and return to player inventory
-    if not player_has_sufficient_tiles(player, tile_name, #tiles_to_place) then
-        player.insert{name = entity.name, count = 1}
-        entity.destroy()
-        return
-    end
+    if tiles_to_place then
+        -- if not enough tiles, destroy the entity and return to player inventory
+        if not player_has_sufficient_tiles(player, tile_name, #tiles_to_place) then
+            player.insert{name = entity.name, count = 1}
+            entity.destroy()
+            return
+        end
 
-    -- place the tiles
-    if #tiles_to_place > 0 then
-        surface.set_tiles(tiles_to_place)
-    end
+        -- place the tiles
+        if #tiles_to_place > 0 then
+            surface.set_tiles(tiles_to_place)
+        end
 
-    -- if tiles placed, remove tiles from player inventory
-    if #tiles_to_place > 0 then
-        local item_name = global.tile_to_item[tile_name]
-        player.remove_item{name = item_name, count = #tiles_to_place}
-    end
+        -- if tiles placed, remove tiles from player inventory
+        if #tiles_to_place > 0 then
+            local item_name = global.tile_to_item[tile_name]
+            player.remove_item{name = item_name, count = #tiles_to_place}
+        end
 
-    -- return replaced tiles to player inventory
-    for _, tile in pairs(tiles_to_return) do
-        if tile.name then
-            player.insert{name = tile.name, count = 1}
+        -- return replaced tiles to player inventory
+        for _, tile in pairs(tiles_to_return) do
+            if tile.name then
+                player.insert{name = tile.name, count = 1}
+            end
         end
     end
 end
@@ -108,6 +110,25 @@ local function configuration_changed()
     update_button()
 end
 
+local function on_player_mined_entity(event)
+    local entity = event.entity
+    local surface = entity.surface
+    local player = game.players[event.player_index]
+    local area = get_area_under_entity(entity)
+
+    if settings.global["Foundations-player-mine-foundation"].value then
+        -- mine the global.foundation tiles
+        for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
+            for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
+                local current_tile = surface.get_tile(x, y)
+                if current_tile.name == global.foundation then
+                    player.mine_tile(current_tile)
+                end
+            end
+        end
+    end
+end
+
 local function on_init()
     global = global or {}
     global.tile_to_item = global.tile_to_item or {["disabled"] = "disabled"}
@@ -125,6 +146,9 @@ local function on_init()
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
 
+    script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity)
+--    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
+
 --    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
 --    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)
 end
@@ -137,6 +161,9 @@ local function on_load()
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
+
+    script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity)
+--    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
 
 --    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
 --    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)

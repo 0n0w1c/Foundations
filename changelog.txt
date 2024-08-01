@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.6
+Date: 01. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added a runtime option, to mine the selected foundation tiles, when an entity is mined
+---------------------------------------------------------------------------------------------------
 Version: 2.0.5
 Date: 31. 07. 2024
   Bugfixes:
