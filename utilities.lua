@@ -1,5 +1,4 @@
 function load_excluded_name_list()
-
     global.excluded_name_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
@@ -14,7 +13,6 @@ function load_excluded_name_list()
 end
 
 function load_excluded_type_list()
-
     global.excluded_type_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
@@ -34,7 +32,6 @@ function load_excluded_type_list()
     if settings.global["Foundations-exclude-inserters"].value then
         global.excluded_type_list["inserter"] = true
     end
-
     if settings.global["Foundations-exclude-belts"].value then
         global.excluded_type_list["transport-belt"] = true
         global.excluded_type_list["underground-belt"] = true
@@ -67,6 +64,7 @@ end
 -- check if the recipe has been enabled
 function recipe_enabled(force, recipe_name)
     local recipe = force.recipes[recipe_name]
+
     if recipe then
         return recipe.enabled
     else
@@ -78,6 +76,7 @@ end
 -- add to global.tile_names and global.tile_to_item, if not already present and recipe enabled
 function add_to_global_tables(tile, item)
     local force = game.forces["player"]
+
     if force and item then
         if not tile_in_global_tile_names(tile) and recipe_enabled(force, item) then
             table.insert(global.tile_names, tile)
@@ -89,19 +88,21 @@ end
 -- check if the player has sufficient tiles in their inventory
 function player_has_sufficient_tiles(player, tile_name, count)
     local item_name = global.tile_to_item[tile_name]
+
     return item_name and player.get_item_count(item_name) >= count
 end
 
 -- get the collision_box of the entity
 function get_entity_collision_box(entity)
     local prototype
+
     if entity.type == "entity-ghost" then
         prototype = game.entity_prototypes[entity.ghost_prototype.name]
     else
         prototype = entity.prototype
     end
-    local collision_box = prototype.collision_box
-    return collision_box
+
+    return prototype.collision_box
 end
 
 function get_area_under_entity(entity)
@@ -200,12 +201,6 @@ end
 function load_global_data()
     global.foundation = global.foundation or "disabled"
 
-    local AAI_INDUSTRY = game.active_mods["aai-industry"] ~= nil or false
-    local DECTORIO = game.active_mods["Dectorio"] ~= nil or false
-    local KRASTORIO2 = game.active_mods["Krastorio2"] ~= nil or false
-    local LUNARLANDINGS = game.active_mods["LunarLandings"] ~= nil or false
-    local SPACE_EXPLORATION = game.active_mods["space-exploration"] ~= nil or false
-
     load_excluded_name_list()
     load_excluded_type_list()
 
@@ -233,19 +228,19 @@ function load_global_data()
         add_to_global_tables("refined-hazard-concrete-right", "refined-hazard-concrete")
     end
 
-    if AAI_INDUSTRY then
+    if game.active_mods["aai-industry"] then
         compatibility.aai_industry()
     end
-    if DECTORIO then
+    if game.active_mods["Dectorio"] then
         compatibility.dectorio()
     end
-    if KRASTORIO2 then
+    if game.active_mods["Krastorio2"] then
         compatibility.krastorio2()
     end
-    if LUNARLANDINGS then
+    if game.active_mods["LunarLandings"] then
         compatibility.lunarlandings()
     end
-    if SPACE_EXPLORATION then
+    if game.active_mods["space-exploration"] then
         compatibility.space_exploration()
     end
 
