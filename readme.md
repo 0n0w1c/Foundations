@@ -15,9 +15,6 @@ Run-time setting to mine the Foundation tiles when an entity is mined
 #### Suggested:  
 [Floor Placer](https://mods.factorio.com/mod/floor-placer/metrics)  
 
-Limitations:  
-Not compatible with multi-player mode, single-player mode only.  
-
 #### Supported:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  

@@ -180,7 +180,7 @@ function load_tiles(entity, area)
     return tiles_to_place, tiles_to_return
 end
 
-function set_global_foundation()
+function set_global_tile_names_index()
     local found = false
 
     -- try to find the index for global.foundation
@@ -191,6 +191,7 @@ function set_global_foundation()
             break
         end
     end
+
     -- global.foundation not found in global.tile_names, reset
     if not found then
         global.tile_names_index = 1
@@ -200,6 +201,7 @@ end
 
 function load_global_data()
     global.foundation = global.foundation or "disabled"
+    global.player_index = global.player_index or 1
 
     load_excluded_name_list()
     load_excluded_type_list()
@@ -244,5 +246,5 @@ function load_global_data()
         compatibility.space_exploration()
     end
 
-    set_global_foundation ()
+    set_global_tile_names_index ()
 end

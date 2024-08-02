@@ -4,13 +4,12 @@ compatibility = require("compatibility")
 require("utilities")
 
 local THIS_MOD = "Foundations"
-local PLAYER_INDEX = 1
 
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
     local entity = event.created_entity
     local surface = entity.surface
-    local player = game.players[PLAYER_INDEX]
+    local player = game.players[global.player_index]
 
     -- if disabled, early exit
     if global.foundation == "disabled" then
@@ -54,7 +53,7 @@ local function place_foundation_under_entity(event)
 end
 
 local function update_button()
-    local player = game.players[PLAYER_INDEX]
+    local player = game.players[global.player_index]
     local button_flow = mod_gui.get_button_flow(player)
     local sprite_path
     local tool_tip
@@ -81,7 +80,7 @@ local function update_button()
 end
 
 local function button_clicked(event)
-    if event.element.name == THIS_MOD then
+    if event.element and event.element.valid and event.element.name == THIS_MOD then
         if event.button == defines.mouse_button_type.left then
             if global.tile_names_index < #global.tile_names then
                 global.tile_names_index = global.tile_names_index + 1
@@ -95,20 +94,26 @@ local function button_clicked(event)
                 global.tile_names_index = #global.tile_names
             end
         end
+
         global.foundation = global.tile_names[global.tile_names_index]
         update_button()
     end
 end
 
-local function configuration_changed()
+local function configuration_changed(event)
     load_global_data()
     update_button()
+end
+
+local function player_joined(event)
+    global.player_index = event.player_index
+    configuration_changed()
 end
 
 local function on_player_mined_entity(event)
     local entity = event.entity
     local surface = entity.surface
-    local player = game.players[event.player_index]
+    local player = game.players[global.player_index]
     local area = get_area_under_entity(entity)
 
     if settings.global["Foundations-player-mine-foundation"].value then
@@ -132,15 +137,16 @@ local function on_init()
     global.foundation = global.foundation or global.tile_names[global.tile_names_index]
     global.excluded_name_list = global.excluded_name_list or {}
     global.excluded_type_list = global.excluded_type_list or {}
+    global.player_index = global.player_index or 1
 
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
     script.on_event(defines.events.on_research_finished, configuration_changed)
     script.on_event(defines.events.on_player_created, configuration_changed)
+    script.on_event(defines.events.on_player_joined_game, player_joined)
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-
     script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity)
 --    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
 
@@ -153,10 +159,10 @@ local function on_load()
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
     script.on_event(defines.events.on_research_finished, configuration_changed)
     script.on_event(defines.events.on_player_created, configuration_changed)
+    script.on_event(defines.events.on_player_joined_game, player_joined)
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-
     script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity)
 --    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
 
