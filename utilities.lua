@@ -1,6 +1,6 @@
-function load_exclusion_name_list()
+function load_excluded_name_list()
 
-    global.exclusion_name_list = {
+    global.excluded_name_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
         ["straight-rail"] = true,
@@ -8,14 +8,14 @@ function load_exclusion_name_list()
     }
 
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
-        global.exclusion_name_list["small-electric-pole"] = true
-        global.exclusion_name_list["medium-electric-pole"] = true
+        global.excluded_name_list["small-electric-pole"] = true
+        global.excluded_name_list["medium-electric-pole"] = true
     end
 end
 
-function load_exclusion_type_list()
+function load_excluded_type_list()
 
-    global.exclusion_type_list = {
+    global.excluded_type_list = {
         ["entity-ghost"] = true,
         ["tile-ghost"] = true,
         ["offshore-pump"] = true,
@@ -32,23 +32,23 @@ function load_exclusion_type_list()
     }
 
     if settings.global["Foundations-exclude-inserters"].value then
-        global.exclusion_type_list["inserter"] = true
+        global.excluded_type_list["inserter"] = true
     end
 
     if settings.global["Foundations-exclude-belts"].value then
-        global.exclusion_type_list["transport-belt"] = true
-        global.exclusion_type_list["underground-belt"] = true
-        global.exclusion_type_list["splitter"] = true
-        global.exclusion_type_list["loader"] = true
+        global.excluded_type_list["transport-belt"] = true
+        global.excluded_type_list["underground-belt"] = true
+        global.excluded_type_list["splitter"] = true
+        global.excluded_type_list["loader"] = true
     end
 end
 
 -- check if an entity is excluded based on name or type
 function entity_excluded(entity)
-    if global.exclusion_name_list[entity.name] then
+    if global.excluded_name_list[entity.name] then
         return true
     end
-    if global.exclusion_type_list[entity.type] then
+    if global.excluded_type_list[entity.type] then
         return true
     end
     return false
@@ -206,8 +206,8 @@ function load_global_data()
     local LUNARLANDINGS = game.active_mods["LunarLandings"] ~= nil or false
     local SPACE_EXPLORATION = game.active_mods["space-exploration"] ~= nil or false
 
-    load_exclusion_name_list()
-    load_exclusion_type_list()
+    load_excluded_name_list()
+    load_excluded_type_list()
 
     -- start fresh, tiles could have been added or removed
     global.tile_names = {}

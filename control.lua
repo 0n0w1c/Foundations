@@ -130,8 +130,8 @@ local function on_init()
     global.tile_names = global.tile_names or {"disabled"}
     global.tile_names_index = global.tile_names_index or 1
     global.foundation = global.foundation or global.tile_names[global.tile_names_index]
-    global.exclusion_name_list = global.exclusion_name_list or {}
-    global.exclusion_type_list = global.exclusion_type_list or {}
+    global.excluded_name_list = global.excluded_name_list or {}
+    global.excluded_type_list = global.excluded_type_list or {}
 
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)

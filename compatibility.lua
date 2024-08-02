@@ -5,7 +5,7 @@ function compatibility.aai_industry()
         add_to_global_tables("rough-stone-path", "stone")
     end
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
-        global.exclusion_name_list["small-iron-electric-pole"] = true
+        global.excluded_name_list["small-iron-electric-pole"] = true
     end
 end
 
