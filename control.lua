@@ -11,14 +11,9 @@ local function place_foundation_under_entity(event)
     local entity = event.created_entity
     local surface = entity.surface
     local player = game.players[PLAYER_INDEX]
-    local tile_name = global.tile_names and global.tile_names[global.tile_names_index]
 
-    -- if no tile_name is available, early exit
-    if not tile_name then
-        return
-    end
     -- if disabled, early exit
-    if global.tile_names_index == 1 then
+    if global.foundation == "disabled" then
         return
     end
     -- if the entity excluded, early exit
@@ -28,11 +23,11 @@ local function place_foundation_under_entity(event)
 
     -- calculate the tiles
     local area = get_area_under_entity(entity)
-    local tiles_to_place, tiles_to_return = load_tiles(entity, area, tile_name)
+    local tiles_to_place, tiles_to_return = load_tiles(entity, area)
 
     if tiles_to_place then
         -- if not enough tiles, destroy the entity and return to player inventory
-        if not player_has_sufficient_tiles(player, tile_name, #tiles_to_place) then
+        if not player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
             player.insert{name = entity.name, count = 1}
             entity.destroy()
             return
@@ -45,7 +40,7 @@ local function place_foundation_under_entity(event)
 
         -- if tiles placed, remove tiles from player inventory
         if #tiles_to_place > 0 then
-            local item_name = global.tile_to_item[tile_name]
+            local item_name = global.tile_to_item[global.foundation]
             player.remove_item{name = item_name, count = #tiles_to_place}
         end
 
@@ -120,9 +115,9 @@ local function on_player_mined_entity(event)
         -- mine the global.foundation tiles
         for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
             for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
-                local current_tile = surface.get_tile(x, y)
-                if current_tile.name == global.foundation then
-                    player.mine_tile(current_tile)
+                local tile = surface.get_tile(x, y)
+                if tile.name == global.foundation then
+                    player.mine_tile(tile)
                 end
             end
         end

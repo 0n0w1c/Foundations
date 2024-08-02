@@ -75,8 +75,8 @@ function recipe_enabled(force, recipe_name)
     end
 end
 
--- insert into global.tile_names and global.tile_to_item, if not already present and recipe enabled
-function add_to_tables(tile, item)
+-- add to global.tile_names and global.tile_to_item, if not already present and recipe enabled
+function add_to_global_tables(tile, item)
     local force = game.forces["player"]
     if force and item then
         if not tile_in_global_tile_names(tile) and recipe_enabled(force, item) then
@@ -84,15 +84,6 @@ function add_to_tables(tile, item)
             global.tile_to_item[tile] = item
         end
     end
-end
-
-function has_collision_mask(collision_mask, mask)
-    for _, layer in pairs(collision_mask) do
-        if layer == mask then
-            return true
-        end
-    end
-    return false
 end
 
 -- check if the player has sufficient tiles in their inventory
@@ -130,40 +121,57 @@ function get_area_under_entity(entity)
     return area
 end
 
-function load_tiles(entity, area, tile_name)
+function get_available_tiles()
+    local tiles_to_exclude = {
+        ["water"] = true,
+        ["deepwater"] = true,
+        ["water-green"] = true,
+        ["deepwater-green"] = true,
+        ["water-shallow"] = true,
+        ["water-mud"] = true,
+        ["landfill"] = true
+    }
+
+    -- filter the available_tiles to remove excluded tiles
+    local available_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
+    local filtered_tiles = {}
+
+    for name, _ in pairs(available_tiles) do
+        if not tiles_to_exclude[name] then
+            filtered_tiles[name] = true
+        end
+    end
+
+    return filtered_tiles
+end
+
+function load_tiles(entity, area)
     local surface = entity.surface
     local tiles_to_place = {}
     local tiles_to_return = {}
+    local mineable_tiles = get_available_tiles()
 
+    -- check each tile under the entity
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local current_tile = surface.get_tile(x, y)
             local search_area = {{x, y}, {x + 1, y + 1}}
             local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
 
-            -- no tiles to be placed on resources
-            if #resources > 0 then
-                return
-            end
+            -- check to make sure the tile is not a resource tile
+            if #resources == 0 then
+                -- prepare to return the current tile and to place a foundation tile
+                if current_tile.name ~= global.foundation then
+                    if mineable_tiles[current_tile.name] then
+                        local return_item = {name = current_tile.name, count = 1}
+                        local item_name = global.tile_to_item[current_tile.name]
 
-            -- check if the tile is a water tile
-            -- what about shallow or muddy water?
-            if has_collision_mask(current_tile.prototype.collision_mask, "water-tile") then
-                return
-            end
+                        return_item.name = item_name
+                        table.insert(tiles_to_return, return_item)
+                    end
 
-            -- ground tiles, grass-1, water
---            if not current_tile.prototype.mineable_properties.mineable then
---                return
---            end
-
-            -- track the current tile to return it to the player
-            if current_tile.name ~= tile_name then
-                local return_item = {name = current_tile.name, count = 1}
-                local item_name = global.tile_to_item[current_tile.name]
-                return_item.name = item_name
-                table.insert(tiles_to_return, return_item)
-                table.insert(tiles_to_place, {name = tile_name, position = {x = x, y = y}})
+                    table.insert(tiles_to_place, {name = global.foundation, position = {x = x, y = y}})
+                end
             end
         end
     end
@@ -171,7 +179,7 @@ function load_tiles(entity, area, tile_name)
     return tiles_to_place, tiles_to_return
 end
 
-function set_current_foundation()
+function set_global_foundation()
     local found = false
 
     -- try to find the index for global.foundation
@@ -182,7 +190,6 @@ function set_current_foundation()
             break
         end
     end
-
     -- global.foundation not found in global.tile_names, reset
     if not found then
         global.tile_names_index = 1
@@ -206,24 +213,24 @@ function load_global_data()
     global.tile_names = {}
 
     -- add disabled, at positon 1
-    add_to_tables("disabled", "disabled")
+    add_to_global_tables("disabled", "disabled")
 
     if settings.global["Foundations-stone-path"].value then
-        add_to_tables("stone-path", "stone-brick")
+        add_to_global_tables("stone-path", "stone-brick")
     end
     if settings.global["Foundations-concrete"].value then
-        add_to_tables("concrete", "concrete")
+        add_to_global_tables("concrete", "concrete")
     end
     if settings.global["Foundations-refined-concrete"].value then
-        add_to_tables("refined-concrete", "refined-concrete")
+        add_to_global_tables("refined-concrete", "refined-concrete")
     end
     if settings.global["Foundations-hazard-concrete"].value then
-        add_to_tables("hazard-concrete-left", "hazard-concrete")
-        add_to_tables("hazard-concrete-right", "hazard-concrete")
+        add_to_global_tables("hazard-concrete-left", "hazard-concrete")
+        add_to_global_tables("hazard-concrete-right", "hazard-concrete")
     end
     if settings.global["Foundations-refined-hazard-concrete"].value then
-        add_to_tables("refined-hazard-concrete-left", "refined-hazard-concrete")
-        add_to_tables("refined-hazard-concrete-right", "refined-hazard-concrete")
+        add_to_global_tables("refined-hazard-concrete-left", "refined-hazard-concrete")
+        add_to_global_tables("refined-hazard-concrete-right", "refined-hazard-concrete")
     end
 
     if AAI_INDUSTRY then
@@ -242,5 +249,5 @@ function load_global_data()
         compatibility.space_exploration()
     end
 
-    set_current_foundation ()
+    set_global_foundation ()
 end
