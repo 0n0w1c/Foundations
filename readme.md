@@ -1,6 +1,8 @@
 #### Complete reimagining, version 2 operates under a completely different premise!  
 Support added for AAI Industry, Dectorio, Krastorio 2, Lunar Landings, and Space Exploration  
 
+[a quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
+
 ![pic 1](/pic1.png)  
 ![pic 2](/pic2.png)  
 ![pic 3](/pic3.png)  
