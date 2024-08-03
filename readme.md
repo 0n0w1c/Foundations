@@ -10,7 +10,7 @@ Note: This link will redirect you to the demo video hosted on Google Drive.
 
 With the Foundations button, you can disable the placement of foundation tiles or select the tile of your choice.  
 
-A runtime setting for each tile, allows you to limit the selections to a limited "palatte", for quick selection.  
+A runtime setting for each tile, allows you to limit the selections to create a "palatte" of tiles, for quick selection.  
 Dectorio users should visit the runtime settings (map tab), most of the Dectorio tiles are not selected by default.  
 Settings for the various supported mods are only visible when the supported mod is active.  
 These settings do not alter the tiles the player has available, only if they are to be included in the button "palette".  
