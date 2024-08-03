@@ -13,7 +13,7 @@ With the Foundations button, you can disable the placement of foundation tiles o
 
 A runtime setting for each tile, allows you to limit the selections to a limited "palatte", for quick selection.  
 Dectorio users should visit the runtime settings (map tab), most of the Dectorio tiles are not selected by default.  
-Settings for the various supported mods, are only visible when the supported mod is active.
+Settings for the various supported mods are only visible when the supported mod is active.
 
 A runtime setting to select if the foundation tiles are to be mined, when an entity is mined.  
 There are also runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
