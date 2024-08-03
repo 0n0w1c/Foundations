@@ -1,7 +1,7 @@
-mod_gui = require("mod-gui")
-
 require("constants")
 require("utilities")
+
+local mod_gui = require("mod-gui")
 
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
