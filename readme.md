@@ -1,5 +1,4 @@
-#### Complete reimagining, version 2 operates under a completely different premise!  
-Foundations is a QOL mod, helping players make their bases a little more interesting.  
+#### A Quality of Life mod to help engineers quickly and easily build a more interesting factory.  
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
