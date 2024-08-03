@@ -1,9 +1,7 @@
 mod_gui = require("mod-gui")
-compatibility = require("compatibility")
 
+require("constants")
 require("utilities")
-
-local THIS_MOD = "Foundations"
 
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
@@ -12,7 +10,7 @@ local function place_foundation_under_entity(event)
     local player = game.players[global.player_index]
 
     -- if disabled, early exit
-    if global.foundation == "disabled" then
+    if global.foundation == DISABLED then
         return
     end
     -- if the entity excluded, early exit
@@ -25,29 +23,23 @@ local function place_foundation_under_entity(event)
     local tiles_to_place, tiles_to_return = load_tiles(entity, area)
 
     if tiles_to_place then
-        -- if not enough tiles, destroy the entity and return to player inventory
+        -- if not enough global.foundation, mine the entity and exit
         if not player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
-            player.insert{name = entity.name, count = 1}
-            entity.destroy()
+            player.mine_entity(entity)
             return
         end
 
-        -- place the tiles
-        if #tiles_to_place > 0 then
-            surface.set_tiles(tiles_to_place)
+        -- mine tiles that are not global.foundation
+        for _, tile in pairs(tiles_to_return) do
+            local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
+            player.mine_tile(tile_to_mine)
         end
 
-        -- if tiles placed, remove tiles from player inventory
+        -- place tiles and remove items from player inventory
         if #tiles_to_place > 0 then
             local item_name = global.tile_to_item[global.foundation]
+            surface.set_tiles(tiles_to_place)
             player.remove_item{name = item_name, count = #tiles_to_place}
-        end
-
-        -- return replaced tiles to player inventory
-        for _, tile in pairs(tiles_to_return) do
-            if tile.name then
-                player.insert{name = tile.name, count = 1}
-            end
         end
     end
 end
@@ -60,7 +52,7 @@ local function update_button()
 
     if global.tile_names_index == 1 then
         sprite_path = "Foundations-disabled"
-        tool_tip = {"sprite-button.Foundations-tooltip-" .. "disabled"}
+        tool_tip = {"sprite-button.Foundations-tooltip-" .. DISABLED}
     else
         sprite_path = "tile/" .. global.tile_names[global.tile_names_index]
         tool_tip = {"sprite-button.Foundations-tooltip-" .. global.tile_names[global.tile_names_index]}
@@ -100,7 +92,7 @@ local function button_clicked(event)
     end
 end
 
-local function configuration_changed(event)
+local function configuration_changed()
     load_global_data()
     update_button()
 end
@@ -131,8 +123,8 @@ end
 
 local function on_init()
     global = global or {}
-    global.tile_to_item = global.tile_to_item or {["disabled"] = "disabled"}
-    global.tile_names = global.tile_names or {"disabled"}
+    global.tile_to_item = global.tile_to_item or {[DISABLED] = DISABLED}
+    global.tile_names = global.tile_names or {DISABLED}
     global.tile_names_index = global.tile_names_index or 1
     global.foundation = global.foundation or global.tile_names[global.tile_names_index]
     global.excluded_name_list = global.excluded_name_list or {}

@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.1.0
+Date: 03. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Flying text now visable for foundation tiles mined, when an entity is mined
+    - Modified the handling of foundation tiles to place and tiles to return
+---------------------------------------------------------------------------------------------------
 Version: 2.0.9
 Date: 02. 08. 2024
   Bugfixes:

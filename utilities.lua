@@ -1,11 +1,7 @@
-function load_excluded_name_list()
-    global.excluded_name_list = {
-        ["entity-ghost"] = true,
-        ["tile-ghost"] = true,
-        ["straight-rail"] = true,
-        ["curved-rail"] = true
-    }
+local compatibility = require("compatibility")
 
+function load_excluded_name_list()
+    global.excluded_name_list = EXCLUDED_NAME_LIST
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
@@ -13,22 +9,7 @@ function load_excluded_name_list()
 end
 
 function load_excluded_type_list()
-    global.excluded_type_list = {
-        ["entity-ghost"] = true,
-        ["tile-ghost"] = true,
-        ["offshore-pump"] = true,
-        ["mining-drill"] = true,
-        ["car"] = true,
-        ["cargo-wagon"] = true,
-        ["fluid-wagon"] = true,
-        ["locomotive"] = true,
-        ["rail-planner"] = true,
-        ["straight-rail"] = true,
-        ["rail-signal"] = true,
-        ["rail-chain-signal"] = true,
-        ["spider-vehicle"] = true
-    }
-
+    global.excluded_type_list = EXCLUDED_TYPE_LIST
     if settings.global["Foundations-exclude-inserters"].value then
         global.excluded_type_list["inserter"] = true
     end
@@ -122,35 +103,26 @@ function get_area_under_entity(entity)
     return area
 end
 
-function get_available_tiles()
-    local tiles_to_exclude = {
-        ["water"] = true,
-        ["deepwater"] = true,
-        ["water-green"] = true,
-        ["deepwater-green"] = true,
-        ["water-shallow"] = true,
-        ["water-mud"] = true,
-        ["landfill"] = true
-    }
+function get_mineable_tiles()
+    local tiles_to_exclude = TILES_TO_EXCLUDE
+    local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
+    local mineable_tiles = {}
 
-    -- filter the available_tiles to remove excluded tiles
-    local available_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
-    local filtered_tiles = {}
-
-    for name, _ in pairs(available_tiles) do
+    -- filter the blueprintable tiles to remove excluded tiles
+    for name, _ in pairs(blueprintable_tiles) do
         if not tiles_to_exclude[name] then
-            filtered_tiles[name] = true
+            mineable_tiles[name] = true
         end
     end
 
-    return filtered_tiles
+    return mineable_tiles
 end
 
 function load_tiles(entity, area)
+    local mineable_tiles = get_mineable_tiles()
     local surface = entity.surface
     local tiles_to_place = {}
     local tiles_to_return = {}
-    local mineable_tiles = get_available_tiles()
 
     -- check each tile under the entity
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
@@ -164,13 +136,8 @@ function load_tiles(entity, area)
                 -- prepare to return the current tile and to place a foundation tile
                 if current_tile.name ~= global.foundation then
                     if mineable_tiles[current_tile.name] then
-                        local return_item = {name = current_tile.name, count = 1}
-                        local item_name = global.tile_to_item[current_tile.name]
-
-                        return_item.name = item_name
-                        table.insert(tiles_to_return, return_item)
+                        table.insert(tiles_to_return, {name = current_tile.name, position = {x = x, y = y}})
                     end
-
                     table.insert(tiles_to_place, {name = global.foundation, position = {x = x, y = y}})
                 end
             end
@@ -195,12 +162,12 @@ function set_global_tile_names_index()
     -- global.foundation not found in global.tile_names, reset
     if not found then
         global.tile_names_index = 1
-        global.foundation = "disabled"
+        global.foundation = DISABLED
     end
 end
 
 function load_global_data()
-    global.foundation = global.foundation or "disabled"
+    global.foundation = global.foundation or DISABLED
     global.player_index = global.player_index or 1
 
     load_excluded_name_list()
@@ -210,7 +177,7 @@ function load_global_data()
     global.tile_names = {}
 
     -- add disabled, at positon 1
-    add_to_global_tables("disabled", "disabled")
+    add_to_global_tables(DISABLED, DISABLED)
 
     if settings.global["Foundations-stone-path"].value then
         add_to_global_tables("stone-path", "stone-brick")
