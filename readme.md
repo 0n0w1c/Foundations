@@ -19,7 +19,7 @@ A runtime setting to select if the foundation tiles are to be mined, when an ent
 There are also runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
 
 Attempts to build, without the required number of foundation tiles in the player inventory, will come to a halt.  
-Make sure to have enough of the selected foundation tiles in your inventory, or disable foundations.  
+Make sure to have enough of the selected foundation tiles in your inventory, or disable foundation tile placement.  
 
 Foundations is compatible with personal logistics for construction, for deconstruction they behave as normal.  
 
