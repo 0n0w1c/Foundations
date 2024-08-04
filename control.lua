@@ -76,7 +76,7 @@ local function button_clicked(event)
         local player = game.players[global.player_index]
         if event.button == defines.mouse_button_type.left then
             if event.control then
-                if player.clear_cursor() then
+                if global.foundation ~= DISABLED and player.clear_cursor() then
                     player.cursor_stack.set_stack({name = "foundations-fill-tool"})
                 end
             else
