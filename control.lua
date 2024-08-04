@@ -139,7 +139,10 @@ local function player_selected_area(event)
         -- scan the area, finding valid empty positions that need a tile
         for _, position in pairs(event.tiles) do
             local tile = surface.get_tile(position.position.x, position.position.y)
-            if not mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
+            local search_area = {{position.position.x, position.position.y}, {position.position.x + 1, position.position.y + 1}}
+            local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
+
+            if #resources == 0 and not mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
                 table.insert(tiles_to_place, {name = global.foundation, position = {x = position.position.x, y = position.position.y}})
             end
         end
