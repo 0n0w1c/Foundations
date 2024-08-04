@@ -22,7 +22,7 @@ There are also runtime settings to exclude small/medium electric poles, inserter
 Attempts to build, without the required number of foundation tiles in the player inventory, will be halted.  
 Make sure to have enough of the selected foundation tiles in your inventory, or disable foundation tile placement.  
 
-Foundations is compatible with personal logistics for construction, for deconstruction they behave as normal.  
+Foundations is compatible with personal logistics for construction and deconstruction.  
 
 #### Limitations:  
 Not compatible with multi-player mode, single-player mode only.  

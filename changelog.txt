@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.1.4
+Date: 04. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Modified the runtime setting "Player Mines Foundations" to be "Mine Foundation Tiles"
+    - When robots deconstruct an entity, they will now follow the "Mine Foundation Tiles" setting
+---------------------------------------------------------------------------------------------------
 Version: 2.1.3
 Date: 04. 08. 2024
   Bugfixes:

@@ -109,13 +109,13 @@ local function player_joined(event)
     configuration_changed()
 end
 
-local function player_mined_entity(event)
+local function entity_mined(event)
     local entity = event.entity
     local surface = entity.surface
     local player = game.players[global.player_index]
     local area = get_area_under_entity(entity)
 
-    if settings.global["Foundations-player-mine-foundation"].value then
+    if settings.global["Foundations-mine-foundation"].value then
         -- mine the global.foundation tiles
         for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
             for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
@@ -180,11 +180,9 @@ local function on_init()
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-    script.on_event(defines.events.on_player_mined_entity, player_mined_entity)
---    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
+    script.on_event(defines.events.on_player_mined_entity, entity_mined)
+    script.on_event(defines.events.on_robot_mined_entity, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)
---    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
---    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)
 end
 
 local function on_load()
@@ -196,11 +194,9 @@ local function on_load()
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-    script.on_event(defines.events.on_player_mined_entity, player_mined_entity)
---    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
+    script.on_event(defines.events.on_player_mined_entity, entity_mined)
+    script.on_event(defines.events.on_robot_mined_entity, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)
---    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
---    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)
 end
 
 script.on_init(on_init)
