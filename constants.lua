@@ -31,5 +31,6 @@ TILES_TO_EXCLUDE = {
     ["deepwater-green"] = true,
     ["water-shallow"] = true,
     ["water-mud"] = true,
-    ["landfill"] = true
+    ["landfill"] = true,
+    ["out-of-map"] = true
 }

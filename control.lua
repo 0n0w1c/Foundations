@@ -73,11 +73,18 @@ end
 
 local function button_clicked(event)
     if event.element and event.element.valid and event.element.name == THIS_MOD then
+        local player = game.players[global.player_index]
         if event.button == defines.mouse_button_type.left then
-            if global.tile_names_index < #global.tile_names then
-                global.tile_names_index = global.tile_names_index + 1
+            if event.control then
+                if player.clear_cursor() then
+                    player.cursor_stack.set_stack({name = "foundations-fill-tool"})
+                end
             else
-                global.tile_names_index = 1
+                if global.tile_names_index < #global.tile_names then
+                    global.tile_names_index = global.tile_names_index + 1
+                else
+                    global.tile_names_index = 1
+                end
             end
         elseif event.button == defines.mouse_button_type.right then
             if global.tile_names_index > 1 then
@@ -102,7 +109,7 @@ local function player_joined(event)
     configuration_changed()
 end
 
-local function on_player_mined_entity(event)
+local function player_mined_entity(event)
     local entity = event.entity
     local surface = entity.surface
     local player = game.players[global.player_index]
@@ -117,6 +124,37 @@ local function on_player_mined_entity(event)
                     player.mine_tile(tile)
                 end
             end
+        end
+    end
+end
+
+local function player_selected_area(event)
+    if event.item == "foundations-fill-tool" then
+        local player = game.players[event.player_index]
+        local surface = player.surface
+        local mineable_tiles = get_mineable_tiles()
+        local tiles_to_exclude = TILES_TO_EXCLUDE
+        local tiles_to_place = {}
+
+        -- scan the area, finding valid empty positions that need a tile
+        for _, position in pairs(event.tiles) do
+            local tile = surface.get_tile(position.position.x, position.position.y)
+            if not mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
+                table.insert(tiles_to_place, {name = global.foundation, position = {x = position.position.x, y = position.position.y}})
+            end
+        end
+
+        if #tiles_to_place > 0 and player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
+            surface.set_tiles(tiles_to_place)
+            local item_name = global.tile_to_item[global.foundation]
+            player.remove_item{name = item_name, count = #tiles_to_place}
+        end
+
+        player.clear_cursor()
+
+        -- remove all copies of the foundations-fill-tool from player inventory
+        while player.get_item_count("foundations-fill-tool") > 0 do
+            player.remove_item({name = "foundations-fill-tool", count = 1})
         end
     end
 end
@@ -139,9 +177,9 @@ local function on_init()
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-    script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity)
+    script.on_event(defines.events.on_player_mined_entity, player_mined_entity)
 --    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
-
+    script.on_event(defines.events.on_player_selected_area, player_selected_area)
 --    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
 --    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)
 end
@@ -155,9 +193,9 @@ local function on_load()
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-    script.on_event(defines.events.on_player_mined_entity, on_player_mined_entity)
+    script.on_event(defines.events.on_player_mined_entity, player_mined_entity)
 --    script.on_event(defines.events.on_robot_mined_entity, on_robot_mined_entity)
-
+    script.on_event(defines.events.on_player_selected_area, player_selected_area)
 --    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
 --    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)
 end

@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.1.1
+Date: 04. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added a Foundation Fill Tool, a selection tool.
+      Fills the selected area with the foundation tile of choice, without disturbing existing tiles
+---------------------------------------------------------------------------------------------------
 Version: 2.1.0
 Date: 03. 08. 2024
   Bugfixes:
