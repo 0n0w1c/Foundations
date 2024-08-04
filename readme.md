@@ -9,7 +9,7 @@ Note: This link will redirect you to the demo video hosted on Google Drive.
 ![pic 3](/pic3.png)  
 
 With the Foundations button, you can disable the placement of foundation tiles or select the tile of your choice.  
-To activate the Foundation fill tool, **[ctrl]+[left-mouse-click]** on the Foundations button, while a foundation is selected. 
+To activate the fill tool, *[ctrl]+[left-mouse-click]* on the Foundations button, with a foundation selected.  
 
 A runtime setting for each tile, allows you to limit the selections to create a "palatte" of tiles, for quick selection.  
 Dectorio users should visit the runtime settings (map tab), most of the Dectorio tiles are not selected by default.  
