@@ -1,7 +1,7 @@
 #### A Quality of Life mod to help engineers quickly and easily build a more interesting factory.  
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
-#### New feature: Stacking for Dectorio colored refined concrete  
+#### New feature: Stacking for Dectorio painted refined concrete  
 Startup options to change the stacking order, higher numbers stack on lower numbers  
 Tiles assigned with the same number, merge (normal behavior) rather than stack  
 
