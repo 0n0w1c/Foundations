@@ -130,9 +130,10 @@ function load_tiles(entity, area)
             local current_tile = surface.get_tile(x, y)
             local search_area = {{x, y}, {x + 1, y + 1}}
             local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
+            local tiles_to_exclude = TILES_TO_EXCLUDE
 
-            -- check to make sure the tile is not a resource tile
-            if #resources == 0 then
+            -- check to make sure the tile is not a resource tile or an excluded tile
+            if #resources == 0 and not tiles_to_exclude["current_tile.name"] then
                 -- prepare to return the current tile and to place a foundation tile
                 if current_tile.name ~= global.foundation then
                     if mineable_tiles[current_tile.name] then
