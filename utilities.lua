@@ -108,7 +108,7 @@ function get_mineable_tiles()
     local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
     local mineable_tiles = {}
 
-    -- filter the blueprintable tiles to remove excluded tiles
+    -- filter the blueprintable (minable) tiles to remove excluded tiles
     for name, _ in pairs(blueprintable_tiles) do
         if not tiles_to_exclude[name] then
             mineable_tiles[name] = true
