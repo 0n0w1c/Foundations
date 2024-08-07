@@ -1,8 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.2.0
+Date: 07. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - With the mod Dectorio active, startup option to stack the colored refined concretes
+---------------------------------------------------------------------------------------------------
 Version: 2.1.6
 Date: 07. 08. 2024
   Bugfixes:
-    - Fill tool can activated and then the foundation set to disabled, result was a crash
+    - Fill tool can be activated and then the foundation set to disabled, result was a crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
