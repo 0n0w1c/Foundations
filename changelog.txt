@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.2.1
+Date: 07. 08. 2024
+  Bugfixes:
+    - Added a check if Dectorio's colored refined concrete is enabled, before applying stacking
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.2.0
 Date: 07. 08. 2024
   Bugfixes:

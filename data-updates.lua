@@ -1,4 +1,7 @@
-if mods["Dectorio"] and not mods["alien-biomes"] and settings.startup["Foundations-stack-concrete"].value then
+if mods["Dectorio"] and not mods["alien-biomes"]
+   and settings.startup["Foundations-stack-concrete"].value
+   and settings.startup["dectorio-painted-concrete"].value
+then
     local refined_tile_layer = settings.startup["Foundations-refined_tile_layer"].value
     local red_tile_layer = settings.startup["Foundations-red_tile_layer"].value
     local green_tile_layer = settings.startup["Foundations-green_tile_layer"].value
