@@ -138,7 +138,7 @@ local function player_selected_area(event)
             local tiles_to_exclude = TILES_TO_EXCLUDE
             local tiles_to_place = {}
 
-            -- scan the area, finding valid empty positions that need a tile
+            -- scan the area, find valid empty positions that need a tile
             for _, position in pairs(event.tiles) do
                 local tile = surface.get_tile(position.position.x, position.position.y)
                 local search_area = {{position.position.x, position.position.y}, {position.position.x + 1, position.position.y + 1}}
