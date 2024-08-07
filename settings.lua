@@ -5,6 +5,119 @@ local function get_next_order()
     return string.format("a-%03d", order_counter)
 end
 
+-- startup
+data:extend({
+    {
+        type = "int-setting",
+        name = "Foundations-refined_tile_layer",
+        setting_type = "startup",
+        default_value = 202,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-red_tile_layer",
+        setting_type = "startup",
+        default_value = 202,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-green_tile_layer",
+        setting_type = "startup",
+        default_value = 203,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-blue_tile_layer",
+        setting_type = "startup",
+        default_value = 204,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-orange_tile_layer",
+        setting_type = "startup",
+        default_value = 205,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-yellow_tile_layer",
+        setting_type = "startup",
+        default_value = 206,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-pink_tile_layer",
+        setting_type = "startup",
+        default_value = 207,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-purple_tile_layer",
+        setting_type = "startup",
+        default_value = 208,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-black_tile_layer",
+        setting_type = "startup",
+        default_value = 209,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-brown_tile_layer",
+        setting_type = "startup",
+        default_value = 210,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-cyan_tile_layer",
+        setting_type = "startup",
+        default_value = 211,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+    {
+        type = "int-setting",
+        name = "Foundations-acid_tile_layer",
+        setting_type = "startup",
+        default_value = 212,
+        allowed_values = {202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212},
+        order = get_next_order(),
+        hidden = mods["alien-biomes"] or not mods["Dectorio"]
+    },
+})
+
+-- runtime-global
 data:extend({
     {
         type = "bool-setting",
