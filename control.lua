@@ -131,28 +131,30 @@ end
 local function player_selected_area(event)
     if event.item == "foundations-fill-tool" then
         local player = game.players[event.player_index]
-        local surface = player.surface
-        local mineable_tiles = get_mineable_tiles()
-        local tiles_to_exclude = TILES_TO_EXCLUDE
-        local tiles_to_place = {}
 
-        -- scan the area, finding valid empty positions that need a tile
-        for _, position in pairs(event.tiles) do
-            local tile = surface.get_tile(position.position.x, position.position.y)
-            local search_area = {{position.position.x, position.position.y}, {position.position.x + 1, position.position.y + 1}}
-            local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
+        if global.foundation ~= DISABLED then
+            local surface = player.surface
+            local mineable_tiles = get_mineable_tiles()
+            local tiles_to_exclude = TILES_TO_EXCLUDE
+            local tiles_to_place = {}
 
-            if #resources == 0 and not mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
-                table.insert(tiles_to_place, {name = global.foundation, position = {x = position.position.x, y = position.position.y}})
+            -- scan the area, finding valid empty positions that need a tile
+            for _, position in pairs(event.tiles) do
+                local tile = surface.get_tile(position.position.x, position.position.y)
+                local search_area = {{position.position.x, position.position.y}, {position.position.x + 1, position.position.y + 1}}
+                local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
+
+                if #resources == 0 and not mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
+                    table.insert(tiles_to_place, {name = global.foundation, position = {x = position.position.x, y = position.position.y}})
+                end
+            end
+
+            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
+                surface.set_tiles(tiles_to_place, true, false, false, true)
+                local item_name = global.tile_to_item[global.foundation]
+                player.remove_item{name = item_name, count = #tiles_to_place}
             end
         end
-
-        if #tiles_to_place > 0 and player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
-            surface.set_tiles(tiles_to_place, true, false, false, true)
-            local item_name = global.tile_to_item[global.foundation]
-            player.remove_item{name = item_name, count = #tiles_to_place}
-        end
-
         player.clear_cursor()
 
         -- remove all copies of the foundations-fill-tool from player inventory
