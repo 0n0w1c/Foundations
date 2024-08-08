@@ -8,7 +8,6 @@ Tiles assigned with the same number, merge (normal behavior) rather than stack
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
 Note: This link will redirect you to the demo video hosted on Google Drive.
 
-![pic 1](/pic1.png)  
 ![pic 2](/pic2.png)  
 ![pic 3](/pic3.png)  
 
