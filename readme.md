@@ -27,7 +27,7 @@ Make sure to have enough of the selected foundation tiles in your inventory, or 
 
 Mining times for all minable tiles are standardized to that of refined concrete.  
 
-Dectorio users have startup options to enable and configure the stacking of painted refined concrete.
+Dectorio users have startup options to enable and configure the stacking of painted refined concrete.  
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
