@@ -2,8 +2,8 @@
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
 #### New feature: Stacking for Dectorio painted refined concrete  
-Startup options to change the stacking order, higher numbers stack on lower numbers  
-Tiles assigned with the same number, merge (normal behavior) rather than stack  
+Startup options to change the stacking order, higher numbers stack on lower numbers.  
+Tiles assigned with the same number, merge (normal behavior) rather than stack.  
 
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
 Note: This link will redirect you to the demo video hosted on Google Drive.
@@ -24,6 +24,10 @@ There are also runtime settings to exclude small/medium electric poles, inserter
 
 Attempts to build, without the required number of foundation tiles in the player inventory, will be halted.  
 Make sure to have enough of the selected foundation tiles in your inventory, or disable foundation tile placement.  
+
+Mining times for all minable tiles are standardized to that of refined concrete.  
+
+Dectorio users have startup options to enable and configure the stacking of painted refined concrete.
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 

@@ -1,33 +1,35 @@
-if mods["Dectorio"] and not mods["alien-biomes"]
-   and settings.startup["Foundations-stack-concrete"].value
-   and settings.startup["dectorio-painted-concrete"].value
-then
-    local colors = {
-        "red",
-        "green",
-        "blue",
-        "orange",
-        "yellow",
-        "pink",
-        "purple",
-        "black",
-        "brown",
-        "cyan",
-        "acid"
-    }
+require("constants")
 
-    -- set stacking order
-    for _, color in ipairs(colors) do
-        data.raw.tile[color.."-refined-concrete"].layer = settings.startup["Foundations-"..color.."-tile-layer"].value
+-- standardize the tile mining times, to be same as refined-concrete
+for _, tile in pairs(data.raw["tile"]) do
+    if tile.minable then
+        tile.minable.mining_time = data.raw.tile["refined-concrete"].minable.mining_time
+        if tile.minable.hardness then
+            tile.minable.hardness = nil
+        end
+    end
+end
+
+if mods["Dectorio"] and not mods["alien-biomes"]
+   and settings.startup["dectorio-painted-concrete"].value
+   and settings.startup["Foundations-stack-concrete"].value
+then
+    -- set the stacking order by setting the layer
+    local refined_layer = settings.startup["Foundations-refined-concrete-layer"].value * 3 + 200
+    data.raw.tile["refined-concrete"].layer = refined_layer
+
+    for _, color in ipairs(PAINTED_COLORS) do
+        local layer = settings.startup["Foundations-"..color.."-refined-concrete-layer"].value * 3 + 200
+        data.raw.tile[color.."-refined-concrete"].layer = layer
         data.raw.tile[color.."-refined-concrete"].transition_merges_with_tile = nil
     end
 
-    data.raw.tile["refined-concrete"].layer = settings.startup["Foundations-refined-tile-layer"].value
-
-    -- update the layer for all tiles that merge with refined-concrete
+    -- update the layer for tiles that merge with refined-concrete
     for _, tile in pairs(data.raw["tile"]) do
-        if tile.transition_merges_with_tile and tile.transition_merges_with_tile == "refined-concrete" then
-            tile.layer = settings.startup["Foundations-refined-tile-layer"].value
+        if tile.minable then
+            if tile.transition_merges_with_tile and tile.transition_merges_with_tile == "refined-concrete" then
+                tile.layer = refined_layer
+            end
         end
     end
 end

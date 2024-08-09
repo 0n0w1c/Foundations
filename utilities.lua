@@ -55,13 +55,13 @@ function recipe_enabled(force, recipe_name)
 end
 
 -- add to global.tile_names and global.tile_to_item, if not already present and recipe enabled
-function add_to_global_tables(tile, item)
+function add_to_global_tables(tile_name, item_name)
     local force = game.forces["player"]
 
-    if force and item then
-        if not tile_in_global_tile_names(tile) and recipe_enabled(force, item) then
-            table.insert(global.tile_names, tile)
-            global.tile_to_item[tile] = item
+    if force and tile_name and item_name then
+        if not tile_in_global_tile_names(tile_name) and recipe_enabled(force, item_name) then
+            table.insert(global.tile_names, tile_name)
+            global.tile_to_item[tile_name] = item_name
         end
     end
 end

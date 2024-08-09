@@ -47,15 +47,11 @@ end
 local function update_button()
     local player = game.players[global.player_index]
     local button_flow = mod_gui.get_button_flow(player)
-    local sprite_path
-    local tool_tip
+    local sprite_path = "tile/"..global.tile_names[global.tile_names_index]
+    local tool_tip = {"sprite-button.Foundations-tooltip-"..global.tile_names[global.tile_names_index]}
 
     if global.tile_names_index == 1 then
         sprite_path = "Foundations-disabled"
-        tool_tip = {"sprite-button.Foundations-tooltip-" .. DISABLED}
-    else
-        sprite_path = "tile/" .. global.tile_names[global.tile_names_index]
-        tool_tip = {"sprite-button.Foundations-tooltip-" .. global.tile_names[global.tile_names_index]}
     end
     if not button_flow[THIS_MOD] then
         button_flow.add {
@@ -97,16 +93,6 @@ local function button_clicked(event)
         global.foundation = global.tile_names[global.tile_names_index]
         update_button()
     end
-end
-
-local function configuration_changed()
-    load_global_data()
-    update_button()
-end
-
-local function player_joined(event)
-    global.player_index = event.player_index
-    configuration_changed()
 end
 
 local function entity_mined(event)
@@ -164,6 +150,24 @@ local function player_selected_area(event)
     end
 end
 
+local function configuration_changed()
+    load_global_data()
+    update_button()
+end
+
+local function register_event_handlers()
+    script.on_event(defines.events.on_gui_click, button_clicked)
+    script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
+    script.on_event(defines.events.on_research_finished, configuration_changed)
+    script.on_event(defines.events.on_player_created, configuration_changed)
+    script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
+    script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
+    script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
+    script.on_event(defines.events.on_player_mined_entity, entity_mined)
+    script.on_event(defines.events.on_robot_mined_entity, entity_mined)
+    script.on_event(defines.events.on_player_selected_area, player_selected_area)
+end
+
 local function on_init()
     global = global or {}
     global.tile_to_item = global.tile_to_item or {[DISABLED] = DISABLED}
@@ -174,33 +178,13 @@ local function on_init()
     global.excluded_type_list = global.excluded_type_list or {}
     global.player_index = global.player_index or 1
 
-    script.on_event(defines.events.on_gui_click, button_clicked)
-    script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
-    script.on_event(defines.events.on_research_finished, configuration_changed)
-    script.on_event(defines.events.on_player_created, configuration_changed)
-    script.on_event(defines.events.on_player_joined_game, player_joined)
-    script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
-    script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
-    script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-    script.on_event(defines.events.on_player_mined_entity, entity_mined)
-    script.on_event(defines.events.on_robot_mined_entity, entity_mined)
-    script.on_event(defines.events.on_player_selected_area, player_selected_area)
+    register_event_handlers()
 end
 
 local function on_load()
-    script.on_event(defines.events.on_gui_click, button_clicked)
-    script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
-    script.on_event(defines.events.on_research_finished, configuration_changed)
-    script.on_event(defines.events.on_player_created, configuration_changed)
-    script.on_event(defines.events.on_player_joined_game, player_joined)
-    script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
-    script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
-    script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
-    script.on_event(defines.events.on_player_mined_entity, entity_mined)
-    script.on_event(defines.events.on_robot_mined_entity, entity_mined)
-    script.on_event(defines.events.on_player_selected_area, player_selected_area)
+    register_event_handlers()
 end
 
+script.on_configuration_changed(configuration_changed)
 script.on_init(on_init)
 script.on_load(on_load)
-script.on_configuration_changed(configuration_changed)
