@@ -20,7 +20,7 @@ Dectorio users should visit the runtime settings (map tab), most of the Dectorio
 Settings for the various supported mods are only visible when the supported mod is active.  
 These settings do not alter the tiles the player has available, only if they are to be included in the button "palette".  
 
-A runtime setting to select if the foundation tiles are to be mined, when an entity is mined.  
+A runtime setting to select whether the foundation tiles are to be mined or not, when an entity is mined.  
 There are also runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
 
 Attempts to build, without the required number of foundation tiles in the player inventory, will be halted.  
