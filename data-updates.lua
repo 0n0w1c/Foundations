@@ -18,6 +18,11 @@ then
     local refined_layer = settings.startup["Foundations-refined-concrete-layer"].value * 3 + 200
     data.raw.tile["refined-concrete"].layer = refined_layer
 
+    -- set wood floor to be top layer
+    if settings.startup["dectorio-wood"].value and data.raw.tile["dect-wood-floor"] then
+       data.raw.tile["dect-wood-floor"].layer = WOOD_LAYER
+    end
+
     for _, color in ipairs(PAINTED_COLORS) do
         local layer = settings.startup["Foundations-"..color.."-refined-concrete-layer"].value * 3 + 200
         data.raw.tile[color.."-refined-concrete"].layer = layer
