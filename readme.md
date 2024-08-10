@@ -42,5 +42,3 @@ Not compatible with multi-player mode, single-player mode only.
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
-[Lunar Landings](https://mods.factorio.com/mod/LunarLandings)  
-[Space Exploration](https://mods.factorio.com/mod/space-exploration)  

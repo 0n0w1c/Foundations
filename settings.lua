@@ -442,34 +442,3 @@ if mods["Krastorio2"] then
         }
     })
 end
-
-if mods["LunarLandings"] then
-    data:extend({
-        {
-            type = "bool-setting",
-            name = "Foundations-ll-lunar-foundation",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        }
-    })
-end
-
-if mods["space-exploration"] then
-    data:extend({
-        {
-            type = "bool-setting",
-            name = "Foundations-se-space-platform-scaffold",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        },
-        {
-            type = "bool-setting",
-            name = "Foundations-se-spaceship-floor",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        }
-    })
-end

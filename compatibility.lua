@@ -51,19 +51,4 @@ function compatibility.krastorio2()
     end
 end
 
-function compatibility.lunarlandings()
-    if settings.global["Foundations-ll-lunar-foundation"].value then
-        add_to_global_tables("ll-lunar-foundation", "ll-lunar-foundation")
-    end
-end
-
-function compatibility.space_exploration()
-    if settings.global["Foundations-se-space-platform-scaffold"].value then
-        add_to_global_tables("se-space-platform-scaffold", "se-space-platform-scaffold")
-    end
-    if settings.global["Foundations-se-spaceship-floor"].value then
-        add_to_global_tables("se-spaceship-floor", "se-spaceship-floor")
-    end
-end
-
 return compatibility
