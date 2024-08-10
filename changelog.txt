@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.2.4
+Date: 10. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added runtime option to clean sweep (remove ground decorations) when foundations are placed
+---------------------------------------------------------------------------------------------------
 Version: 2.2.3
 Date: 09. 08. 2024
   Bugfixes:

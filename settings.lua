@@ -120,6 +120,13 @@ end
 data:extend({
     {
         type = "bool-setting",
+        name = "Foundations-clean-sweep",
+        setting_type = "runtime-global",
+        default_value = false,
+        order = get_next_order()
+    },
+        {
+        type = "bool-setting",
         name = "Foundations-mine-foundation",
         setting_type = "runtime-global",
         default_value = true,

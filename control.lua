@@ -37,7 +37,8 @@ local function place_foundation_under_entity(event)
 
         -- place tiles and remove items from player inventory
         if #tiles_to_place > 0 then
-            surface.set_tiles(tiles_to_place, true, false, false, true)
+            local clean_sweep = settings.global["Foundations-clean-sweep"].value
+            surface.set_tiles(tiles_to_place, true, false, clean_sweep, true)
             local item_name = global.tile_to_item[global.foundation]
             player.remove_item{name = item_name, count = #tiles_to_place}
         end
@@ -136,7 +137,8 @@ local function player_selected_area(event)
             end
 
             if #tiles_to_place > 0 and player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
-                surface.set_tiles(tiles_to_place, true, false, false, true)
+                local clean_sweep = settings.global["Foundations-clean-sweep"].value
+                surface.set_tiles(tiles_to_place, true, false, clean_sweep, true)
                 local item_name = global.tile_to_item[global.foundation]
                 player.remove_item{name = item_name, count = #tiles_to_place}
             end
