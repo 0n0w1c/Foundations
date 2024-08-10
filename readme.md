@@ -26,7 +26,7 @@ There are also runtime settings to exclude small/medium electric poles, inserter
 Attempts to build, without the required number of foundation tiles in the player inventory, will be halted.  
 Make sure to have enough of the selected foundation tiles in your inventory, or disable foundation tile placement.  
 
-Runtime option to clean sweep (remove ground decorations), when the foundation tiles are placed.  
+Runtime setting to clean sweep (remove ground decorations), when the foundation tiles are placed.  
 
 Mining times for all minable tiles are standardized to that of refined concrete.  
 

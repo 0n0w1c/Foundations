@@ -6,6 +6,9 @@ local mod_gui = require("mod-gui")
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
     local entity = event.created_entity
+    if not entity then
+        return
+    end
     local surface = entity.surface
     local player = game.players[global.player_index]
 
