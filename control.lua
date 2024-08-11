@@ -26,13 +26,13 @@ local function place_foundation_under_entity(event)
     local tiles_to_place, tiles_to_return = load_tiles(entity, area)
 
     if tiles_to_place then
-        -- if not enough global.foundation, mine the entity and exit
+        -- if not enough global.foundation, put entity back on cursor and destroy the placed entity, then exit
         if not player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
-            player.mine_entity(entity)
+            return_entity_to_cursor(player, entity)
             return
         end
 
-        -- mine tiles that are not global.foundation
+        -- mine tiles that are not global.foundation (already has the position)??
         for _, tile in pairs(tiles_to_return) do
             local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
             player.mine_tile(tile_to_mine)

@@ -73,6 +73,18 @@ function player_has_sufficient_tiles(player, tile_name, count)
     return item_name and player.get_item_count(item_name) >= count
 end
 
+-- when player does not have sufficent tiles in their inventory
+function return_entity_to_cursor(player, entity)
+    if not player.cursor_stack.valid_for_read then
+        player.cursor_stack.set_stack({name = entity.name, count = 1})
+    else
+        player.cursor_stack.count = player.cursor_stack.count + 1
+    end
+
+    -- build halted
+    entity.destroy()
+end
+
 -- get the collision_box of the entity
 function get_entity_collision_box(entity)
     local prototype

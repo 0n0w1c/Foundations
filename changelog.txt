@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.3.1
+Date: 11. 08. 2024
+  Bugfixes:
+    - Existing foundation tiles were mined when placing an entity, and the player had insufficient
+      foundation tiles to build
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.3.0
 Date: 10. 08. 2024
   Bugfixes:
