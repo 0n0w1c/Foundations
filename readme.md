@@ -2,7 +2,7 @@
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
 #### New feature: Stacking for Dectorio painted refined concrete  
-Startup options to change the stacking order, higher numbers stack on lower numbers.  
+Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge (normal behavior) rather than stack.  
 
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
@@ -30,7 +30,7 @@ Runtime setting to clean sweep (remove ground decorations), when the foundation 
 
 Mining times for all minable tiles are standardized to that of refined concrete.  
 
-Users have a startup option to enable and configure the stacking of painted refined concrete.  
+Users have a startup setting to enable and configure the stacking of painted refined concrete.  
 If Alien Biomes is active, settings for stacking the painted refined conretes are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
 Otherwise, this mod now supplies the painted refined concretes.  
