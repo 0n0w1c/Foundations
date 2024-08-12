@@ -9,5 +9,4 @@ for index, force in pairs(game.forces) do
             recipes[color.name.."-refined-concrete"].enabled = technologies["concrete"].researched
         end
     end
-
 end
