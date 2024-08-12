@@ -1,5 +1,13 @@
 local compatibility = {}
 
+function compatibility.vanilla()
+    for _, color in pairs(COLORS) do
+        if settings.global["Foundations-"..color.name.."-refined-concrete"].value then
+            add_to_global_tables(color.name.."-refined-concrete", color.name.."-refined-concrete")
+        end
+    end
+end
+
 function compatibility.aai_industry()
     if settings.startup["aai-stone-path"].value and settings.global["Foundations-rough-stone-path"].value then
         add_to_global_tables("rough-stone-path", "stone")
@@ -34,9 +42,9 @@ function compatibility.dectorio()
                 add_to_global_tables("dect-paint-refined-"..variant.."-right", "dect-paint-refined-"..variant)
             end
         end
-        for _, color in pairs(PAINTED_COLORS) do
-            if settings.global["Foundations-"..color.."-refined-concrete"].value then
-                add_to_global_tables(color.."-refined-concrete", "dect-"..color.."-refined-concrete")
+        for _, color in pairs(COLORS) do
+            if settings.global["Foundations-"..color.name.."-refined-concrete"].value then
+                add_to_global_tables(color.name.."-refined-concrete", "dect-"..color.name.."-refined-concrete")
             end
         end
     end

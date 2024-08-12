@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.4.0
+Date: 12. 08. 2024
+  Bugfixes:
+    - Removed code that likely caused issues when loaded with Space Exploration and Lunar Landings
+  Changes:
+    - Added a startup setting to provide painted refined concrete, if Dectorio is not active.
+    - Added a migration for the painted refined concrete recipes
+---------------------------------------------------------------------------------------------------
 Version: 2.3.1
 Date: 11. 08. 2024
   Bugfixes:

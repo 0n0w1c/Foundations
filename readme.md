@@ -30,7 +30,10 @@ Runtime setting to clean sweep (remove ground decorations), when the foundation 
 
 Mining times for all minable tiles are standardized to that of refined concrete.  
 
-Dectorio users have startup options to enable and configure the stacking of painted refined concrete.  
+Users have a startup option to enable and configure the stacking of painted refined concrete.  
+If Alien Biomes is active, settings for stacking the painted refined conretes are not available.  
+If Dectorio is active, this mod will utilize the provided painted refined concrete.  
+Otherwise, this mod now supplies the painted refined concretes.  
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 

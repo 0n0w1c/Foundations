@@ -1,6 +1,6 @@
 {
   "name": "Foundations",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "title": "Foundations",
   "author": "0n0w1c",
   "factorio_version": "1.1",
@@ -9,6 +9,7 @@
     "(?) aai-industry >= 0.5.22",
     "(?) Dectorio >= 0.12.6",
     "(?) Krastorio2 >= 1.3.24",
+    "(?) IndustrialRevolution3",
     "! easier-vehicles"
   ],
   "description": "Lays tiles (Foundations) under most everything, button controlled"

@@ -8,7 +8,19 @@ local function get_next_order()
 end
 
 -- startup
-if mods["Dectorio"] and not mods["alien-biomes"] then
+if not mods["Dectorio"] then
+    data:extend({
+    {
+        type = "bool-setting",
+        name = "Foundations-supply-concrete",
+        setting_type = "startup",
+        default_value = true,
+        order = get_next_order()
+    }
+})
+end
+
+if not mods["alien-biomes"] then
     data:extend({
         {
             type = "bool-setting",
@@ -343,7 +355,11 @@ if mods["Dectorio"] then
             setting_type = "runtime-global",
             default_value = false,
             order = get_next_order(),
-        },
+        }
+    })
+end
+
+    data:extend({
         {
             type = "bool-setting",
             name = "Foundations-acid-refined-concrete",
@@ -422,7 +438,6 @@ if mods["Dectorio"] then
             order = get_next_order(),
         }
     })
-end
 
 if mods["Krastorio2"] then
     data:extend({

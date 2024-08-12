@@ -215,15 +215,11 @@ function load_global_data()
     end
     if game.active_mods["Dectorio"] then
         compatibility.dectorio()
+    else
+        compatibility.vanilla()
     end
     if game.active_mods["Krastorio2"] then
         compatibility.krastorio2()
-    end
-    if game.active_mods["LunarLandings"] then
-        compatibility.lunarlandings()
-    end
-    if game.active_mods["space-exploration"] then
-        compatibility.space_exploration()
     end
 
     set_global_tile_names_index ()

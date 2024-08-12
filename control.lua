@@ -6,18 +6,14 @@ local mod_gui = require("mod-gui")
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
     local entity = event.created_entity
-    if not entity then
-        return
-    end
     local surface = entity.surface
     local player = game.players[global.player_index]
 
-    -- if disabled, early exit
-    if global.foundation == DISABLED then
+    if (not entity) or (not surface) or (not player) then
         return
     end
-    -- if the entity excluded, early exit
-    if entity_excluded(entity) then
+
+    if global.foundation == DISABLED or entity_excluded(entity) then
         return
     end
 
@@ -50,6 +46,11 @@ end
 
 local function update_button()
     local player = game.players[global.player_index]
+
+    if not player then
+        return
+    end
+
     local button_flow = mod_gui.get_button_flow(player)
     local sprite_path = "tile/"..global.tile_names[global.tile_names_index]
     local tool_tip = {"sprite-button.Foundations-tooltip-"..global.tile_names[global.tile_names_index]}
@@ -103,6 +104,11 @@ local function entity_mined(event)
     local entity = event.entity
     local surface = entity.surface
     local player = game.players[global.player_index]
+
+    if (not entity) or (not surface) or (not player) then
+        return
+    end
+
     local area = get_area_under_entity(entity)
 
     if settings.global["Foundations-mine-foundation"].value then
@@ -119,7 +125,7 @@ local function entity_mined(event)
 end
 
 local function player_selected_area(event)
-    if event.item == "foundations-fill-tool" then
+    if event.item and event.item == "foundations-fill-tool" then
         local player = game.players[event.player_index]
 
         if global.foundation ~= DISABLED then
