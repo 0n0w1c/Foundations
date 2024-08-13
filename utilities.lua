@@ -218,6 +218,9 @@ function load_global_data()
     else
         compatibility.vanilla()
     end
+    if game.active_mods["IndustrialRevolution3"] then
+        compatibility.industrialrevolution3()
+    end
     if game.active_mods["Krastorio2"] then
         compatibility.krastorio2()
     end

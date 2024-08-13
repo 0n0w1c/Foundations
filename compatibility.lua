@@ -52,6 +52,16 @@ function compatibility.dectorio()
     end
 end
 
+function compatibility.industrialrevolution3()
+    if settings.global["Foundations-tarmac"].value then
+        add_to_global_tables("tarmac", "tarmac")
+    end
+    if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
+        global.excluded_name_list["small-bronze-pole"] = true
+        global.excluded_name_list["small-iron-pole"] = true
+    end
+end
+
 function compatibility.krastorio2()
     if settings.global["Foundations-kr-black-reinforced-plate"].value then
         add_to_global_tables("kr-black-reinforced-plate", "kr-black-reinforced-plate")
