@@ -1,3 +1,8 @@
+util = util or require('__core__/lualib/util')
+settings = settings or {}
+data = data or {}
+mods = mods or {}
+
 require("constants")
 
 data:extend({
@@ -33,7 +38,7 @@ data:extend({
 if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].value then
     -- add placement items for each color
     for _, color in pairs(COLORS) do
-        local template = table.deepcopy(data.raw.item['refined-concrete'])
+        local template = util.table.deepcopy(data.raw.item['refined-concrete'])
         -- make local name then add item name
         if template and template.name then
             template.localised_name = {"", {"color."..color.name}, " ", {"tile-name."..template.name}}
@@ -57,8 +62,7 @@ if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].valu
 
     -- Add recipes for each color
     for _, color in pairs(COLORS) do
-        local template = table.deepcopy(data.raw.recipe['refined-concrete'])
-        -- make local name then add item name
+        local template = util.table.deepcopy(data.raw.recipe['refined-concrete'])
         if template and template.name then
             template.localised_name = {"", {"color."..color.name}, " ", {"tile-name."..template.name}}
             template.name = color.name.."-"..template.name

@@ -1,3 +1,8 @@
+defines = defines or {}
+script = script or {}
+game = game or {}
+global = global or {}
+
 require("constants")
 require("utilities")
 
@@ -5,9 +10,9 @@ local mod_gui = require("mod-gui")
 
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
-    local entity = event.created_entity
-    local surface = entity.surface
-    local player = game.players[global.player_index]
+    local entity = event.created_entity or {}
+    local surface = entity.surface or {}
+    local player = game.players[global.player_index] or {}
 
     if (not entity) or (not surface) or (not player) then
         return
@@ -101,9 +106,9 @@ local function button_clicked(event)
 end
 
 local function entity_mined(event)
-    local entity = event.entity
-    local surface = entity.surface
-    local player = game.players[global.player_index]
+    local entity = event.entity or {}
+    local surface = entity.surface or {}
+    local player = game.players[global.player_index] or {}
 
     if (not entity) or (not surface) or (not player) then
         return
@@ -126,7 +131,10 @@ end
 
 local function player_selected_area(event)
     if event.item and event.item == "foundations-fill-tool" then
-        local player = game.players[event.player_index]
+        local player = game.players[event.player_index] or {}
+        if not player then
+            return
+        end
 
         if global.foundation ~= DISABLED then
             local surface = player.surface

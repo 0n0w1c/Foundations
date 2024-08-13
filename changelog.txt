@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.4.1
+Date: 12. 08. 2024
+  Bugfixes:
+    - Recipes for the painted refined concrete now unlock with research
+  Changes:
+    - Added support for Industrial Revolution 3
+---------------------------------------------------------------------------------------------------
 Version: 2.4.0
 Date: 12. 08. 2024
   Bugfixes:

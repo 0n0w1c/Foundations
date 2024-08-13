@@ -1,3 +1,5 @@
+require("constants")
+
 local compatibility = {}
 
 function compatibility.vanilla()
