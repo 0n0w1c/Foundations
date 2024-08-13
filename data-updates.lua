@@ -40,6 +40,10 @@ if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].valu
             end
         end
     end
+
+    if IR3 and settings.startup["Foundations-stack-tarmac"].value then
+        data.raw.tile["tarmac"].layer = TARMAC_LAYER
+    end
 end
 
 -- standardize the tile mining times, to be equal to refined-concrete

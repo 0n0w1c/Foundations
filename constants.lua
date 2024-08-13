@@ -1,7 +1,9 @@
 THIS_MOD = "Foundations"
 DISABLED = "disabled"
 STACKING_SLOTS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
-WOOD_SLOT = 12 -- highest stacking slot
+TARMAC_SLOT = 12
+TARMAC_LAYER = TARMAC_SLOT * 3 + 200
+WOOD_SLOT = 13 -- highest stacking slot
 WOOD_LAYER = WOOD_SLOT * 3 + 200
 
 GRAVELS = {

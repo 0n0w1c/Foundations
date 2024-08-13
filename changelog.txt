@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.5.1
+Date: 13. 08. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added a startup setting to enable stacking of tarmac on top of the refined concretes
+---------------------------------------------------------------------------------------------------
 Version: 2.5.0
 Date: 13. 08. 2024
   Bugfixes:

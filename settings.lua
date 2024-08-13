@@ -16,7 +16,15 @@ if not mods["Dectorio"] then
         setting_type = "startup",
         default_value = true,
         order = get_next_order()
-    }
+    },
+    {
+        type = "bool-setting",
+        name = "Foundations-stack-tarmac",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order(),
+        hidden = not mods["IndustrialRevolution3"]
+    },
 })
 end
 
