@@ -1,7 +1,7 @@
 #### A Quality of Life mod to help engineers quickly and easily build a more interesting factory.  
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
-#### New feature: Now provides painted refined concrete for users that prefer not to use Dectorio.  
+#### New feature: Can now provides painted refined concrete for users that prefer not to use Dectorio.  
 Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge (normal behavior) rather than stack.  
 (If you use the mod Alien Biomes, then you already have this effect. This mod will not disturb the modifications  
@@ -35,7 +35,7 @@ Mining times for all minable tiles are standardized to that of refined concrete.
 Users have a startup setting to enable and configure the stacking of painted refined concrete.  
 If Alien Biomes is active, settings for stacking the painted refined conretes are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
-Otherwise, this mod now supplies the painted refined concretes.  
+Otherwise, if the startup setting is enabled, this mod will supply the painted refined concretes.  
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
