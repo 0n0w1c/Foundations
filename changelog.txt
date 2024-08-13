@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.5.2
+Date: 13. 08. 2024
+  Bugfixes:
+    - Krastorio 2 black and light reinforced plates stack on top of refined concretes
+    - Added the tooltip for tarmac
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.5.1
 Date: 13. 08. 2024
   Bugfixes:

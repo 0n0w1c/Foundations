@@ -82,3 +82,8 @@ then
         end
     end
 end
+
+if mods["Krastorio2"] and not mods["alien-biomes"] then
+    data.raw.tile["kr-white-reinforced-plate"].layer = WHITE_REINFORCED_LAYER
+    data.raw.tile["kr-black-reinforced-plate"].layer = BLACK_REINFORCED_LAYER
+end
