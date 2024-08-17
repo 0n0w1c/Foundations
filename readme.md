@@ -30,7 +30,7 @@ Make sure to have enough of the selected foundation tiles in your inventory, or 
 
 Runtime setting to clean sweep (remove ground decorations), when the foundation tiles are placed.  
 
-Mining times for all minable tiles are standardized to that of refined concrete.  
+Startup setting to select the tile mining time (default = 0.1).  
 
 Users have a startup setting to enable and configure the stacking of painted refined concrete.  
 If Alien Biomes is active, settings for stacking the painted refined concretes are not available.  
