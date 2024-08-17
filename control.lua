@@ -40,7 +40,7 @@ local function place_foundation_under_entity(event)
             return
         end
 
-        -- mine tiles that are not global.foundation (already has the position)??
+        -- mine tiles that are not global.foundation
         for _, tile in pairs(tiles_to_return) do
             local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
             player.mine_tile(tile_to_mine)
@@ -198,14 +198,15 @@ local function entity_moved(event)
         return
     end
 
-    local area = get_area_under_entity_at_position(entity, event.start_pos)
+    local previous_area = get_area_under_entity_at_position(entity, event.start_pos)
+    local current_area = get_area_under_entity(entity)
 
     if settings.global["Foundations-mine-foundation"].value then
-        -- mine the global.foundation tiles
-        for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
-            for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
+        -- mine the global.foundation tiles no longer under the entity
+        for x = math.floor(previous_area.left_top.x), math.ceil(previous_area.right_bottom.x) - 1 do
+            for y = math.floor(previous_area.left_top.y), math.ceil(previous_area.right_bottom.y) - 1 do
                 local tile = surface.get_tile(x, y)
-                if tile.name == global.foundation then
+                if tile.name == global.foundation and not within_area(tile.position, current_area) then
                     player.mine_tile(tile)
                 end
             end
@@ -218,27 +219,13 @@ local function on_entity_moved(event)
         return
     end
 
-    local moved_entity = event.moved_entity
-    if not moved_entity or not event then
+    if not event then
         return
     end
 
-    local start_pos = event.start_pos
-    local surface = moved_entity.surface
-    local player = game.players[event.player_index]
-
-    -- calculate the area under the entity at the previous and current positions
-    local previous_area = get_area_under_entity_at_position(moved_entity, start_pos) or {}
-    local current_area = get_area_under_entity(moved_entity) or {}
-
-    -- mine tiles that were under the entity
-    for x = previous_area.left_top.x, previous_area.right_bottom.x - 1 do
-        for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
-            local tile = surface.get_tile(x, y)
-            if tile.name == global.foundation then
-                player.mine_tile(tile)
-            end
-        end
+    local moved_entity = event.moved_entity
+    if not moved_entity then
+        return
     end
 
     entity_moved(event)

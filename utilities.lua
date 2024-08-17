@@ -98,6 +98,12 @@ function get_entity_collision_box(entity)
     return prototype.collision_box
 end
 
+-- check if a position is within an area
+function within_area(position, area)
+    return position.x >= area.left_top.x and position.x <= area.right_bottom.x and
+           position.y >= area.left_top.y and position.y <= area.right_bottom.y
+end
+
 function get_area_under_entity(entity)
     local position = entity.position
     local collision_box = get_entity_collision_box(entity)
