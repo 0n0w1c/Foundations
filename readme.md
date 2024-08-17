@@ -1,10 +1,10 @@
 #### A Quality of Life mod to help engineers quickly and easily build a more interesting factory.  
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
-#### New feature: Can now provides painted refined concrete for users that prefer not to use Dectorio.  
+#### New feature: Now supports the use of Picker Dollies.  
 Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge (normal behavior) rather than stack.  
-(If you use the mod Alien Biomes, then you already have this effect. This mod will not disturb the modifications  
+(If you use Alien Biomes, you already have something of this effect. This mod will not disturb the modifications
 made by Alien Biomes.)  
 
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
@@ -15,7 +15,7 @@ Note: This link will redirect you to the demo video hosted on Google Drive.
 ![pic 4](/pic4.png)  
 
 With the Foundations button, you can disable the placement of foundation tiles or select the tile of your choice.  
-To activate the fill tool, *[ctrl]+[left-mouse-click]* on the Foundations button, with a foundation tile selected.  
+To activate the fill tool, *[ctrl]+[left-click]* on the Foundations button, when a foundation tile selected.  
 
 A runtime setting for each tile, allows you to limit the selections to create a "palatte" of tiles, for quick selection.  
 Dectorio users should visit the runtime settings (map tab), most of the Dectorio tiles are not selected by default.  
@@ -33,7 +33,7 @@ Runtime setting to clean sweep (remove ground decorations), when the foundation 
 Mining times for all minable tiles are standardized to that of refined concrete.  
 
 Users have a startup setting to enable and configure the stacking of painted refined concrete.  
-If Alien Biomes is active, settings for stacking the painted refined conretes are not available.  
+If Alien Biomes is active, settings for stacking the painted refined concretes are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
 Otherwise, if the startup setting is enabled, this mod will supply the painted refined concretes.  
 

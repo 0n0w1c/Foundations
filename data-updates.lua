@@ -46,14 +46,6 @@ if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].valu
     end
 end
 
--- standardize the tile mining times, to be equal to refined-concrete
-for _, tile in pairs(data.raw["tile"]) do
-    if tile.minable then
-        tile.minable.mining_time = data.raw.tile["refined-concrete"].minable.mining_time
-        tile.minable.hardness = nil
-    end
-end
-
 if mods["Dectorio"] and not mods["alien-biomes"]
    and settings.startup["dectorio-painted-concrete"].value
    and settings.startup["Foundations-stack-concrete"].value

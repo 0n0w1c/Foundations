@@ -16,6 +16,18 @@ if not mods["Dectorio"] then
         setting_type = "startup",
         default_value = true,
         order = get_next_order()
+    }
+})
+end
+
+data:extend({
+    {
+        type = "double-setting",
+        name = "Foundations-mining-time",
+        setting_type = "startup",
+        default_value = 0.1,
+        allowed_values = MINING_TIMES,
+        order = get_next_order(),
     },
     {
         type = "bool-setting",
@@ -24,9 +36,8 @@ if not mods["Dectorio"] then
         default_value = false,
         order = get_next_order(),
         hidden = not mods["IndustrialRevolution3"]
-    },
+    }
 })
-end
 
 if not mods["alien-biomes"] then
     data:extend({
