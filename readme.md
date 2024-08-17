@@ -1,7 +1,7 @@
 #### A Quality of Life mod to help engineers quickly and easily build a more interesting factory.  
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
-#### New feature: Now supports the use of Picker Dollies.  
+#### New feature: Now supports the use of Picker Dollies and setting of the mining time.  
 Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge (normal behavior) rather than stack.  
 (If you use Alien Biomes, you already have something of this effect. This mod will not disturb the modifications
