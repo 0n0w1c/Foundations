@@ -10,7 +10,14 @@ local mod_gui = require("mod-gui")
 
 -- function to place tiles under the entity
 local function place_foundation_under_entity(event)
-    local entity = event.created_entity or {}
+    local entity = event.created_entity
+    if not entity then
+        entity = event.moved_entity
+    end
+    if not entity then
+        return
+    end
+
     local surface = entity.surface or {}
     local player = game.players[global.player_index] or {}
 
@@ -174,6 +181,70 @@ local function configuration_changed()
     update_button()
 end
 
+local function entity_moved(event)
+    if not event then
+        return
+    end
+
+    local entity = event.moved_entity or {}
+    if not entity then
+        return
+    end
+
+    local surface = entity.surface or {}
+    local player = game.players[global.player_index] or {}
+
+    if (not surface) or (not player) then
+        return
+    end
+
+    local area = get_area_under_entity_at_position(entity, event.start_pos)
+
+    if settings.global["Foundations-mine-foundation"].value then
+        -- mine the global.foundation tiles
+        for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
+            for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
+                local tile = surface.get_tile(x, y)
+                if tile.name == global.foundation then
+                    player.mine_tile(tile)
+                end
+            end
+        end
+    end
+end
+
+local function on_entity_moved(event)
+    if global.foundation == DISABLED then
+        return
+    end
+
+    local moved_entity = event.moved_entity
+    if not moved_entity or not event then
+        return
+    end
+
+    local start_pos = event.start_pos
+    local surface = moved_entity.surface
+    local player = game.players[event.player_index]
+
+    -- calculate the area under the entity at the previous and current positions
+    local previous_area = get_area_under_entity_at_position(moved_entity, start_pos) or {}
+    local current_area = get_area_under_entity(moved_entity) or {}
+
+    -- mine tiles that were under the entity
+    for x = previous_area.left_top.x, previous_area.right_bottom.x - 1 do
+        for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
+            local tile = surface.get_tile(x, y)
+            if tile.name == global.foundation then
+                player.mine_tile(tile)
+            end
+        end
+    end
+
+    entity_moved(event)
+    place_foundation_under_entity(event)
+end
+
 local function register_event_handlers()
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
@@ -185,6 +256,10 @@ local function register_event_handlers()
     script.on_event(defines.events.on_player_mined_entity, entity_mined)
     script.on_event(defines.events.on_robot_mined_entity, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)
+
+    if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
+        script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), on_entity_moved)
+    end
 end
 
 local function on_init()

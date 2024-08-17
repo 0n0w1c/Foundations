@@ -48,3 +48,4 @@ Not compatible with multi-player mode, single-player mode only.
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
 [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
+[Picker Dollies](https://mods.factorio.com/mod/PickerDollies)  

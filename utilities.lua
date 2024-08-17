@@ -115,6 +115,26 @@ function get_area_under_entity(entity)
     return area
 end
 
+function get_area_under_entity_at_position(entity, position)
+    local collision_box = get_entity_collision_box(entity)
+    local area = {}
+
+    if not position then
+        return
+    end
+
+    -- adjust collision_box based on entity direction
+    if entity.direction == defines.direction.east or entity.direction == defines.direction.west then
+        area.left_top = {x = position.x + collision_box.left_top.y, y = position.y + collision_box.left_top.x}
+        area.right_bottom = {x = position.x + collision_box.right_bottom.y, y = position.y + collision_box.right_bottom.x}
+    else
+        area.left_top = {x = position.x + collision_box.left_top.x, y = position.y + collision_box.left_top.y}
+        area.right_bottom = {x = position.x + collision_box.right_bottom.x, y = position.y + collision_box.right_bottom.y}
+    end
+
+    return area
+end
+
 function get_mineable_tiles()
     local tiles_to_exclude = TILES_TO_EXCLUDE
     local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
