@@ -156,6 +156,7 @@ data:extend({
         default_value = false,
         order = get_next_order()
     },
+--[[
         {
         type = "bool-setting",
         name = "Foundations-mine-foundation",
@@ -163,6 +164,7 @@ data:extend({
         default_value = true,
         order = get_next_order(),
     },
+]]
     {
         type = "bool-setting",
         name = "Foundations-exclude-small-medium-electric-poles",
@@ -226,6 +228,37 @@ if mods["aai-industry"] then
         {
             type = "bool-setting",
             name = "Foundations-rough-stone-path",
+            setting_type = "runtime-global",
+            default_value = true,
+            order = get_next_order(),
+        }
+    })
+end
+
+if mods["IndustrialRevolution3"] then
+    data:extend({
+        {
+            type = "bool-setting",
+            name = "Foundations-tarmac",
+            setting_type = "runtime-global",
+            default_value = true,
+            order = get_next_order(),
+        }
+    })
+end
+
+if mods["Krastorio2"] then
+    data:extend({
+        {
+            type = "bool-setting",
+            name = "Foundations-kr-black-reinforced-plate",
+            setting_type = "runtime-global",
+            default_value = true,
+            order = get_next_order(),
+        },
+        {
+            type = "bool-setting",
+            name = "Foundations-kr-white-reinforced-plate",
             setting_type = "runtime-global",
             default_value = true,
             order = get_next_order(),
@@ -457,34 +490,3 @@ data:extend({
         order = get_next_order(),
     }
 })
-
-if mods["IndustrialRevolution3"] then
-    data:extend({
-        {
-            type = "bool-setting",
-            name = "Foundations-tarmac",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        }
-    })
-end
-
-if mods["Krastorio2"] then
-    data:extend({
-        {
-            type = "bool-setting",
-            name = "Foundations-kr-black-reinforced-plate",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        },
-        {
-            type = "bool-setting",
-            name = "Foundations-kr-white-reinforced-plate",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        }
-    })
-end

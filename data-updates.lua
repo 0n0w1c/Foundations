@@ -2,8 +2,6 @@ require("constants")
 require("technology")
 
 if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].value then
-    local IR3 = mods["IndustrialRevolution3"]
-
     for _, color in pairs(COLORS) do
         data.raw.tile[color.name.."-refined-concrete"].layer = data.raw.tile["refined-concrete"].layer + 1
         data.raw.tile[color.name.."-refined-concrete"].transition_merges_with_tile = nil
@@ -13,9 +11,6 @@ if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].valu
 --            order = "a[artificial]-c[tier-3]-b[refined-concrete]",
             result = color.name .. "-refined-concrete"
         }
-        if IR3 then
-            data.raw.tile[color.name .. "-refined-concrete"].subgroup = "ir-tiles"
-        end
     end
 
     if not mods["alien-biomes"] then
@@ -40,15 +35,11 @@ if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].valu
             end
         end
     end
-
-    if IR3 and settings.startup["Foundations-stack-tarmac"].value then
-        data.raw.tile["tarmac"].layer = TARMAC_LAYER
-    end
 end
 
-if mods["Dectorio"] and not mods["alien-biomes"]
-   and settings.startup["dectorio-painted-concrete"].value
-   and settings.startup["Foundations-stack-concrete"].value
+if mods["Dectorio"] and (not mods["alien-biomes"])
+    and settings.startup["dectorio-painted-concrete"].value
+    and settings.startup["Foundations-stack-concrete"].value
 then
     -- set the stacking order by setting the layer
     local refined_layer = settings.startup["Foundations-refined-concrete-layer"].value * 3 + 200
@@ -75,7 +66,16 @@ then
     end
 end
 
-if mods["Krastorio2"] and not mods["alien-biomes"] then
+if mods["IndustrialRevolution3"] and (not mods["alien-biomes"])
+    and settings.startup["Foundations-stack-tarmac"].value
+    and settings.startup["Foundations-stack-concrete"].value
+then
+    data.raw.tile["tarmac"].layer = TARMAC_LAYER
+end
+
+if mods["Krastorio2"] and (not mods["alien-biomes"])
+    and settings.startup["Foundations-stack-concrete"].value
+then
     data.raw.tile["kr-white-reinforced-plate"].layer = WHITE_REINFORCED_LAYER
     data.raw.tile["kr-black-reinforced-plate"].layer = BLACK_REINFORCED_LAYER
 end

@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.7.1
+Date: 21. 08. 2024
+  Bugfixes:
+    - Corrected some logic with supported mods and startup settings
+  Changes:
+    - Removed the startup setting 'Mine Foundation Tiles', leads to an inconsistent user experience
+      Use the Foundations button to Enable/Disable the placement and mining of foundation tiles
+    - Rearranged the order of runtime settings, moving IR3 and K2 settings before those of Dectorio
+---------------------------------------------------------------------------------------------------
 Version: 2.7.0
 Date: 17. 08. 2024
   Bugfixes:

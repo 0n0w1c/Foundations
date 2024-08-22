@@ -1,13 +1,12 @@
 require("constants")
 
 for _, force in pairs(game.forces) do
-    local technologies = force.technologies
     local recipes = force.recipes
 
-    if technologies and recipes then
+    if recipes then
         for _, color in pairs(COLORS) do
-            if recipes[color.name.."-refined-concrete"] and technologies["concrete"] then
-                recipes[color.name.."-refined-concrete"].enabled = technologies["concrete"].researched
+            if recipes[color.name.."-refined-concrete"] and recipes["refined-concrete"] then
+                recipes[color.name.."-refined-concrete"].enabled = recipes["refined-concrete"].enabled
             end
         end
     end

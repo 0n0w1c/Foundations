@@ -2,6 +2,7 @@ defines = defines or {}
 script = script or {}
 game = game or {}
 global = global or {}
+remote = remote or {}
 
 require("constants")
 require("utilities")
@@ -90,7 +91,7 @@ local function button_clicked(event)
         if event.button == defines.mouse_button_type.left then
             if event.control then
                 if global.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({name = "foundations-fill-tool"})
+                    player.cursor_stack.set_stack({name = "Foundations-fill-tool"})
                 end
             else
                 if global.tile_names_index < #global.tile_names then
@@ -117,13 +118,17 @@ local function entity_mined(event)
     local surface = entity.surface or {}
     local player = game.players[global.player_index] or {}
 
+    if global.foundation == DISABLED or entity_excluded(entity) then
+        return
+    end
+
     if (not entity) or (not surface) or (not player) then
         return
     end
 
     local area = get_area_under_entity(entity)
 
-    if settings.global["Foundations-mine-foundation"].value then
+--    if settings.global["Foundations-mine-foundation"].value then
         -- mine the global.foundation tiles
         for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
             for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
@@ -133,11 +138,11 @@ local function entity_mined(event)
                 end
             end
         end
-    end
+--    end
 end
 
 local function player_selected_area(event)
-    if event.item and event.item == "foundations-fill-tool" then
+    if event.item and event.item == "Foundations-fill-tool" then
         local player = game.players[event.player_index] or {}
         if not player then
             return
@@ -169,9 +174,9 @@ local function player_selected_area(event)
         end
         player.clear_cursor()
 
-        -- remove all copies of the foundations-fill-tool from player inventory
-        while player.get_item_count("foundations-fill-tool") > 0 do
-            player.remove_item({name = "foundations-fill-tool", count = 1})
+        -- remove all copies of the Foundations-fill-tool from player inventory
+        while player.get_item_count("Foundations-fill-tool") > 0 do
+            player.remove_item({name = "Foundations-fill-tool", count = 1})
         end
     end
 end
@@ -201,7 +206,8 @@ local function entity_moved(event)
     local previous_area = get_area_under_entity_at_position(entity, event.start_pos)
     local current_area = get_area_under_entity(entity)
 
-    if settings.global["Foundations-mine-foundation"].value then
+--    if previous_area and current_area and settings.global["Foundations-mine-foundation"].value then
+    if previous_area and current_area then
         -- mine the global.foundation tiles no longer under the entity
         for x = math.floor(previous_area.left_top.x), math.ceil(previous_area.right_bottom.x) - 1 do
             for y = math.floor(previous_area.left_top.y), math.ceil(previous_area.right_bottom.y) - 1 do

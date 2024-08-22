@@ -19,7 +19,7 @@ data:extend({
 data:extend({
     {
       type = "selection-tool",
-      name = "foundations-fill-tool",
+      name = "Foundations-fill-tool",
       icon = "__base__/graphics/icons/blueprint.png",
       icon_size = 64,
       flags = {},
