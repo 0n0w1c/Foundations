@@ -156,15 +156,6 @@ data:extend({
         default_value = false,
         order = get_next_order()
     },
---[[
-        {
-        type = "bool-setting",
-        name = "Foundations-mine-foundation",
-        setting_type = "runtime-global",
-        default_value = true,
-        order = get_next_order(),
-    },
-]]
     {
         type = "bool-setting",
         name = "Foundations-exclude-small-medium-electric-poles",
@@ -223,7 +214,7 @@ data:extend({
     }
 })
 
-if mods["aai-industry"] then
+if mods["aai-industry"] or mods["RoughStonePath"] then
     data:extend({
         {
             type = "bool-setting",

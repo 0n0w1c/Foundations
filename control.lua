@@ -128,17 +128,15 @@ local function entity_mined(event)
 
     local area = get_area_under_entity(entity)
 
---    if settings.global["Foundations-mine-foundation"].value then
-        -- mine the global.foundation tiles
-        for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
-            for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
-                local tile = surface.get_tile(x, y)
-                if tile.name == global.foundation then
-                    player.mine_tile(tile)
-                end
+    -- mine the global.foundation tiles
+    for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
+        for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
+            local tile = surface.get_tile(x, y)
+            if tile.name == global.foundation then
+                player.mine_tile(tile)
             end
         end
---    end
+    end
 end
 
 local function player_selected_area(event)
@@ -187,34 +185,60 @@ local function configuration_changed()
 end
 
 local function entity_moved(event)
-    if not event then
-        return
-    end
+    if not event then return end
 
-    local entity = event.moved_entity or {}
-    if not entity then
-        return
-    end
+    local entity = event.moved_entity
+    if not entity then return end
 
-    local surface = entity.surface or {}
-    local player = game.players[global.player_index] or {}
+    local surface = entity.surface
+    local player = game.players[global.player_index]
+    if not surface or not player then return end
 
-    if (not surface) or (not player) then
-        return
-    end
+    local mineable_tiles = get_mineable_tiles()
+    local tiles_to_exclude = TILES_TO_EXCLUDE
 
     local previous_area = get_area_under_entity_at_position(entity, event.start_pos)
     local current_area = get_area_under_entity(entity)
 
---    if previous_area and current_area and settings.global["Foundations-mine-foundation"].value then
     if previous_area and current_area then
-        -- mine the global.foundation tiles no longer under the entity
-        for x = math.floor(previous_area.left_top.x), math.ceil(previous_area.right_bottom.x) - 1 do
-            for y = math.floor(previous_area.left_top.y), math.ceil(previous_area.right_bottom.y) - 1 do
-                local tile = surface.get_tile(x, y)
-                if tile.name == global.foundation and not within_area(tile.position, current_area) then
-                    player.mine_tile(tile)
+        local tiles_to_place = {}
+        local tile_name
+
+        -- find a tile name of the tiles to be moved
+        for x = current_area.left_top.x, current_area.right_bottom.x - 1 do
+            for y = current_area.left_top.y, current_area.right_bottom.y - 1 do
+                local position= {x = x, y = y}
+                local tile = surface.get_tile(position.x, position.y)
+                if tile and not within_area(position, previous_area) then
+                    if tile.name and mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
+                        tile_name = tile.name
+                        break
+                    end
                 end
+            end
+        end
+
+        -- mine foundation tiles from vacated positions
+        for x = previous_area.left_top.x, previous_area.right_bottom.x - 1 do
+            for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
+                local position= {x = x, y = y}
+                local tile = surface.get_tile(position.x, position.y)
+                if not within_area(position, current_area) then
+                    player.mine_tile(surface.get_tile(tile.position.x, tile.position.y))
+                    table.insert(tiles_to_place, { name = tile_name, position = position})
+                end
+            end
+        end
+
+        -- fill vacated positions
+        if #tiles_to_place > 0 then
+            local clean_sweep = settings.global["Foundations-clean-sweep"].value
+            local item_name = global.tile_to_item[tile_name]
+
+            if item_name and mineable_tiles[tile_name] and (not tiles_to_exclude[tile_name] or tile_name == "landfill") then
+                -- better to not raise an event if just moving tiles
+                surface.set_tiles(tiles_to_place, true, false, clean_sweep, false)
+                player.remove_item{name = item_name, count = #tiles_to_place}
             end
         end
     end

@@ -100,8 +100,8 @@ end
 
 -- check if a position is within an area
 function within_area(position, area)
-    return position.x >= area.left_top.x and position.x <= area.right_bottom.x and
-           position.y >= area.left_top.y and position.y <= area.right_bottom.y
+    return position.x >= area.left_top.x and position.x < area.right_bottom.x and
+           position.y >= area.left_top.y and position.y < area.right_bottom.y
 end
 
 function get_area_under_entity(entity)
@@ -111,11 +111,23 @@ function get_area_under_entity(entity)
 
     -- adjust collision_box based on entity direction
     if entity.direction == defines.direction.east or entity.direction == defines.direction.west then
-        area.left_top = {x = position.x + collision_box.left_top.y, y = position.y + collision_box.left_top.x}
-        area.right_bottom = {x = position.x + collision_box.right_bottom.y, y = position.y + collision_box.right_bottom.x}
+        area.left_top = {
+            x = math.floor(position.x + collision_box.left_top.y),
+            y = math.floor(position.y + collision_box.left_top.x)
+        }
+        area.right_bottom = {
+            x = math.ceil(position.x + collision_box.right_bottom.y),
+            y = math.ceil(position.y + collision_box.right_bottom.x)
+        }
     else
-        area.left_top = {x = position.x + collision_box.left_top.x, y = position.y + collision_box.left_top.y}
-        area.right_bottom = {x = position.x + collision_box.right_bottom.x, y = position.y + collision_box.right_bottom.y}
+        area.left_top = {
+            x = math.floor(position.x + collision_box.left_top.x),
+            y = math.floor(position.y + collision_box.left_top.y)
+        }
+        area.right_bottom = {
+            x = math.ceil(position.x + collision_box.right_bottom.x),
+            y = math.ceil(position.y + collision_box.right_bottom.y)
+        }
     end
 
     return area
@@ -131,11 +143,23 @@ function get_area_under_entity_at_position(entity, position)
 
     -- adjust collision_box based on entity direction
     if entity.direction == defines.direction.east or entity.direction == defines.direction.west then
-        area.left_top = {x = position.x + collision_box.left_top.y, y = position.y + collision_box.left_top.x}
-        area.right_bottom = {x = position.x + collision_box.right_bottom.y, y = position.y + collision_box.right_bottom.x}
+        area.left_top = {
+            x = math.floor(position.x + collision_box.left_top.y),
+            y = math.floor(position.y + collision_box.left_top.x)
+        }
+        area.right_bottom = {
+            x = math.ceil(position.x + collision_box.right_bottom.y),
+            y = math.ceil(position.y + collision_box.right_bottom.x)
+        }
     else
-        area.left_top = {x = position.x + collision_box.left_top.x, y = position.y + collision_box.left_top.y}
-        area.right_bottom = {x = position.x + collision_box.right_bottom.x, y = position.y + collision_box.right_bottom.y}
+        area.left_top = {
+            x = math.floor(position.x + collision_box.left_top.x),
+            y = math.floor(position.y + collision_box.left_top.y)
+        }
+        area.right_bottom = {
+            x = math.ceil(position.x + collision_box.right_bottom.x),
+            y = math.ceil(position.y + collision_box.right_bottom.y)
+        }
     end
 
     return area
@@ -236,6 +260,9 @@ function load_global_data()
         add_to_global_tables("refined-hazard-concrete-right", "refined-hazard-concrete")
     end
 
+    if game.active_mods["RoughStonePath"] then
+        compatibility.rough_stone_path()
+    end
     if game.active_mods["aai-industry"] then
         compatibility.aai_industry()
     end

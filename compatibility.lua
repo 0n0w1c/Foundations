@@ -2,6 +2,12 @@ require("constants")
 
 local compatibility = {}
 
+function compatibility.rough_stone_path()
+    if settings.global["Foundations-rough-stone-path"].value then
+        add_to_global_tables("rough-stone-path", "stone")
+    end
+end
+
 function compatibility.vanilla()
     for _, color in pairs(COLORS) do
         if settings.global["Foundations-"..color.name.."-refined-concrete"].value then

@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.7.2
+Date: 03. 09. 2024
+  Bugfixes:
+    - Better handling of placed tiles when using Picker Dollies
+      Placed tiles are now moved to fill the void created by moving an entity and foundation
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.7.1
 Date: 21. 08. 2024
   Bugfixes:
