@@ -207,7 +207,7 @@ local function entity_moved(event)
         -- find a tile name of the tiles to be moved
         for x = current_area.left_top.x, current_area.right_bottom.x - 1 do
             for y = current_area.left_top.y, current_area.right_bottom.y - 1 do
-                local position= {x = x, y = y}
+                local position = {x = x, y = y}
                 local tile = surface.get_tile(position.x, position.y)
                 if tile and not within_area(position, previous_area) then
                     if tile.name and mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
@@ -221,7 +221,7 @@ local function entity_moved(event)
         -- mine foundation tiles from vacated positions
         for x = previous_area.left_top.x, previous_area.right_bottom.x - 1 do
             for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
-                local position= {x = x, y = y}
+                local position = {x = x, y = y}
                 local tile = surface.get_tile(position.x, position.y)
                 if not within_area(position, current_area) then
                     player.mine_tile(surface.get_tile(tile.position.x, tile.position.y))
