@@ -203,6 +203,7 @@ local function entity_moved(event)
     if previous_area and current_area then
         local tiles_to_place = {}
         local tile_name
+        local tile_names = {}
 
         -- find a tile name of the tiles to be moved
         for x = current_area.left_top.x, current_area.right_bottom.x - 1 do
@@ -212,7 +213,7 @@ local function entity_moved(event)
                 if tile and not within_area(position, previous_area) then
                     if tile.name and mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
                         tile_name = tile.name
-                        break
+                        table.insert(tile_names, tile_name)
                     end
                 end
             end
@@ -231,14 +232,17 @@ local function entity_moved(event)
         end
 
         -- fill vacated positions
-        if #tiles_to_place > 0 then
+        if #tile_names > 0 then
             local clean_sweep = settings.global["Foundations-clean-sweep"].value
-            local item_name = global.tile_to_item[tile_name]
+            for _, tile in ipairs(tile_names) do
+                local item_name = global.tile_to_item[tile]
+                local tile_to_place = {{name = tile, position = tiles_to_place[_].position}}
 
-            if item_name and mineable_tiles[tile_name] and (not tiles_to_exclude[tile_name] or tile_name == "landfill") then
-                -- better to not raise an event if just moving tiles
-                surface.set_tiles(tiles_to_place, true, false, clean_sweep, false)
-                player.remove_item{name = item_name, count = #tiles_to_place}
+                if item_name then
+                    -- better to not raise an event if just moving tiles
+                    surface.set_tiles(tile_to_place, true, false, clean_sweep, false)
+                    player.remove_item{name = item_name, count = 1}
+                end
             end
         end
     end

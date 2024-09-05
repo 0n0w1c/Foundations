@@ -55,12 +55,22 @@ function recipe_enabled(force, recipe_name)
 end
 
 -- add to global.tile_names and global.tile_to_item, if not already present and recipe enabled
-function add_to_global_tables(tile_name, item_name)
+function add_to_global_tile_names(tile_name, item_name)
     local force = game.forces["player"]
 
     if force and tile_name and item_name then
         if not tile_in_global_tile_names(tile_name) and recipe_enabled(force, item_name) then
             table.insert(global.tile_names, tile_name)
+        end
+    end
+end
+
+-- add to global.tile_to_item, if not already present and recipe enabled
+function add_to_global_tile_to_item(tile_name, item_name)
+    local force = game.forces["player"]
+
+    if force and tile_name and item_name then
+        if not global.tile_to_item[tile_name] and recipe_enabled(force, item_name) then
             global.tile_to_item[tile_name] = item_name
         end
     end
@@ -240,25 +250,37 @@ function load_global_data()
     global.tile_names = {}
 
     -- add disabled, at positon 1
-    add_to_global_tables(DISABLED, DISABLED)
+    add_to_global_tile_names(DISABLED, DISABLED)
+    add_to_global_tile_to_item(DISABLED, DISABLED)
 
     if settings.global["Foundations-stone-path"].value then
-        add_to_global_tables("stone-path", "stone-brick")
+        add_to_global_tile_names("stone-path", "stone-brick")
     end
+    add_to_global_tile_to_item("stone-path", "stone-brick")
+
     if settings.global["Foundations-concrete"].value then
-        add_to_global_tables("concrete", "concrete")
+        add_to_global_tile_names("concrete", "concrete")
     end
+    add_to_global_tile_to_item("concrete", "concrete")
+
     if settings.global["Foundations-refined-concrete"].value then
-        add_to_global_tables("refined-concrete", "refined-concrete")
+        add_to_global_tile_names("refined-concrete", "refined-concrete")
     end
+    add_to_global_tile_to_item("refined-concrete", "refined-concrete")
+
     if settings.global["Foundations-hazard-concrete"].value then
-        add_to_global_tables("hazard-concrete-left", "hazard-concrete")
-        add_to_global_tables("hazard-concrete-right", "hazard-concrete")
+        add_to_global_tile_names("hazard-concrete-left", "hazard-concrete")
+        add_to_global_tile_names("hazard-concrete-right", "hazard-concrete")
     end
+    add_to_global_tile_to_item("hazard-concrete-left", "hazard-concrete")
+    add_to_global_tile_to_item("hazard-concrete-right", "hazard-concrete")
+
     if settings.global["Foundations-refined-hazard-concrete"].value then
-        add_to_global_tables("refined-hazard-concrete-left", "refined-hazard-concrete")
-        add_to_global_tables("refined-hazard-concrete-right", "refined-hazard-concrete")
+        add_to_global_tile_names("refined-hazard-concrete-left", "refined-hazard-concrete")
+        add_to_global_tile_names("refined-hazard-concrete-right", "refined-hazard-concrete")
     end
+    add_to_global_tile_to_item("refined-hazard-concrete-left", "refined-hazard-concrete")
+    add_to_global_tile_to_item("refined-hazard-concrete-right", "refined-hazard-concrete")
 
     if game.active_mods["RoughStonePath"] then
         compatibility.rough_stone_path()

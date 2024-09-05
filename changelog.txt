@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.7.3
+Date: 04. 09. 2024
+  Bugfixes:
+    - Improved handling of tiles on edges, the absense of tiles, and multiple tile types, when
+      moving entities and foundations using Picker Dollies.
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.7.2
 Date: 03. 09. 2024
   Bugfixes:
