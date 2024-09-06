@@ -11,7 +11,7 @@ Note: This link will redirect you to the demo video hosted on Google Drive.
 ![pic 4](/pic4.png)  
 
 With the Foundations button, you can disable the placement of foundation tiles or select the tile of your choice.  
-You can also enable the available selection based tools by:
+You can also enable the available selection based tools by:  
 *[ctrl]+[left-click]* - place tiles on open positions  
 *[shift]+[left-click]* - remove tiles from open positions  
 *[ctrl]+[right-click]* - place foundation tiles under entities  
