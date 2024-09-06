@@ -1,11 +1,9 @@
 #### A Quality of Life mod to help engineers quickly and easily build a more interesting factory.  
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
-#### New feature: Now supports the use of Picker Dollies and setting of the mining time.  
+#### New feature: Added three selection tools for en masse tile operations.  
 Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge (normal behavior) rather than stack.  
-(If you use Alien Biomes, you already have something of this effect. This mod will not disturb the modifications
-made by Alien Biomes.)  
 
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
 Note: This link will redirect you to the demo video hosted on Google Drive.
@@ -15,32 +13,36 @@ Note: This link will redirect you to the demo video hosted on Google Drive.
 ![pic 4](/pic4.png)  
 
 With the Foundations button, you can disable the placement of foundation tiles or select the tile of your choice.  
-To activate the fill tool, *[ctrl]+[left-click]* on the Foundations button, when a foundation tile selected.  
-
-A runtime setting for each tile, allows you to limit the selections to create a "palatte" of tiles, for quick selection.  
-Dectorio users should visit the runtime settings (map tab), most of the Dectorio tiles are not selected by default.  
-Settings for the various supported mods are only visible when the supported mod is active.  
-These settings do not alter the tiles the player has available, only if they are to be included in the button "palette".  
-
-A runtime setting to select whether the foundation tiles are to be mined or not, when an entity is mined.  
-There are also runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
-
-Attempts to build, without the required number of foundation tiles in the player inventory, will be halted.  
-Make sure to have enough of the selected foundation tiles in your inventory, or disable foundation tile placement.  
-
-Runtime setting to clean sweep (remove ground decorations), when the foundation tiles are placed.  
+You can also enable the available selection based tools by:
+*[ctrl]+[left-click]* - place tiles on open positions  
+*[shift]+[left-click]* - remove tiles from open positions  
+*[ctrl]+[right-click]* - place foundation tiles under entities  
+*[shift]+[right-click]* - remove foundation tiles from under entities  
 
 Startup setting to select the tile mining time (default = 0.1).  
 
-Users have a startup setting to enable and configure the stacking of painted refined concrete.  
+Startup settings to change the stacking order, higher numbers stack on lower numbers.  
+Tiles assigned with the same number, merge rather than stack.  
 If Alien Biomes is active, settings for stacking the painted refined concretes are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
 Otherwise, if the startup setting is enabled, this mod will supply the painted refined concretes.  
 
+A runtime setting for each tile, allows you to limit the selections available for the Foudnations button,  
+to create a "palatte" of tiles for quick selection.  
+Dectorio users should visit the runtime settings (Map tab), most of the Dectorio tiles are not selected by default.  
+
+Runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
+Runtime setting to clean sweep (remove ground decorations), when the foundation tiles are placed.  
+
+Settings for the various supported mods are only visible when the supported mod is active.  
+
+Attempts to build without the required number of foundation tiles in the player inventory, will be halted.  
+Make sure to have enough of the selected foundation tiles in your inventory, or disable foundation tile placement.  
+
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
 #### Limitations:  
-Tiles placed with the fill tool are not "Undo"-able, use with caution.  
+Tiles placed with the selection tools are not "Undo"-able, use them with some caution.  
 Not compatible with multi-player mode, single-player mode only.  
 
 #### Supported:

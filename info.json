@@ -1,8 +1,9 @@
 {
   "name": "Foundations",
-  "version": "2.7.3",
+  "version": "2.8.0",
   "title": "Foundations",
   "author": "0n0w1c",
+  "description": "Lays tiles, button controlled",
   "factorio_version": "1.1",
   "dependencies": [
     "base >= 1.1",
@@ -11,7 +12,7 @@
     "(?) Krastorio2 >= 1.3.24",
     "(?) IndustrialRevolution3 >= 3.1.29",
     "(?) PickerDollies >= 1.2.6",
+    "(?) alien-biomes",
     "! easier-vehicles"
-  ],
-  "description": "Lays tiles (Foundations) under most everything, button controlled"
+  ]
 }

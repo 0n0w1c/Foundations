@@ -34,6 +34,60 @@ data:extend({
       alt_selection_cursor_box_type = "entity",
     }
 })
+data:extend({
+    {
+      type = "selection-tool",
+      name = "Foundations-unfill-tool",
+      icon = "__base__/graphics/icons/deconstruction-planner.png",
+      icon_size = 64,
+      flags = {},
+      subgroup = "tool",
+      order = "c[automated-construction]-a[blueprint]",
+      stack_size = 1,
+      selection_color = { r = 0.7, g = 0.7, b = 0.7 },
+      alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
+      selection_mode = {"any-tile"},
+      alt_selection_mode = {"any-tile"},
+      selection_cursor_box_type = "entity",
+      alt_selection_cursor_box_type = "entity",
+    }
+})
+data:extend({
+    {
+      type = "selection-tool",
+      name = "Foundations-place-tool",
+      icon = "__base__/graphics/icons/blueprint.png",
+      icon_size = 64,
+      flags = {},
+      subgroup = "tool",
+      order = "c[automated-construction]-a[blueprint]",
+      stack_size = 1,
+      selection_color = { r = 0.7, g = 0.7, b = 0.7 },
+      alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
+      selection_mode = {"any-tile"},
+      alt_selection_mode = {"any-tile"},
+      selection_cursor_box_type = "entity",
+      alt_selection_cursor_box_type = "entity",
+    }
+})
+data:extend({
+    {
+      type = "selection-tool",
+      name = "Foundations-unplace-tool",
+      icon = "__base__/graphics/icons/deconstruction-planner.png",
+      icon_size = 64,
+      flags = {},
+      subgroup = "tool",
+      order = "c[automated-construction]-a[blueprint]",
+      stack_size = 1,
+      selection_color = { r = 0.7, g = 0.7, b = 0.7 },
+      alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
+      selection_mode = {"any-tile"},
+      alt_selection_mode = {"any-tile"},
+      selection_cursor_box_type = "entity",
+      alt_selection_cursor_box_type = "entity",
+    }
+})
 
 if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].value then
     -- add placement items for each color

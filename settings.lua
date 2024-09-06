@@ -31,6 +31,13 @@ data:extend({
     },
     {
         type = "bool-setting",
+        name = "Foundations-clean-sweep",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order()
+    },
+    {
+        type = "bool-setting",
         name = "Foundations-stack-tarmac",
         setting_type = "startup",
         default_value = false,
@@ -149,13 +156,6 @@ end
 
 -- runtime-global
 data:extend({
-    {
-        type = "bool-setting",
-        name = "Foundations-clean-sweep",
-        setting_type = "runtime-global",
-        default_value = false,
-        order = get_next_order()
-    },
     {
         type = "bool-setting",
         name = "Foundations-exclude-small-medium-electric-poles",

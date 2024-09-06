@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.8.0
+Date: 06. 09. 2024
+  Bugfixes:
+    - If enabled, clean sweep probability now set to 1
+  Changes:
+    - Clean sweep setting moved from runtime to startup
+    - Added three selection tools: unfill, place, and unplace (remove) tiles en masse
+---------------------------------------------------------------------------------------------------
 Version: 2.7.3
 Date: 04. 09. 2024
   Bugfixes:
