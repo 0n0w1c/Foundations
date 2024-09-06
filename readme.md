@@ -2,8 +2,6 @@
 There are no special bonuses with this mod, it is decorative and helpful in nature.  
 
 #### New feature: Added three selection tools for en masse tile operations.  
-Startup settings to change the stacking order, higher numbers stack on lower numbers.  
-Tiles assigned with the same number, merge (normal behavior) rather than stack.  
 
 [A quick demo](https://drive.google.com/file/d/1o4HD90M7-e2r7auqeI3zcnIm5Rq9RNND/view?usp=sharing)  
 Note: This link will redirect you to the demo video hosted on Google Drive.
