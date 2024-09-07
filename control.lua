@@ -164,6 +164,10 @@ local function player_selected_area(event)
         return
     end
 
+    if not is_within_reach(player, event.area) then
+        return -- abort if the player is out of reach
+    end
+
     -- [ctrl][left]
     if event.item == "Foundations-fill-tool" then
         if global.foundation ~= DISABLED then

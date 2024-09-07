@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.8.1
+Date: 06. 09. 2024
+  Bugfixes:
+    - Enforce player reach limit for selection based tools, to closest corner of the selected area
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.8.0
 Date: 06. 09. 2024
   Bugfixes:

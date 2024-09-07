@@ -175,6 +175,21 @@ function get_area_under_entity_at_position(entity, position)
     return area
 end
 
+function is_within_reach(player, area)
+    local player_position = player.position
+    local reach = player.character.reach_distance or 0
+
+    -- find the closest corner of the area
+    local closest_x = math.max(area.left_top.x, math.min(player_position.x, area.right_bottom.x))
+    local closest_y = math.max(area.left_top.y, math.min(player_position.y, area.right_bottom.y))
+
+    -- calculate the distance between the player and the closest point
+    local distance = math.sqrt((closest_x - player_position.x)^2 + (closest_y - player_position.y)^2)
+
+    -- check if the distance is within the player's reach
+    return distance <= reach
+end
+
 function get_mineable_tiles()
     local tiles_to_exclude = TILES_TO_EXCLUDE
     local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
