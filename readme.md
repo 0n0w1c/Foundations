@@ -18,6 +18,7 @@ You can also enable the available selection based tools by:
 *[shift]+[right-click]* (Unplace tool) - remove foundation tiles from under entities  
 
 Startup setting to select the tile mining time (default = 0.1).  
+Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
 
 Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge rather than stack.  
@@ -30,7 +31,6 @@ to create a "palatte" of tiles for quick selection.
 Dectorio users should visit the runtime settings (Map tab), most of the Dectorio tiles are not selected by default.  
 
 Runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
-Runtime setting to clean sweep (remove ground decorations), when the foundation tiles are placed.  
 
 Settings for the various supported mods are only visible when the supported mod is active.  
 
