@@ -176,6 +176,11 @@ function get_area_under_entity_at_position(entity, position)
 end
 
 function is_within_reach(player, area)
+    -- Fix reach check for players without characters (e.g., god mode)
+     if not player.character or not player.character.valid then
+        return true -- or handle this case differently if needed
+    end
+    
     local player_position = player.position
     local reach = player.character.reach_distance or 0
 
