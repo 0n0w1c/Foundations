@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.8.5
+Date: 07. 09. 2024
+  Bugfixes:
+    - Added check to prevent a crash when attempting to use the selection tools in "god mode"
+      Fix provided by mmmilez
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.8.4
 Date: 07. 09. 2024
   Bugfixes:
