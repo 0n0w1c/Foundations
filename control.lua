@@ -49,7 +49,8 @@ local function place_foundation_under_entity(event)
 
         -- place tiles and remove items from player inventory
         if #tiles_to_place > 0 then
-            local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+            --local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+            local clean_sweep = true
             surface.set_tiles(tiles_to_place, true, false, clean_sweep, true)
             local item_name = global.tile_to_item[global.foundation]
             player.remove_item{name = item_name, count = #tiles_to_place}
@@ -199,7 +200,8 @@ local function player_selected_area(event)
             end
 
             if #tiles_to_place > 0 and player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
-                local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+--                local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+                local clean_sweep = true
                 surface.set_tiles(tiles_to_place, true, false, clean_sweep, true)
                 local item_name = global.tile_to_item[global.foundation]
                 player.remove_item{name = item_name, count = #tiles_to_place}
@@ -292,7 +294,8 @@ local function player_selected_area(event)
 
             -- place the foundation tiles
             if #tiles_to_place > 0 and player_has_sufficient_tiles(player, global.foundation, #tiles_to_place) then
-                local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+--                local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+                local clean_sweep = true
                 surface.set_tiles(tiles_to_place, true, false, clean_sweep, true)
                 local item_name = global.tile_to_item[global.foundation]
                 player.remove_item{name = item_name, count = #tiles_to_place}
@@ -391,7 +394,8 @@ local function entity_moved(event)
 
         -- fill vacated positions
         if #tile_names > 0 then
-            local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+--            local clean_sweep = settings.startup["Foundations-clean-sweep"].value
+            local clean_sweep = true
             for _, tile in ipairs(tile_names) do
                 local item_name = global.tile_to_item[tile]
                 local tile_to_place = {{name = tile, position = tiles_to_place[_].position}}
