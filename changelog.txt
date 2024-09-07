@@ -4,8 +4,8 @@ Date: 07. 09. 2024
   Bugfixes:
     - None
   Changes:
-    - Added 0 as an option for the Tile Mining Time startup setting.
-      Select to honor the intent of the tile provider, make no modification to tile mining times.
+    - Added 0 as an option for the Tile Mining Time startup setting
+      Select to honor the intent of the tile provider, make no modification to tile mining times
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.2
 Date: 06. 09. 2024
