@@ -40,7 +40,7 @@ Make sure to have enough of the selected foundation tiles in your inventory, or 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
 #### Limitations:  
-Tiles placed with the selection tools are not "Undo"-able, use them with some caution.  
+Tiles placed or removed with the selection tools are not "Undo"-able, use them with some caution.  
 Not compatible with multi-player mode, single-player mode only.  
 
 #### Supported:
