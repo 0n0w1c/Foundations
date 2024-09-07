@@ -6,7 +6,7 @@ for _, tile in pairs(data.raw["tile"]) do
         end
     end
 
-    if settings.startup["Foundations-clean-sweep"].value then
+    if tile.minable and settings.startup["Foundations-clean-sweep"].value then
         tile.decorative_removal_probability = 1
     end
 end
