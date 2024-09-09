@@ -9,7 +9,7 @@ data:extend({
     {
         type = "sprite",
         name = "Foundations-disabled",
-        filename = "__base__/graphics/icons/deconstruction-planner.png",
+        filename = "__Foundations__/graphics/icons/disabled.png",
         width = 64,
         height = 64,
         priority = "medium"
