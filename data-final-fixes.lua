@@ -9,3 +9,7 @@ for _, tile in pairs(data.raw["tile"]) do
         end
     end
 end
+
+if settings.startup["Foundations-added-inventory-rows"].value > 0 then
+    data.raw.character.character.inventory_size = data.raw.character.character.inventory_size + (settings.startup["Foundations-added-inventory-rows"].value * 10)
+end

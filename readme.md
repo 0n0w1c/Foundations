@@ -19,6 +19,7 @@ You can also enable the available selection based tools by:
 
 Startup setting to select the tile mining time (default = 0.1).  
 Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
+Startup setting for the number of rows to add to the player inventory size.
 
 Startup settings to change the stacking order, higher numbers stack on lower numbers.  
 Tiles assigned with the same number, merge rather than stack.  

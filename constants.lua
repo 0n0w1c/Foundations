@@ -1,5 +1,6 @@
 THIS_MOD = "Foundations"
 DISABLED = "disabled"
+INVENTORY_ROWS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 MINING_TIMES = {0, 0.1, 0.2, 0.3, 0.4, 0.5}
 STACKING_SLOTS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
 WHITE_REINFORCED_PLATE_SLOT = 12

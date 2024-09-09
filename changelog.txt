@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.8.7
+Date: 09. 09. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added a startup setting for number of rows to add to the player inventory size
+---------------------------------------------------------------------------------------------------
 Version: 2.8.6
 Date: 08. 09. 2024
   Bugfixes:

@@ -22,6 +22,14 @@ end
 
 data:extend({
     {
+        type = "int-setting",
+        name = "Foundations-added-inventory-rows",
+        setting_type = "startup",
+        default_value = 0,
+        allowed_values = INVENTORY_ROWS,
+        order = get_next_order(),
+    },
+    {
         type = "double-setting",
         name = "Foundations-mining-time",
         setting_type = "startup",
