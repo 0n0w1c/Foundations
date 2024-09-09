@@ -186,8 +186,10 @@ local function player_selected_area(event)
                 local should_place_tile = true
 
                 for _, entity in pairs(entities) do
-                    -- allow placing tiles under the player character
-                    if entity.name ~= "character" then
+                    -- allow placing tiles under the player character and entity_excluded
+                    if entity.name == "character" or entity_excluded(entity) then
+                        -- do nothing, place the tile
+                    else
                         should_place_tile = false
                         break
                     end
