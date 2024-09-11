@@ -1,4 +1,4 @@
-![red-black](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/red-black.png?raw=true)
+![red-black](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/red-black.png?raw=true)  
 A [demo](https://drive.google.com/file/d/19IW1BqMI3D-ZT9L8otzVgFEscUW8Nnev/view?usp=drive_link) of tile placement and a [demo](https://drive.google.com/file/d/1-Q80DSgyIuHM7wrxrbzyDSqme0gMSsAz/view?usp=drive_link) showing some of the selection tools in action.  
 Note: These links will redirect you to the videos hosted on Google Drive.
 
