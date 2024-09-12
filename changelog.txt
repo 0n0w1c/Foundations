@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.9.1
+Date: 11. 09. 2024
+  Bugfixes:
+    - Changes to runtime settings for electric poles, inserters, and belts not always recognized
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.9.0
 Date: 09. 09. 2024
   Bugfixes:

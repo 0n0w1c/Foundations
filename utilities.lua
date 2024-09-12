@@ -1,7 +1,11 @@
 local compatibility = require("compatibility")
 
 function load_excluded_name_list()
-    global.excluded_name_list = EXCLUDED_NAME_LIST
+    global.excluded_name_list = {}
+    for k, v in pairs(EXCLUDED_NAME_LIST) do
+        global.excluded_name_list[k] = v
+    end
+
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
@@ -9,7 +13,11 @@ function load_excluded_name_list()
 end
 
 function load_excluded_type_list()
-    global.excluded_type_list = EXCLUDED_TYPE_LIST
+    global.excluded_type_list = {}
+    for k, v in pairs(EXCLUDED_TYPE_LIST) do
+        global.excluded_type_list[k] = v
+    end
+
     if settings.global["Foundations-exclude-inserters"].value then
         global.excluded_type_list["inserter"] = true
     end
