@@ -2,34 +2,37 @@ local compatibility = require("compatibility")
 
 function load_excluded_name_list()
     global.excluded_name_list = {}
-    for k, v in pairs(EXCLUDED_NAME_LIST) do
-        global.excluded_name_list[k] = v
+
+    for key, value in pairs(EXCLUDED_NAME_LIST) do
+        global.excluded_name_list[key] = value
     end
 
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
 
+        if game.active_mods["aai-industry"] then
+            global.excluded_name_list["small-iron-electric-pole"] = true
+        end
+
         if game.active_mods["IndustrialRevolution3"] then
             global.excluded_name_list["small-bronze-pole"] = true
             global.excluded_name_list["small-iron-pole"] = true
-        end
-
-        if game.active_mods["aai-industry"] then
-            global.excluded_name_list["small-iron-electric-pole"] = true
         end
     end
 end
 
 function load_excluded_type_list()
     global.excluded_type_list = {}
-    for k, v in pairs(EXCLUDED_TYPE_LIST) do
-        global.excluded_type_list[k] = v
+
+    for key, value in pairs(EXCLUDED_TYPE_LIST) do
+        global.excluded_type_list[key] = value
     end
 
     if settings.global["Foundations-exclude-inserters"].value then
         global.excluded_type_list["inserter"] = true
     end
+
     if settings.global["Foundations-exclude-belts"].value then
         global.excluded_type_list["transport-belt"] = true
         global.excluded_type_list["underground-belt"] = true
@@ -40,35 +43,39 @@ end
 
 -- check if an entity is excluded based on name or type
 function entity_excluded(entity)
-    if global.excluded_name_list[entity.name] then
+    if entity and (global.excluded_name_list[entity.name] or global.excluded_type_list[entity.type]) then
         return true
     end
-    if global.excluded_type_list[entity.type] then
-        return true
-    end
+
     return false
 end
 
 -- check if the tile is in global.tile_names 
 function tile_in_global_tile_names(tile)
-    for _, tile_name in ipairs(global.tile_names) do
-        if tile_name == tile then
-            return true
+    if tile then
+        for _, tile_name in ipairs(global.tile_names) do
+            if tile_name == tile then
+                return true
+            end
         end
     end
+
     return false
 end
 
 -- check if the recipe has been enabled
 function recipe_enabled(force, recipe_name)
-    local recipe = force.recipes[recipe_name]
+    if not force or not recipe_name then
+        return false
+    end
 
+    local recipe = force.recipes[recipe_name]
     if recipe then
         return recipe.enabled
-    else
-        -- if no recipe, add it (ex. stone to rough-stone-path has no recipe)
-        return true
     end
+
+    -- no recipe (ex. stone to rough-stone-path has no recipe)
+    return true
 end
 
 -- add to global.tile_names and global.tile_to_item, if not already present and recipe enabled
@@ -95,13 +102,20 @@ end
 
 -- check if the player has sufficient tiles in their inventory
 function player_has_sufficient_tiles(player, tile_name, count)
-    local item_name = global.tile_to_item[tile_name]
+    if not player or not tile_name or count == nil then
+        return false
+    end
 
+    local item_name = global.tile_to_item[tile_name]
     return item_name and player.get_item_count(item_name) >= count
 end
 
 -- when player does not have sufficent tiles in their inventory
 function return_entity_to_cursor(player, entity)
+    if not player or not entity then
+        return
+    end
+
     if not player.cursor_stack.valid_for_read then
         player.cursor_stack.set_stack({name = entity.name, count = 1})
     else
@@ -112,28 +126,27 @@ function return_entity_to_cursor(player, entity)
     entity.destroy()
 end
 
--- get the collision_box of the entity
-function get_entity_collision_box(entity)
-    local prototype
-
-    if entity.type == "entity-ghost" then
-        prototype = game.entity_prototypes[entity.ghost_prototype.name]
-    else
-        prototype = entity.prototype
-    end
-
-    return prototype.collision_box
-end
-
 -- check if a position is within an area
 function within_area(position, area)
+    if not position or not area then
+        return false
+    end
+
     return position.x >= area.left_top.x and position.x < area.right_bottom.x and
            position.y >= area.left_top.y and position.y < area.right_bottom.y
 end
 
 function get_area_under_entity(entity)
+    if not entity then
+        return
+    end
+
     local position = entity.position
-    local collision_box = get_entity_collision_box(entity)
+    local collision_box = entity.prototype.collision_box
+    if not position or not collision_box then
+        return
+    end
+
     local area = {}
 
     -- adjust collision_box based on entity direction
@@ -161,12 +174,16 @@ function get_area_under_entity(entity)
 end
 
 function get_area_under_entity_at_position(entity, position)
-    local collision_box = get_entity_collision_box(entity)
-    local area = {}
-
-    if not position then
+    if not entity or not position then
         return
     end
+
+    local collision_box = entity.prototype.collision_box
+    if not collision_box then
+        return
+    end
+
+    local area = {}
 
     -- adjust collision_box based on entity direction
     if entity.direction == defines.direction.east or entity.direction == defines.direction.west then
@@ -193,9 +210,9 @@ function get_area_under_entity_at_position(entity, position)
 end
 
 function is_within_reach(player, area)
-    -- fix reach check for players without characters (e.g., god mode)
+    -- no reach limit for players without characters (e.g., god mode)
     if not player.character or not player.character.valid then
-        return true -- or handle this case differently if needed
+        return true
     end
 
     if not area then
@@ -218,8 +235,11 @@ end
 
 function get_mineable_tiles()
     local tiles_to_exclude = TILES_TO_EXCLUDE
-    local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
     local mineable_tiles = {}
+    local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
+    if not blueprintable_tiles then
+        return
+    end
 
     -- filter the blueprintable (minable) tiles to remove excluded tiles
     for name, _ in pairs(blueprintable_tiles) do
@@ -232,8 +252,16 @@ function get_mineable_tiles()
 end
 
 function load_tiles(entity, area)
-    local mineable_tiles = get_mineable_tiles()
+    if not entity or not area then
+        return
+    end
+
     local surface = entity.surface
+    local mineable_tiles = get_mineable_tiles()
+    if not surface or not mineable_tiles then
+        return
+    end
+
     local tiles_to_place = {}
     local tiles_to_return = {}
 
@@ -263,7 +291,6 @@ end
 
 function set_global_tile_names_index()
     local found = false
-
     -- try to find the index for global.foundation
     for index, tile in ipairs(global.tile_names) do
         if tile == global.foundation then

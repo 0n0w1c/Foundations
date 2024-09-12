@@ -14,8 +14,8 @@ if not mods["Dectorio"] and settings.startup["Foundations-supply-concrete"].valu
     end
 
     if not mods["alien-biomes"] then
-        if settings.startup["Foundations-stack-concrete"].value then
-            -- set the stacking order by setting the layer
+        if settings.startup["Foundations-layer-concrete"].value then
+            -- set the layering order by setting the layer
             local refined_layer = settings.startup["Foundations-refined-concrete-layer"].value * 3 + 200
             data.raw.tile["refined-concrete"].layer = refined_layer
 
@@ -39,9 +39,9 @@ end
 
 if mods["Dectorio"] and (not mods["alien-biomes"])
     and settings.startup["dectorio-painted-concrete"].value
-    and settings.startup["Foundations-stack-concrete"].value
+    and settings.startup["Foundations-layer-concrete"].value
 then
-    -- set the stacking order by setting the layer
+    -- set the layering order by setting the layer
     local refined_layer = settings.startup["Foundations-refined-concrete-layer"].value * 3 + 200
     data.raw.tile["refined-concrete"].layer = refined_layer
 
@@ -67,14 +67,14 @@ then
 end
 
 if mods["IndustrialRevolution3"] and (not mods["alien-biomes"])
-    and settings.startup["Foundations-stack-tarmac"].value
-    and settings.startup["Foundations-stack-concrete"].value
+    and settings.startup["Foundations-layer-tarmac"].value
+    and settings.startup["Foundations-layer-concrete"].value
 then
     data.raw.tile["tarmac"].layer = TARMAC_LAYER
 end
 
 if mods["Krastorio2"] and (not mods["alien-biomes"])
-    and settings.startup["Foundations-stack-concrete"].value
+    and settings.startup["Foundations-layer-concrete"].value
 then
     data.raw.tile["kr-white-reinforced-plate"].layer = WHITE_REINFORCED_LAYER
     data.raw.tile["kr-black-reinforced-plate"].layer = BLACK_REINFORCED_LAYER

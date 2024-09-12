@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.9.3
+Date: 12. 09. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Replaced the terms "stack" and "stacking" with "layer" and "layering" in both code and docs
+    - Some refactoring, mostly focused on additional nil checks
+---------------------------------------------------------------------------------------------------
 Version: 2.9.2
 Date: 12. 09. 2024
   Bugfixes:
@@ -9,7 +17,7 @@ Date: 12. 09. 2024
 Version: 2.9.1
 Date: 11. 09. 2024
   Bugfixes:
-    - Changes to runtime settings for electric poles, inserters, and belts not always recognized
+    - Runtime settings for electric poles, inserters, and belts not always recognized
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
@@ -128,7 +136,7 @@ Date: 16. 08. 2024
 Version: 2.5.2
 Date: 13. 08. 2024
   Bugfixes:
-    - Krastorio 2 black and light reinforced plates stack on top of refined concretes
+    - Krastorio 2 black and light reinforced plates layer on top of refined concretes
     - Added the tooltip for tarmac
   Changes:
     - None
@@ -138,7 +146,7 @@ Date: 13. 08. 2024
   Bugfixes:
     - None
   Changes:
-    - Added a startup setting to enable stacking of tarmac on top of the refined concretes
+    - Added a startup setting to enable layering of tarmac on top of the refined concretes
 ---------------------------------------------------------------------------------------------------
 Version: 2.5.0
 Date: 13. 08. 2024
@@ -187,14 +195,14 @@ Date: 10. 08. 2024
 Version: 2.2.6
 Date: 10. 08. 2024
   Bugfixes:
-    - Dectorio wood floor disabled and stacking enabled, result crash
+    - Dectorio wood floor disabled and layering enabled, result crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.5
 Date: 10. 08. 2024
   Bugfixes:
-    - Dectorio wood tiles now stack on top
+    - Dectorio wood tiles now layer on top
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
@@ -208,10 +216,10 @@ Date: 10. 08. 2024
 Version: 2.2.3
 Date: 09. 08. 2024
   Bugfixes:
-    - Graphical issue with tile transitions when stacking the painted refined concretes
+    - Graphical issue with tile transitions when layering the painted refined concretes
   Changes:
     - Mining times for all minable tiles are now standardized to that of refined concrete
-    - Startup settings for the Dectorio painted refined concrete stacking order are now 0 - 11
+    - Startup settings for the Dectorio painted refined concrete layering order are now 0 - 11
     - Modifed the wording of startup settings and this changelog to be more consistent
     - Refactoring
 ---------------------------------------------------------------------------------------------------
@@ -220,12 +228,12 @@ Date: 07. 08. 2024
   Bugfixes:
     - None
   Changes:
-    - Refactored the Dectorio tile stacking code
+    - Refactored the Dectorio tile layering code
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.1
 Date: 07. 08. 2024
   Bugfixes:
-    - Added a check if Dectorio's painted refined concrete is enabled, before applying stacking
+    - Added a check if Dectorio's painted refined concrete is enabled, before applying layering
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
@@ -234,7 +242,7 @@ Date: 07. 08. 2024
   Bugfixes:
     - None
   Changes:
-    - With the mod Dectorio active, startup option to stack the painted refined concretes
+    - With the mod Dectorio active, startup option to layer the painted refined concretes
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.6
 Date: 07. 08. 2024

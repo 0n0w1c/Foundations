@@ -46,7 +46,7 @@ data:extend({
     },
     {
         type = "bool-setting",
-        name = "Foundations-stack-tarmac",
+        name = "Foundations-layer-tarmac",
         setting_type = "startup",
         default_value = false,
         order = get_next_order(),
@@ -58,7 +58,7 @@ if not mods["alien-biomes"] then
     data:extend({
         {
             type = "bool-setting",
-            name = "Foundations-stack-concrete",
+            name = "Foundations-layer-concrete",
             setting_type = "startup",
             default_value = true,
             order = get_next_order()

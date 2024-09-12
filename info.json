@@ -1,9 +1,9 @@
 {
   "name": "Foundations",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "title": "Foundations",
   "author": "0n0w1c",
-  "description": "Lays tiles, button controlled",
+  "description": "Settings, tools and automation for a multi-layered tile appearance, button controlled",
   "factorio_version": "1.1",
   "dependencies": [
     "base >= 1.1",
