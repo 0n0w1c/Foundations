@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.9.2
+Date: 12. 09. 2024
+  Bugfixes:
+    - Add modded electric poles to excluded entities when electric pole runtime setting changes
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.9.1
 Date: 11. 09. 2024
   Bugfixes:

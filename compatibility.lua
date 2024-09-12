@@ -23,10 +23,6 @@ function compatibility.aai_industry()
         add_to_global_tile_names("rough-stone-path", "stone")
     end
     add_to_global_tile_to_item("rough-stone-path", "stone")
-
-    if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
-        global.excluded_name_list["small-iron-electric-pole"] = true
-    end
 end
 
 function compatibility.dectorio()
@@ -79,11 +75,6 @@ function compatibility.industrialrevolution3()
         add_to_global_tile_names("tarmac", "tarmac")
     end
     add_to_global_tile_to_item("tarmac", "tarmac")
-
-    if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
-        global.excluded_name_list["small-bronze-pole"] = true
-        global.excluded_name_list["small-iron-pole"] = true
-    end
 end
 
 function compatibility.krastorio2()

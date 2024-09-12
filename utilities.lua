@@ -9,6 +9,15 @@ function load_excluded_name_list()
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
+
+        if game.active_mods["IndustrialRevolution3"] then
+            global.excluded_name_list["small-bronze-pole"] = true
+            global.excluded_name_list["small-iron-pole"] = true
+        end
+
+        if game.active_mods["aai-industry"] then
+            global.excluded_name_list["small-iron-electric-pole"] = true
+        end
     end
 end
 
