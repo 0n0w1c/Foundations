@@ -12,6 +12,8 @@ You can also enable the available selection based tools by:
 | *[Ctrl]+[Right-click]*  | Place   | Places tiles under entities       |
 | *[Shift]+[Right-click]* | Unplace | Removes tiles from under entities |
 
+To use, release the *[Key]* and then *[Left-click]* hold and drag.  
+
 Startup setting to select the tile mining time (default = 0.1).  
 Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
 Startup setting for the number of rows to add to the player inventory size.
