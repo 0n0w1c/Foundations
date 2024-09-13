@@ -11,6 +11,14 @@ You can also enable the available selection based tools by:
 *[ctrl]+[right-click]* (Place tool) - place foundation tiles under entities  
 *[shift]+[right-click]* (Unplace tool) - remove foundation tiles from under entities  
 
+| Key + Mouse-click       | Tool    | Effect                            |
+| :---------------------- | :------ | :-------------------------------- |
+| *[Ctrl ]+[Left-click ]* | Fill    | Places tiles on open positions    |
+| *[Shift]+[Left-click ]* | Unfill  | Removes tiles from open positions |
+| *[Ctrl ]+[Right-click]* | Place   | Places tiles under entities       |
+| *[Shift]+[Right-click]* | Unplace | Removes tiles from under entities |
+
+
 Startup setting to select the tile mining time (default = 0.1).  
 Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
 Startup setting for the number of rows to add to the player inventory size.
