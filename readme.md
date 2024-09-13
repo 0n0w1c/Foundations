@@ -7,9 +7,9 @@ You can also enable the available selection based tools by:
 
 | Key + Mouse-click       | Tool    | Effect                            |
 | :---------------------- | :------ | :-------------------------------- |
-| *[Ctrl ]+[Left-click ]* | Fill    | Places tiles on open positions    |
-| *[Shift]+[Left-click ]* | Unfill  | Removes tiles from open positions |
-| *[Ctrl ]+[Right-click]* | Place   | Places tiles under entities       |
+| *[Ctrl]+[Left-click]*   | Fill    | Places tiles on open positions    |
+| *[Shift]+[Left-click]*  | Unfill  | Removes tiles from open positions |
+| *[Ctrl]+[Right-click]*  | Place   | Places tiles under entities       |
 | *[Shift]+[Right-click]* | Unplace | Removes tiles from under entities |
 
 Startup setting to select the tile mining time (default = 0.1).  
