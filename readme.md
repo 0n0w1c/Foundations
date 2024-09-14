@@ -1,8 +1,12 @@
-![red-black](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/red-black.png?raw=true)  
-A [demo](https://drive.google.com/file/d/1HhUQe3d0-JM2_g1sDUhMwH2XuVyj-mB4/view?usp=drive_link) of tile placement (with Picker Dollies) and a [demo](https://drive.google.com/file/d/1-Q80DSgyIuHM7wrxrbzyDSqme0gMSsAz/view?usp=drive_link) showing some of the selection tools in action.  
-Note: These links will redirect you to the videos hosted on Google Drive.
+[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4)
+A demo of tile placement with Picker Dollies active.
 
-With the Foundations button, you can disable the placement of foundation tiles or select the tile of your choice.  
+&NewLine;
+[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/tools-thumbnail.png?raw=true)](https://www.youtube.com/embed/-miukT1D6n0)
+A demo of some of the selection tools in action.
+
+&NewLine;
+With the Foundations button, you can disable the placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  
 
 | Key + Mouse-click       | Tool    | Effect                            |
