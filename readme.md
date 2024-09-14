@@ -20,7 +20,7 @@ Startup setting for the number of rows to add to the player inventory size.
 
 Startup settings to change the [layering order](https://mods.factorio.com/mod/Foundations/faq), higher numbers layer on top of lower numbers.  
 Tiles assigned with the same number, merge rather than layer.  
-If Alien Biomes is active, settings for layering the painted refined concretes are not available.  
+If Alien Biomes is active, settings for layering the painted refined concrete are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
 Otherwise, if the startup setting is enabled, this mod will supply the painted refined concrete.  
 
