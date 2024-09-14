@@ -1,9 +1,9 @@
-[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4)
-A demo of tile placement with Picker Dollies active.
+[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4)  
+A demo of tile placement with Picker Dollies active.  
 
 &NewLine;
-[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/tools-thumbnail.png?raw=true)](https://www.youtube.com/embed/-miukT1D6n0)
-A demo of some of the selection tools in action.
+[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/screenshots/tools-thumbnail.png?raw=true)](https://www.youtube.com/embed/-miukT1D6n0)  
+A demo of some of the selection tools in action.  
 
 &NewLine;
 With the Foundations button, you can disable the placement of tiles or select the tile of your choice.  
