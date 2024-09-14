@@ -2,7 +2,6 @@
 | :---- |
 |[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4) |
 
-&nbsp;
 &NewLine;
 
 |Demo of some of the selection tools in action|
