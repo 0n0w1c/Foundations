@@ -1,4 +1,4 @@
-|Demo of automated tile placement and movement (with Picker Dollies)|
+|Demo of automated tile placement and movement (via Picker Dollies)|
 |:----|
 |[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4)|
 
