@@ -37,4 +37,8 @@ There are two categories of excluded entities.
 >   inserters  
 >   belts, underground belts, splitters, and loaders  
 
+&NewLine;
+
 *These entities play a significant role in the tile layering pattern.*  
+
+&NewLine;
