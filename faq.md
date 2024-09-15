@@ -22,7 +22,7 @@ Tiles set to the same layering order merge.
 
 &NewLine;
 
-### What are the excluded entities?  
+### What are excluded entities?  
 There are two categories of excluded entities.  
 
 *Entities that never have tiles automatically placed under them:*  
