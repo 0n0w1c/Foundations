@@ -35,13 +35,12 @@ Startup setting to clean sweep (remove ground decorations), when tiles are place
 Startup setting for the number of rows to add to the player inventory size.
 
 Startup settings to change the [layering order](https://mods.factorio.com/mod/Foundations/faq), higher numbers layer on top of lower numbers.  
-Tiles assigned with the same number, merge rather than layer.  
+Tiles assigned with the same number merge rather than layer.  
 If Alien Biomes is active, settings for layering the painted refined concrete are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
 Otherwise, if the startup setting is enabled, this mod will provide the painted refined concrete.  
 
-A runtime setting for each tile, to enable the tiles made available for use with the Foundations button,  
-limiting the selections to create a *palette* of tiles, for quicker selection.  
+Runtime setting to enable tiles to be selectable by the Foundations button, limit the palette for quicker selection.  
 Dectorio users should visit the runtime settings (Map tab), most of the Dectorio tiles are not selected by default.  
 
 Runtime settings to add small/medium electric poles, inserters, belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
