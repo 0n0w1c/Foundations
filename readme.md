@@ -16,7 +16,7 @@
 
 &NewLine;
 
-With the Foundations button, you can disable the automatic placement of tiles or select the tile of your choice.  
+With the Foundations button, you can disable the automated placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  
 
 | Key + Mouse-click       | Tool    | Effect                            |
@@ -48,7 +48,7 @@ Runtime settings to add small/medium electric poles, inserters, belts, splitters
 Settings for the various supported mods are only visible when the supported mod is active.  
 
 Construction is halted if the player’s inventory lacks a sufficient quantity of the selected tile.  
-Make sure to have enough of the selected tile or disable automatic tile placement. 
+Make sure to have enough of the selected tile or disable automated tile placement. 
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
