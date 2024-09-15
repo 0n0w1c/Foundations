@@ -16,7 +16,7 @@
 
 &NewLine;
 
-Foundations button ![](https://github.com/0n0w1c/Foundations/blob/main/graphics/icons/disabled.png)  
+Foundations button ![](https://github.com/0n0w1c/Foundations/blob/main/graphics/icons/disabled_32x32.png)  
 With the Foundations button, you can disable the automated placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  
 
