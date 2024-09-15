@@ -1,3 +1,5 @@
+---
+
 ### What is tile layering and what are the effects?  
 It is the appearance and behavior of tiles, when two different types of tile are placed on adjacent positions.  
 
@@ -15,7 +17,9 @@ Tiles set to the same layering order merge.
 
 *Hazard and Dectorio's Safety Refined concrete are set to the same layering order as Refined concrete.*  
 
-&NewLine;
+
+---
+
 &NewLine;
 
 ### What are the excluded entities?  
