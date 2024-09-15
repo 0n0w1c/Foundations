@@ -48,7 +48,7 @@ Runtime settings to add small/medium electric poles, inserters, belts, splitters
 
 Settings for the various supported mods are only visible when the supported mod is active.  
 
-Attempts to build without the required number of tiles in the player inventory, will be halted.  
+Attempts to build without the required number of selected tiles in the player inventory, will be halted.  
 Make sure to have enough of the selected tiles in your inventory, or disable automatic tile placement.  
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
