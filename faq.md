@@ -1,4 +1,4 @@
-###What is tile layering and what are the effects?  
+### What is tile layering and what are the effects?  
 It is the appearance and behavior of tiles, when two different types of tile are placed on adjacent positions.  
 
 Red layering above:  
@@ -18,7 +18,7 @@ Note:  Hazard and Dectorio's Safety Refined concrete are set to the same layerin
 &NewLine;
 &NewLine;
 
-###What are the excluded entities?  
+### What are the excluded entities?  
 There are two categories of excluded entities.  
 
 Entities that never have tiles automatically placed under them:  
