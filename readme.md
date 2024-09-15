@@ -3,14 +3,18 @@
 |[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4)|
 
 &NewLine;
+&NewLine;
 
 |Demo of some of the selection tools in action|
 |:----|
 |[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/tools-thumbnail.png?raw=true)](https://www.youtube.com/embed/-miukT1D6n0)|
 
 &NewLine;
+&NewLine;
 
 ---
+
+&NewLine;
 
 With the Foundations button, you can disable the placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  
@@ -49,13 +53,18 @@ Make sure to have enough of the selected foundation tiles in your inventory, or 
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
+---
+
 #### Limitations:  
 Tiles placed or removed with the selection tools are not "Undo"-able, use them with some caution.  
 Not compatible with multi-player mode, single-player mode only.  
 
-#### Supported:
+---
+
+#### Mod provided tiles supported:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
-[Krastorio 2](https://mods.factorio.com/mod/Krastorio2)  
-[Picker Dollies](https://mods.factorio.com/mod/PickerDollies)  
+[Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
+  
+Movement via [Picker Dollies](https://mods.factorio.com/mod/PickerDollies)  
