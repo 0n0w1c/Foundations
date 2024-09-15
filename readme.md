@@ -26,7 +26,7 @@ You can also enable the available selection based tools by:
 | *[Ctrl]+[Right-click]*  | Place   | Places tiles under entities       |
 | *[Shift]+[Right-click]* | Unplace | Removes tiles from under entities |
 
-To use, release the *[Key]* and then *[Left-click]* hold and drag.  
+To use: Release the *[Key]* and then *[Left-click]* hold and drag.  
 
 ---
 
