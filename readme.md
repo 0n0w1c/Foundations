@@ -16,7 +16,7 @@
 
 &NewLine;
 
-With the Foundations button, you can disable the placement of tiles or select the tile of your choice.  
+With the Foundations button, you can disable the automatic placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  
 
 | Key + Mouse-click       | Tool    | Effect                            |
