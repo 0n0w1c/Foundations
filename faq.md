@@ -32,7 +32,7 @@ Entities that never have tiles automatically placed under them:
 &NewLine;
 &NewLine;
 
-Entities in which automatic tile placement is runtime selectable:  
+Entities for which automatic tile placement is runtime selectable:  
 >   small and medium electric poles  
 >   inserters  
 >   belts, underground belts, splitters, and loaders  
