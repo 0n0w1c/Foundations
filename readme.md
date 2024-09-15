@@ -61,7 +61,7 @@ Not compatible with multi-player mode, single-player mode only.
 
 ---
 
-#### Mod provided tiles support:
+#### Supports tiles provided by:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
 [Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
