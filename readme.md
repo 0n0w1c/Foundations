@@ -38,7 +38,7 @@ Startup settings to change the [layering order](https://mods.factorio.com/mod/Fo
 Tiles assigned with the same number, merge rather than layer.  
 If Alien Biomes is active, settings for layering the painted refined concrete are not available.  
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
-Otherwise, if the startup setting is enabled, this mod will supply the painted refined concrete.  
+Otherwise, if the startup setting is enabled, this mod will provide the painted refined concrete.  
 
 A runtime setting for each tile, allows you to limit the selections available for the Foundations button,  
 to create a "palatte" of tiles for quick selection.  
