@@ -40,8 +40,8 @@ If Alien Biomes is active, settings for layering the painted refined concrete ar
 If Dectorio is active, this mod will utilize the provided painted refined concrete.  
 Otherwise, if the startup setting is enabled, this mod will provide the painted refined concrete.  
 
-A runtime setting for each tile, to enable the tiles made available for use with the Foundations button.  
-Limiting the selections to create a *palette* of tiles, for quicker selection.  
+A runtime setting for each tile, to enable the tiles made available for use with the Foundations button,  
+limiting the selections to create a *palette* of tiles, for quicker selection.  
 Dectorio users should visit the runtime settings (Map tab), most of the Dectorio tiles are not selected by default.  
 
 Runtime settings to add small/medium electric poles, inserters, belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
