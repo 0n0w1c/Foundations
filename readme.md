@@ -16,7 +16,6 @@
 
 &NewLine;
 
-|---|---|
 |Foundations button|![](https://github.com/0n0w1c/Foundations/blob/main/graphics/icons/disabled_32x32.png)|
 |---|---|
 
