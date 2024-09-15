@@ -520,16 +520,11 @@ end
 
 
 local function on_entity_moved(event)
-    if global.foundation == DISABLED then
+    if not event or global.foundation == DISABLED then
         return
     end
 
-    if not event then
-        return
-    end
-
-    local moved_entity = event.moved_entity
-    if not moved_entity then
+    if not event.moved_entity or entity_excluded(event.moved_entity) then
         return
     end
 
