@@ -10,6 +10,8 @@
 
 &NewLine;
 
+---
+
 With the Foundations button, you can disable the placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  
 
@@ -21,6 +23,8 @@ You can also enable the available selection based tools by:
 | *[Shift]+[Right-click]* | Unplace | Removes tiles from under entities |
 
 To use, release the *[Key]* and then *[Left-click]* hold and drag.  
+
+---
 
 Startup setting to select the tile mining time (default = 0.1).  
 Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
