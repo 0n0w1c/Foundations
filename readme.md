@@ -36,7 +36,7 @@ A runtime setting for each tile, allows you to limit the selections available fo
 to create a "palatte" of tiles for quick selection.  
 Dectorio users should visit the runtime settings (Map tab), most of the Dectorio tiles are not selected by default.  
 
-Runtime settings to exclude small/medium electric poles, inserters, and belts, splitters, and loaders.  
+Runtime settings to add small/medium electric poles, inserters, and belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq#exclude).  
 
 Settings for the various supported mods are only visible when the supported mod is active.  
 
