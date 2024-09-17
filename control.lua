@@ -13,8 +13,12 @@ local mod_gui = require("mod-gui")
 local function place_foundation_under_entity(event)
     local entity = event.created_entity
 
-    if not entity then
+    if not entity and event.moved_entity then
         entity = event.moved_entity
+    end
+
+    if not entity and event.entity then
+        entity = event.entity
     end
 
     if not entity then
@@ -545,6 +549,7 @@ local function register_event_handlers()
     script.on_event(defines.events.on_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
+    script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
     script.on_event(defines.events.on_player_mined_entity, entity_mined)
     script.on_event(defines.events.on_robot_mined_entity, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)

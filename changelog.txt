@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.10.0
+Date: 17. 09. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Improved mod compatibility, place tiles under script created entities, if the event is raised
+---------------------------------------------------------------------------------------------------
 Version: 2.9.4
 Date: 15. 09. 2024
   Bugfixes:
@@ -261,7 +268,7 @@ Date: 07. 08. 2024
 Version: 2.1.5
 Date: 05. 08. 2024
   Bugfixes:
-    - Tile placement now triggers the script_raised_set_tiles event
+    - Tile placement now raises the script_raised_set_tiles event
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
