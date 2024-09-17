@@ -11,6 +11,10 @@ local mod_gui = require("mod-gui")
 
 -- place tiles under the entity
 local function place_foundation_under_entity(event)
+    if not event then
+        return
+    end
+
     local entity = event.created_entity
 
     if not entity and event.moved_entity then
