@@ -15,7 +15,11 @@ local function place_foundation_under_entity(event)
         return
     end
 
-    local entity = event.created_entity
+    local entity
+
+    if event.created_entity then
+        entity = event.created_entity
+    end
 
     if not entity and event.moved_entity then
         entity = event.moved_entity
