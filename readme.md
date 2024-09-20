@@ -12,7 +12,7 @@
 &NewLine;
 &NewLine;
 
-Note: Videos hosted on YouTube, flagged as "made for kids", unlisted, not monetized, no tracking and no ads.  
+Note: Videos hosted on YouTube, flagged as "made for kids", unlisted, not monetized, and no ads.  
 
 ---
 
