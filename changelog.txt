@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.10.2
+Date: 23. 09. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Removed incompatibe mod dependency for Easier Vehicles, issue seems to be resolved
+---------------------------------------------------------------------------------------------------
 Version: 2.10.1
 Date: 19. 09. 2024
   Bugfixes:
