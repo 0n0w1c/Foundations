@@ -7,17 +7,6 @@ function load_excluded_name_list()
         global.excluded_name_list[key] = value
     end
 
-    if game.active_mods["IndustrialRevolution3"] then
-        global.excluded_name_list["tree-planter-tree-01"] = true
-        global.excluded_name_list["tree-planter-tree-02"] = true
-        global.excluded_name_list["tree-planter-tree-03"] = true
-        global.excluded_name_list["tree-planter-tree-04"] = true
-        global.excluded_name_list["tree-planter-tree-05"] = true
-        global.excluded_name_list["tree-planter-tree-07"] = true
-        global.excluded_name_list["tree-planter-tree-09"] = true
-        global.excluded_name_list["tree-planter-ir-rubber-tree"] = true
-    end
-
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
