@@ -7,6 +7,17 @@ function load_excluded_name_list()
         global.excluded_name_list[key] = value
     end
 
+    if game.active_mods["IndustrialRevolution3"] then
+        global.excluded_name_list["tree-planter-tree-01"] = true
+        global.excluded_name_list["tree-planter-tree-02"] = true
+        global.excluded_name_list["tree-planter-tree-03"] = true
+        global.excluded_name_list["tree-planter-tree-04"] = true
+        global.excluded_name_list["tree-planter-tree-05"] = true
+        global.excluded_name_list["tree-planter-tree-07"] = true
+        global.excluded_name_list["tree-planter-tree-09"] = true
+        global.excluded_name_list["tree-planter-ir-rubber-tree"] = true
+    end
+
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
@@ -50,7 +61,7 @@ function entity_excluded(entity)
     return false
 end
 
--- check if the tile is in global.tile_names 
+-- check if the tile is in global.tile_names
 function tile_in_global_tile_names(tile)
     if tile then
         for _, tile_name in ipairs(global.tile_names) do
@@ -117,7 +128,7 @@ function return_entity_to_cursor(player, entity)
     end
 
     if not player.cursor_stack.valid_for_read then
-        player.cursor_stack.set_stack({name = entity.name, count = 1})
+        player.cursor_stack.set_stack({ name = entity.name, count = 1 })
     else
         player.cursor_stack.count = player.cursor_stack.count + 1
     end
@@ -133,7 +144,7 @@ function within_area(position, area)
     end
 
     return position.x >= area.left_top.x and position.x < area.right_bottom.x and
-           position.y >= area.left_top.y and position.y < area.right_bottom.y
+        position.y >= area.left_top.y and position.y < area.right_bottom.y
 end
 
 function get_area_under_entity(entity)
@@ -227,7 +238,7 @@ function is_within_reach(player, area)
     local closest_y = math.max(area.left_top.y, math.min(player_position.y, area.right_bottom.y))
 
     -- calculate the distance between the player and the closest point
-    local distance = math.sqrt((closest_x - player_position.x)^2 + (closest_y - player_position.y)^2)
+    local distance = math.sqrt((closest_x - player_position.x) ^ 2 + (closest_y - player_position.y) ^ 2)
 
     -- check if the distance is within the player's reach
     return distance <= reach
@@ -236,7 +247,7 @@ end
 function get_mineable_tiles()
     local tiles_to_exclude = TILES_TO_EXCLUDE
     local mineable_tiles = {}
-    local blueprintable_tiles = game.get_filtered_tile_prototypes{{filter="blueprintable"}}
+    local blueprintable_tiles = game.get_filtered_tile_prototypes { { filter = "blueprintable" } }
     if not blueprintable_tiles then
         return
     end
@@ -269,8 +280,8 @@ function load_tiles(entity, area)
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local current_tile = surface.get_tile(x, y)
-            local search_area = {{x, y}, {x + 1, y + 1}}
-            local resources = surface.find_entities_filtered({area = search_area, type = "resource"})
+            local search_area = { { x, y }, { x + 1, y + 1 } }
+            local resources = surface.find_entities_filtered({ area = search_area, type = "resource" })
             local tiles_to_exclude = TILES_TO_EXCLUDE
 
             -- check to make sure the tile is not a resource tile or an excluded tile
@@ -278,9 +289,9 @@ function load_tiles(entity, area)
                 -- prepare to return the current tile and to place a foundation tile
                 if current_tile.name ~= global.foundation then
                     if mineable_tiles[current_tile.name] then
-                        table.insert(tiles_to_return, {name = current_tile.name, position = {x = x, y = y}})
+                        table.insert(tiles_to_return, { name = current_tile.name, position = { x = x, y = y } })
                     end
-                    table.insert(tiles_to_place, {name = global.foundation, position = {x = x, y = y}})
+                    table.insert(tiles_to_place, { name = global.foundation, position = { x = x, y = y } })
                 end
             end
         end
@@ -368,5 +379,5 @@ function load_global_data()
         compatibility.krastorio2()
     end
 
-    set_global_tile_names_index ()
+    set_global_tile_names_index()
 end

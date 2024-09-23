@@ -10,14 +10,14 @@ end
 -- startup
 if not mods["Dectorio"] then
     data:extend({
-    {
-        type = "bool-setting",
-        name = "Foundations-supply-concrete",
-        setting_type = "startup",
-        default_value = true,
-        order = get_next_order()
-    }
-})
+        {
+            type = "bool-setting",
+            name = "Foundations-supply-concrete",
+            setting_type = "startup",
+            default_value = true,
+            order = get_next_order()
+        }
+    })
 end
 
 data:extend({

@@ -11,10 +11,10 @@ end
 
 function compatibility.vanilla()
     for _, color in pairs(COLORS) do
-        if settings.global["Foundations-"..color.name.."-refined-concrete"].value then
-            add_to_global_tile_names(color.name.."-refined-concrete", color.name.."-refined-concrete")
+        if settings.global["Foundations-" .. color.name .. "-refined-concrete"].value then
+            add_to_global_tile_names(color.name .. "-refined-concrete", color.name .. "-refined-concrete")
         end
-        add_to_global_tile_to_item(color.name.."-refined-concrete", color.name.."-refined-concrete")
+        add_to_global_tile_to_item(color.name .. "-refined-concrete", color.name .. "-refined-concrete")
     end
 end
 
@@ -38,34 +38,34 @@ function compatibility.dectorio()
 
     if settings.startup["dectorio-gravel"].value then
         for _, gravel in pairs(GRAVELS) do
-            if settings.global["Foundations-dect-"..gravel.."-gravel"].value then
-                add_to_global_tile_names("dect-"..gravel.."-gravel", "dect-"..gravel.."-gravel")
+            if settings.global["Foundations-dect-" .. gravel .. "-gravel"].value then
+                add_to_global_tile_names("dect-" .. gravel .. "-gravel", "dect-" .. gravel .. "-gravel")
             end
-            add_to_global_tile_to_item("dect-"..gravel.."-gravel", "dect-"..gravel.."-gravel")
+            add_to_global_tile_to_item("dect-" .. gravel .. "-gravel", "dect-" .. gravel .. "-gravel")
         end
     end
 
     if settings.startup["dectorio-painted-concrete"].value then
         for _, variant in pairs(PAINTED_CONCRETE) do
-            if settings.global["Foundations-dect-paint-"..variant].value then
-                add_to_global_tile_names("dect-paint-"..variant.."-left", "dect-paint-"..variant)
-                add_to_global_tile_names("dect-paint-"..variant.."-right", "dect-paint-"..variant)
+            if settings.global["Foundations-dect-paint-" .. variant].value then
+                add_to_global_tile_names("dect-paint-" .. variant .. "-left", "dect-paint-" .. variant)
+                add_to_global_tile_names("dect-paint-" .. variant .. "-right", "dect-paint-" .. variant)
             end
-            add_to_global_tile_to_item("dect-paint-"..variant.."-left", "dect-paint-"..variant)
-            add_to_global_tile_to_item("dect-paint-"..variant.."-right", "dect-paint-"..variant)
+            add_to_global_tile_to_item("dect-paint-" .. variant .. "-left", "dect-paint-" .. variant)
+            add_to_global_tile_to_item("dect-paint-" .. variant .. "-right", "dect-paint-" .. variant)
 
-            if settings.global["Foundations-dect-paint-refined-"..variant].value then
-                add_to_global_tile_names("dect-paint-refined-"..variant.."-left", "dect-paint-refined-"..variant)
-                add_to_global_tile_names("dect-paint-refined-"..variant.."-right", "dect-paint-refined-"..variant)
+            if settings.global["Foundations-dect-paint-refined-" .. variant].value then
+                add_to_global_tile_names("dect-paint-refined-" .. variant .. "-left", "dect-paint-refined-" .. variant)
+                add_to_global_tile_names("dect-paint-refined-" .. variant .. "-right", "dect-paint-refined-" .. variant)
             end
-            add_to_global_tile_to_item("dect-paint-refined-"..variant.."-left", "dect-paint-refined-"..variant)
-            add_to_global_tile_to_item("dect-paint-refined-"..variant.."-right", "dect-paint-refined-"..variant)
+            add_to_global_tile_to_item("dect-paint-refined-" .. variant .. "-left", "dect-paint-refined-" .. variant)
+            add_to_global_tile_to_item("dect-paint-refined-" .. variant .. "-right", "dect-paint-refined-" .. variant)
         end
         for _, color in pairs(COLORS) do
-            if settings.global["Foundations-"..color.name.."-refined-concrete"].value then
-                add_to_global_tile_names(color.name.."-refined-concrete", "dect-"..color.name.."-refined-concrete")
+            if settings.global["Foundations-" .. color.name .. "-refined-concrete"].value then
+                add_to_global_tile_names(color.name .. "-refined-concrete", "dect-" .. color.name .. "-refined-concrete")
             end
-            add_to_global_tile_to_item(color.name.."-refined-concrete", "dect-"..color.name.."-refined-concrete")
+            add_to_global_tile_to_item(color.name .. "-refined-concrete", "dect-" .. color.name .. "-refined-concrete")
         end
     end
 end

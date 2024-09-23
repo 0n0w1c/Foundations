@@ -2,9 +2,10 @@
 Version: 2.10.2
 Date: 23. 09. 2024
   Bugfixes:
-    - None
+    - Crash if a tree spawned while clicking the Foundations button (Industrial Revolution 3)
   Changes:
-    - Removed incompatible mod dependency for Easier Vehicles
+    - Added entity type tree as an excluded entity
+    - Removed the incompatible mod dependency for Easier Vehicles
 ---------------------------------------------------------------------------------------------------
 Version: 2.10.1
 Date: 19. 09. 2024
