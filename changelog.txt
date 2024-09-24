@@ -4,7 +4,7 @@ Date: 24. 09. 2024
   Bugfixes:
     - None
   Changes:
-    - Unhide optional mod dependencies
+    - Hidden mod dependencies are now Optional mod dependencies
 ---------------------------------------------------------------------------------------------------
 Version: 2.10.2
 Date: 23. 09. 2024
