@@ -45,7 +45,6 @@ If Dectorio is active, this mod will utilize the provided painted refined concre
 Otherwise, if the startup setting is enabled, this mod will provide the painted refined concrete.  
 
 &NewLine;
-&NewLine;
 
 * Runtime settings to add small/medium electric poles, inserters, belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
 

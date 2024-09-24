@@ -32,17 +32,18 @@ There are two categories of excluded entities.
 >   mining-drills  
 >   offshore-pumps  
 >   spidertrons  
+>   trees  
 
 &NewLine;
 &NewLine;
 
 *Entities for which automatic tile placement is runtime selectable:*  
->   small and medium electric poles  
->   inserters  
 >   belts, underground belts, splitters, and loaders  
+>   inserters  
+>   small and medium electric poles  
 
 &NewLine;
 
-*These entities play a significant role in the tile layering pattern.*  
+*The runtime selectable entities play a significant role in the tile layering pattern.*  
 
 &NewLine;
