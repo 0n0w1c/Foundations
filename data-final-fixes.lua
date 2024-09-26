@@ -1,7 +1,7 @@
 for _, tile in pairs(data.raw["tile"]) do
     if tile.minable then
         if settings.startup["Foundations-mining-time"].value > 0 then
-            tile.minable.mining_time = settings.startup["Foundations-mining-time"].value
+            tile.minable.mining_time = tonumber(settings.startup["Foundations-mining-time"].value) or 0.1
         end
 
         if settings.startup["Foundations-clean-sweep"].value then

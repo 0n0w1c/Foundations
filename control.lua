@@ -1,9 +1,3 @@
-defines = defines or {}
-script = script or {}
-game = game or {}
-global = global or {}
-remote = remote or {}
-
 require("constants")
 require("utilities")
 
@@ -376,7 +370,7 @@ local function player_selected_area(event)
                                 -- place global.foundation tile if it's not already the same tile
                                 if tile.name ~= global.foundation then
                                     table.insert(tiles_to_place,
-                                    { name = global.foundation, position = { x = x, y = y } })
+                                        { name = global.foundation, position = { x = x, y = y } })
                                 end
                             end
                         end
