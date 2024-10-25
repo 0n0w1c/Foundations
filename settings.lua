@@ -44,14 +44,6 @@ data:extend({
         default_value = false,
         order = get_next_order()
     },
-    {
-        type = "bool-setting",
-        name = "Foundations-layer-tarmac",
-        setting_type = "startup",
-        default_value = false,
-        order = get_next_order(),
-        hidden = not mods["IndustrialRevolution3"]
-    }
 })
 
 if not mods["alien-biomes"] then
@@ -227,18 +219,6 @@ if mods["aai-industry"] or mods["RoughStonePath"] then
         {
             type = "bool-setting",
             name = "Foundations-rough-stone-path",
-            setting_type = "runtime-global",
-            default_value = true,
-            order = get_next_order(),
-        }
-    })
-end
-
-if mods["IndustrialRevolution3"] then
-    data:extend({
-        {
-            type = "bool-setting",
-            name = "Foundations-tarmac",
             setting_type = "runtime-global",
             default_value = true,
             order = get_next_order(),

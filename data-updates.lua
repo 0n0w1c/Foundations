@@ -66,13 +66,6 @@ then
     end
 end
 
-if mods["IndustrialRevolution3"] and (not mods["alien-biomes"])
-    and settings.startup["Foundations-layer-tarmac"].value
-    and settings.startup["Foundations-layer-concrete"].value
-then
-    data.raw.tile["tarmac"].layer = TARMAC_LAYER
-end
-
 if mods["Krastorio2"] and (not mods["alien-biomes"])
     and settings.startup["Foundations-layer-concrete"].value
 then

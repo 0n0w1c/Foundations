@@ -11,13 +11,8 @@ function load_excluded_name_list()
         global.excluded_name_list["small-electric-pole"] = true
         global.excluded_name_list["medium-electric-pole"] = true
 
-        if game.active_mods["aai-industry"] then
+        if script.active_mods["aai-industry"] then
             global.excluded_name_list["small-iron-electric-pole"] = true
-        end
-
-        if game.active_mods["IndustrialRevolution3"] then
-            global.excluded_name_list["small-bronze-pole"] = true
-            global.excluded_name_list["small-iron-pole"] = true
         end
     end
 end
@@ -236,6 +231,24 @@ end
 function get_mineable_tiles()
     local tiles_to_exclude = TILES_TO_EXCLUDE
     local mineable_tiles = {}
+
+    -- Fetch mineable tiles directly using prototypes.get_tile_filtered
+    local blueprintable_tiles = prototypes.get_tile_filtered({ { filter = "minable" } })
+
+    -- Filter out excluded tiles
+    for name, tile in pairs(blueprintable_tiles) do
+        if not tiles_to_exclude[name] then
+            mineable_tiles[name] = true
+        end
+    end
+
+    return mineable_tiles
+end
+
+--[[
+function get_mineable_tiles()
+    local tiles_to_exclude = TILES_TO_EXCLUDE
+    local mineable_tiles = {}
     local blueprintable_tiles = game.get_filtered_tile_prototypes { { filter = "blueprintable" } }
     if not blueprintable_tiles then
         return
@@ -250,6 +263,8 @@ function get_mineable_tiles()
 
     return mineable_tiles
 end
+]]
+
 
 function load_tiles(entity, area)
     if not entity or not area then
@@ -350,21 +365,18 @@ function load_global_data()
     add_to_global_tile_to_item("refined-hazard-concrete-left", "refined-hazard-concrete")
     add_to_global_tile_to_item("refined-hazard-concrete-right", "refined-hazard-concrete")
 
-    if game.active_mods["RoughStonePath"] then
+    if script.active_mods["RoughStonePath"] then
         compatibility.rough_stone_path()
     end
-    if game.active_mods["aai-industry"] then
+    if script.active_mods["aai-industry"] then
         compatibility.aai_industry()
     end
-    if game.active_mods["Dectorio"] then
+    if script.active_mods["Dectorio"] then
         compatibility.dectorio()
     else
         compatibility.vanilla()
     end
-    if game.active_mods["IndustrialRevolution3"] then
-        compatibility.industrialrevolution3()
-    end
-    if game.active_mods["Krastorio2"] then
+    if script.active_mods["Krastorio2"] then
         compatibility.krastorio2()
     end
 

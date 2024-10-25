@@ -71,7 +71,6 @@ Not compatible with multi-player mode, single-player mode only.
 #### Supports tiles provided by:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
-[Industrial Revolution 3](https://mods.factorio.com/mod/IndustrialRevolution3)  
 [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
   
-Movement via [Picker Dollies](https://mods.factorio.com/mod/PickerDollies)  
+Movement via [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  

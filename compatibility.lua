@@ -70,13 +70,6 @@ function compatibility.dectorio()
     end
 end
 
-function compatibility.industrialrevolution3()
-    if settings.global["Foundations-tarmac"].value then
-        add_to_global_tile_names("tarmac", "tarmac")
-    end
-    add_to_global_tile_to_item("tarmac", "tarmac")
-end
-
 function compatibility.krastorio2()
     if settings.global["Foundations-kr-black-reinforced-plate"].value then
         add_to_global_tile_names("kr-black-reinforced-plate", "kr-black-reinforced-plate")

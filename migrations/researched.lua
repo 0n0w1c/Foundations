@@ -6,11 +6,7 @@ for _, force in pairs(game.forces) do
     local researched = false
 
     if technologies then
-        if game.active_mods["IndustrialRevolution3"] then
-            researched = technologies["ir-concrete-2"].researched
-        else
-            researched = technologies["concrete"].researched
-        end
+        researched = technologies["concrete"].researched
     end
 
     if recipes then

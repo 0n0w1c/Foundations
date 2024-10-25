@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.0
+Date: 24. 09. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Support for Factorio 2.0 (Probably not ready for Space Age, new surfaces and placement rules)
+    - Removed support for Industrial Revolution 3 (not updating to Factorio 2.0)
+    - Removed support for Picker Dollies (Not likely to be updated to 2.0)
+    - Added support for Even Pickier Dollies (2.0 replacement for Picker Dollies)
+---------------------------------------------------------------------------------------------------
 Version: 2.10.3
 Date: 24. 09. 2024
   Bugfixes:
