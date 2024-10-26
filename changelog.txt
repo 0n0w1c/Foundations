@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.1
+Date: 25. 10. 2024
+  Bugfixes:
+    - Painted refined concrete placed as regular refined concrete
+    - With layering active, refined and painted refined conrete placed at ground tile level
+  Changes:
+    - Refactored: Ripped the proverbial stuffin's out of it
+    - Support for Factorio 2.0 (Probably not Space Age)
+    - Removed support for Krastoro2 (Will revisit if updated to 2.0)
+    - Removed support for Dectorio (Not likely to be updated to 2.0)
+    - Removed painted refined concete (Unknown if they will return)
+    - No longer modifies the tile layer setting
+    - Only vanilla and AAI Industry stone path tiles are currently supported
+---------------------------------------------------------------------------------------------------
 Version: 2.11.0
 Date: 25. 10. 2024
   Bugfixes:

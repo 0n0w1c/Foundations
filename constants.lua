@@ -2,32 +2,6 @@ THIS_MOD = "Foundations"
 DISABLED = "disabled"
 INVENTORY_ROWS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 MINING_TIMES = { 0, 0.1, 0.2, 0.3, 0.4, 0.5 }
-STACKING_SLOTS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }
-WHITE_REINFORCED_PLATE_SLOT = 12
-WHITE_REINFORCED_LAYER = WHITE_REINFORCED_PLATE_SLOT * 3 + 200
-BLACK_REINFORCED_PLATE_SLOT = 13
-BLACK_REINFORCED_LAYER = BLACK_REINFORCED_PLATE_SLOT * 3 + 200
-TARMAC_SLOT = 14
-TARMAC_LAYER = TARMAC_SLOT * 3 + 200
-WOOD_SLOT = 15 -- highest layering slot
-WOOD_LAYER = WOOD_SLOT * 3 + 200
-
-GRAVELS = {
-    "coal",
-    "copper-ore",
-    "iron-ore",
-    "stone"
-}
-
-PAINTED_CONCRETE = {
-    "caution",
-    "danger",
-    "defect",
-    "emergency",
-    "operations",
-    "radiation",
-    "safety"
-}
 
 COLORS = {
     { name = "acid",   rgb_color = { r = 0.559, g = 0.761, b = 0.157, a = 0.5 } },

@@ -245,27 +245,6 @@ function get_mineable_tiles()
     return mineable_tiles
 end
 
---[[
-function get_mineable_tiles()
-    local tiles_to_exclude = TILES_TO_EXCLUDE
-    local mineable_tiles = {}
-    local blueprintable_tiles = game.get_filtered_tile_prototypes { { filter = "blueprintable" } }
-    if not blueprintable_tiles then
-        return
-    end
-
-    -- filter the blueprintable (minable) tiles to remove excluded tiles
-    for name, _ in pairs(blueprintable_tiles) do
-        if not tiles_to_exclude[name] then
-            mineable_tiles[name] = true
-        end
-    end
-
-    return mineable_tiles
-end
-]]
-
-
 function load_tiles(entity, area)
     if not entity or not area then
         return
@@ -365,19 +344,8 @@ function load_global_data()
     add_to_global_tile_to_item("refined-hazard-concrete-left", "refined-hazard-concrete")
     add_to_global_tile_to_item("refined-hazard-concrete-right", "refined-hazard-concrete")
 
-    if script.active_mods["RoughStonePath"] then
+    if script.active_mods["aai-industry"] or script.active_mods["stone-path"] then
         compatibility.rough_stone_path()
-    end
-    if script.active_mods["aai-industry"] then
-        compatibility.aai_industry()
-    end
-    if script.active_mods["Dectorio"] then
-        compatibility.dectorio()
-    else
-        compatibility.vanilla()
-    end
-    if script.active_mods["Krastorio2"] then
-        compatibility.krastorio2()
     end
 
     set_global_tile_names_index()

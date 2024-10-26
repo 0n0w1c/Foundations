@@ -38,22 +38,13 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
 * Startup setting for the number of rows to add to the player inventory size.
 
-* Startup settings to change the [layering order](https://mods.factorio.com/mod/Foundations/faq), higher numbers layer on top of lower numbers.  
-Tiles assigned with the same number merge rather than layer.  
-If Alien Biomes is active, settings for layering the painted refined concrete are not available.  
-If Dectorio is active, this mod will utilize the provided painted refined concrete.  
-Otherwise, if the startup setting is enabled, this mod will provide the painted refined concrete.  
-
 &NewLine;
 
 * Runtime settings to add small/medium electric poles, inserters, belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
 
 * Runtime setting to enable tiles to be selectable via the Foundations button, limit the palette for quicker selection.  
-Dectorio users should visit the runtime settings (Map tab), most of the Dectorio tiles are not selected by default.  
 
 ---
-
-Settings for the various supported mods are only visible when the supported mod is active.  
 
 Construction is halted if the player’s inventory lacks a sufficient quantity of the selected tile.  
 Make sure to have enough of the selected tile or disable automated tile placement. 
@@ -70,7 +61,5 @@ Not compatible with multi-player mode, single-player mode only.
 
 #### Supports tiles provided by:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
-[Dectorio](https://mods.factorio.com/mod/Dectorio)  
-[Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
-  
+
 Movement via [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  
