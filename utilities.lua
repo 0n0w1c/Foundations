@@ -1,54 +1,54 @@
 local compatibility = require("compatibility")
 
 function load_excluded_name_list()
-    global.excluded_name_list = {}
+    storage.excluded_name_list = {}
 
     for key, value in pairs(EXCLUDED_NAME_LIST) do
-        global.excluded_name_list[key] = value
+        storage.excluded_name_list[key] = value
     end
 
     if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
-        global.excluded_name_list["small-electric-pole"] = true
-        global.excluded_name_list["medium-electric-pole"] = true
+        storage.excluded_name_list["small-electric-pole"] = true
+        storage.excluded_name_list["medium-electric-pole"] = true
 
         if script.active_mods["aai-industry"] then
-            global.excluded_name_list["small-iron-electric-pole"] = true
+            storage.excluded_name_list["small-iron-electric-pole"] = true
         end
     end
 end
 
 function load_excluded_type_list()
-    global.excluded_type_list = {}
+    storage.excluded_type_list = {}
 
     for key, value in pairs(EXCLUDED_TYPE_LIST) do
-        global.excluded_type_list[key] = value
+        storage.excluded_type_list[key] = value
     end
 
     if settings.global["Foundations-exclude-inserters"].value then
-        global.excluded_type_list["inserter"] = true
+        storage.excluded_type_list["inserter"] = true
     end
 
     if settings.global["Foundations-exclude-belts"].value then
-        global.excluded_type_list["transport-belt"] = true
-        global.excluded_type_list["underground-belt"] = true
-        global.excluded_type_list["splitter"] = true
-        global.excluded_type_list["loader"] = true
+        storage.excluded_type_list["transport-belt"] = true
+        storage.excluded_type_list["underground-belt"] = true
+        storage.excluded_type_list["splitter"] = true
+        storage.excluded_type_list["loader"] = true
     end
 end
 
 -- check if an entity is excluded based on name or type
 function entity_excluded(entity)
-    if entity and (global.excluded_name_list[entity.name] or global.excluded_type_list[entity.type]) then
+    if entity and (storage.excluded_name_list[entity.name] or storage.excluded_type_list[entity.type]) then
         return true
     end
 
     return false
 end
 
--- check if the tile is in global.tile_names
+-- check if the tile is in storage.tile_names
 function tile_in_global_tile_names(tile)
     if tile then
-        for _, tile_name in ipairs(global.tile_names) do
+        for _, tile_name in ipairs(storage.tile_names) do
             if tile_name == tile then
                 return true
             end
@@ -73,24 +73,24 @@ function recipe_enabled(force, recipe_name)
     return true
 end
 
--- add to global.tile_names and global.tile_to_item, if not already present and recipe enabled
+-- add to storage.tile_names and storage.tile_to_item, if not already present and recipe enabled
 function add_to_global_tile_names(tile_name, item_name)
     local force = game.forces["player"]
 
     if force and tile_name and item_name then
         if not tile_in_global_tile_names(tile_name) and recipe_enabled(force, item_name) then
-            table.insert(global.tile_names, tile_name)
+            table.insert(storage.tile_names, tile_name)
         end
     end
 end
 
--- add to global.tile_to_item, if not already present and recipe enabled
+-- add to storage.tile_to_item, if not already present and recipe enabled
 function add_to_global_tile_to_item(tile_name, item_name)
     local force = game.forces["player"]
 
     if force and tile_name and item_name then
-        if not global.tile_to_item[tile_name] and recipe_enabled(force, item_name) then
-            global.tile_to_item[tile_name] = item_name
+        if not storage.tile_to_item[tile_name] and recipe_enabled(force, item_name) then
+            storage.tile_to_item[tile_name] = item_name
         end
     end
 end
@@ -101,7 +101,7 @@ function player_has_sufficient_tiles(player, tile_name, count)
         return false
     end
 
-    local item_name = global.tile_to_item[tile_name]
+    local item_name = storage.tile_to_item[tile_name]
     return item_name and player.get_item_count(item_name) >= count
 end
 
@@ -270,11 +270,11 @@ function load_tiles(entity, area)
             -- check to make sure the tile is not a resource tile or an excluded tile
             if #resources == 0 and not tiles_to_exclude["current_tile.name"] then
                 -- prepare to return the current tile and to place a foundation tile
-                if current_tile.name ~= global.foundation then
+                if current_tile.name ~= storage.foundation then
                     if mineable_tiles[current_tile.name] then
                         table.insert(tiles_to_return, { name = current_tile.name, position = { x = x, y = y } })
                     end
-                    table.insert(tiles_to_place, { name = global.foundation, position = { x = x, y = y } })
+                    table.insert(tiles_to_place, { name = storage.foundation, position = { x = x, y = y } })
                 end
             end
         end
@@ -285,31 +285,31 @@ end
 
 function set_global_tile_names_index()
     local found = false
-    -- try to find the index for global.foundation
-    for index, tile in ipairs(global.tile_names) do
-        if tile == global.foundation then
-            global.tile_names_index = index
+    -- try to find the index for storage.foundation
+    for index, tile in ipairs(storage.tile_names) do
+        if tile == storage.foundation then
+            storage.tile_names_index = index
             found = true
             break
         end
     end
 
-    -- global.foundation not found in global.tile_names, reset
+    -- storage.foundation not found in storage.tile_names, reset
     if not found then
-        global.tile_names_index = 1
-        global.foundation = DISABLED
+        storage.tile_names_index = 1
+        storage.foundation = DISABLED
     end
 end
 
 function load_global_data()
-    global.foundation = global.foundation or DISABLED
-    global.player_index = global.player_index or 1
+    storage.foundation = storage.foundation or DISABLED
+    storage.player_index = storage.player_index or 1
 
     load_excluded_name_list()
     load_excluded_type_list()
 
     -- start fresh, tiles could have been added or removed
-    global.tile_names = {}
+    storage.tile_names = {}
 
     -- add disabled, at positon 1
     add_to_global_tile_names(DISABLED, DISABLED)

@@ -1,5 +1,4 @@
 for _, tile in pairs(data.raw["tile"]) do
-    log("jlb: Tile = |" .. tile.name .. "|")
     if tile.minable then
         if settings.startup["Foundations-mining-time"].value > 0 then
             tile.minable.mining_time = tonumber(settings.startup["Foundations-mining-time"].value) or 0.1

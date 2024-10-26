@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.2
+Date: 26. 10. 2024
+  Bugfixes:
+    - Crash caused by using 1.1 persistent memory, changed from global to storage
+    - Removed a debug to log
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.11.1
 Date: 25. 10. 2024
   Bugfixes:
