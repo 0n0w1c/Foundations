@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.3
+Date: 26. 10. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added the startup option to enable hidden refined concrete variants (aka painted)
+---------------------------------------------------------------------------------------------------
 Version: 2.11.2
 Date: 26. 10. 2024
   Bugfixes:
@@ -17,7 +24,7 @@ Date: 25. 10. 2024
     - Support for Factorio 2.0 (Probably not Space Age)
     - Removed support for Krastoro2 (Will revisit if updated to 2.0)
     - Removed support for Dectorio (Not likely to be updated to 2.0)
-    - Removed painted refined concete (Unknown if they will return)
+    - Removed painted refined concete
     - No longer modifies the tile layer setting
     - Only vanilla and AAI Industry stone path tiles are currently supported
 ---------------------------------------------------------------------------------------------------

@@ -348,5 +348,9 @@ function load_global_data()
         compatibility.rough_stone_path()
     end
 
+    if settings.startup["Foundations-concrete-variants"].value then
+        compatibility.vanilla()
+    end
+
     set_global_tile_names_index()
 end

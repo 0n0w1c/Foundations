@@ -41,28 +41,6 @@ data:extend({
     }
 })
 
-
---[[
-data:extend({
-    {
-        type = "selection-tool",
-        name = "Foundations-fill-tool",
-        icon = "__base__/graphics/icons/blueprint.png",
-        icon_size = 64,
-        flags = {},
-        subgroup = "tool",
-        order = "c[automated-construction]-a[blueprint]",
-        stack_size = 1,
-        selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        selection_mode = { "any-tile" },
-        alt_selection_mode = { "any-tile" },
-        selection_cursor_box_type = "entity",
-        alt_selection_cursor_box_type = "entity",
-    }
-})
-]]
-
 data:extend({
     {
         type = "selection-tool",
@@ -87,28 +65,6 @@ data:extend({
         }
     }
 })
-
-
---[[
-data:extend({
-    {
-        type = "selection-tool",
-        name = "Foundations-unfill-tool",
-        icon = "__base__/graphics/icons/deconstruction-planner.png",
-        icon_size = 64,
-        flags = {},
-        subgroup = "tool",
-        order = "c[automated-construction]-a[blueprint]",
-        stack_size = 1,
-        selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        selection_mode = { "any-tile" },
-        alt_selection_mode = { "any-tile" },
-        selection_cursor_box_type = "entity",
-        alt_selection_cursor_box_type = "entity",
-    }
-})
-]]
 
 data:extend({
     {
@@ -135,29 +91,6 @@ data:extend({
     }
 })
 
-
---[[
-data:extend({
-    {
-        type = "selection-tool",
-        name = "Foundations-place-tool",
-        icon = "__base__/graphics/icons/blueprint.png",
-        icon_size = 64,
-        flags = {},
-        subgroup = "tool",
-        order = "c[automated-construction]-a[blueprint]",
-        stack_size = 1,
-        selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        selection_mode = { "any-tile" },
-        alt_selection_mode = { "any-tile" },
-        selection_cursor_box_type = "entity",
-        alt_selection_cursor_box_type = "entity",
-    }
-})
-]]
-
-
 data:extend({
     {
         type = "selection-tool",
@@ -183,23 +116,37 @@ data:extend({
     }
 })
 
---[[
-data:extend({
-    {
-        type = "selection-tool",
-        name = "Foundations-unplace-tool",
-        icon = "__base__/graphics/icons/deconstruction-planner.png",
-        icon_size = 64,
-        flags = {},
-        subgroup = "tool",
-        order = "c[automated-construction]-a[blueprint]",
-        stack_size = 1,
-        selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        alt_selection_color = { r = 0.7, g = 0.7, b = 0.7 },
-        selection_mode = { "any-tile" },
-        alt_selection_mode = { "any-tile" },
-        selection_cursor_box_type = "entity",
-        alt_selection_cursor_box_type = "entity",
-    }
-})
-]]
+if settings.startup["Foundations-concrete-variants"].value then
+    -- Add items for each color
+    for _, color in pairs(COLORS) do
+        local template = util.table.deepcopy(data.raw.item['refined-concrete'])
+        if template and template.name then
+            template.name = color.name .. "-" .. template.name
+            template.localised_name = { "item-name.Foundations-" .. color.name .. "-refined-concrete" }
+            template.place_as_tile.result = template.name
+            template.subgroup = "terrain"
+            template.icons = { {
+                icon = template.icon,
+                tint = data.raw["tile"][template.name].tint
+            } }
+            template.hidden = nil
+
+            data:extend({ template })
+        end
+    end
+
+    -- Add recipes for each color
+    for _, color in pairs(COLORS) do
+        local template = util.table.deepcopy(data.raw.recipe['refined-concrete'])
+        if template and template.name then
+            template.name = color.name .. "-" .. template.name
+            template.localised_name = { "item-name.Foundations-" .. color.name .. "-refined-concrete" }
+            template.enabled = false
+            template.ingredients = { { type = "item", name = "refined-concrete", amount = 10 } }
+            template.energy_required = 0.25
+            template.products = { { type = "item", name = template.name, amount = 10 } }
+            template.results = { { type = "item", name = template.name, amount = 10 } }
+            data:extend({ template })
+        end
+    end
+end
