@@ -11,7 +11,7 @@ Version: 2.11.1
 Date: 25. 10. 2024
   Bugfixes:
     - Painted refined concrete placed as regular refined concrete
-    - With layering active, refined and painted refined concrete placed at ground tile level
+    - With layering active, refined and painted refined concrete placed at ground tile layer
   Changes:
     - Refactored: Ripped the proverbial stuffin's out of it
     - Support for Factorio 2.0 (Probably not Space Age)
