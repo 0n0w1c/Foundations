@@ -34,16 +34,16 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 ---
 
+* Startup setting for the number of rows to add to the player inventory size.
 * Startup setting to select the tile mining time (default = 0.1).  
 * Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
-* Startup setting for the number of rows to add to the player inventory size.
 * Startup setting to enable the hidden refined concrete variants.
 
 &NewLine;
 
 * Runtime settings to add small/medium electric poles, inserters, belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
 
-* Runtime settings to enable tiles to be selectable via the Foundations button, limit the palette for quicker selection.  
+* Runtime settings to enable tiles to be selectable via the Foundations button, limits the palette for quicker selection.  
 
 ---
 

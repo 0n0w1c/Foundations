@@ -7,7 +7,7 @@ if settings.startup["Foundations-concrete-variants"].value then
         data.raw["tile"][color_tile].hidden = nil
         data.raw["tile"][color_tile].subgroup = "artificial-tiles"
         data.raw["tile"][color_tile].layer_group = "ground-artificial"
-        data.raw["tile"][color_tile].frozen_variant = "frozen-refined-concrete"
+        --data.raw["tile"][color_tile].frozen_variant = "frozen-refined-concrete"
         data.raw["tile"][color_tile].minable = {
             mining_time = 0.1,
             result = color_tile

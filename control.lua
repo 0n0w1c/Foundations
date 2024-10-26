@@ -75,6 +75,10 @@ local function update_button()
     local sprite_path = "tile/" .. storage.tile_names[storage.tile_names_index]
     local tool_tip = { "sprite-button.Foundations-tooltip-" .. storage.tile_names[storage.tile_names_index] }
 
+    if not sprite_path or #sprite_path <= 5 then
+        storage.tile_names_index = 1
+    end
+
     if storage.tile_names_index == 1 then
         sprite_path = "Foundations-disabled"
     end

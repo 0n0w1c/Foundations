@@ -4,6 +4,7 @@ Date: 26. 10. 2024
   Bugfixes:
     - None
   Changes:
+    - Marked Space Age as incomptible (Unknown when/if this will change)
     - Added the startup option to enable hidden refined concrete variants (aka painted)
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.2

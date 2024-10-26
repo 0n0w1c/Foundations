@@ -107,9 +107,7 @@ end
 
 -- when player does not have sufficent tiles in their inventory
 function return_entity_to_cursor(player, entity)
-    if not player or not entity then
-        return
-    end
+    if not player or not entity or not entity.valid or not entity.prototype then return end
 
     if not player.cursor_stack.valid_for_read then
         player.cursor_stack.set_stack({ name = entity.name, count = 1 })
