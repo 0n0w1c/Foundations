@@ -3,9 +3,40 @@ require("utilities")
 
 local mod_gui = require("mod-gui")
 
+local function is_player_in_remote_view(player)
+    return player.controller_type == defines.controllers.remote
+end
+
+local function is_compatible_surface(event)
+    local surface_name = nil
+
+    -- 1. If the event has a `surface_index`, check the surface directly
+    if event.surface_index then
+        local surface = game.surfaces[event.surface_index]
+        surface_name = surface and surface.name
+
+    -- 2. If it’s a player-based event, check if the player is on a compatible surface and not in remote view
+    elseif event.player_index then
+        local player = game.get_player(event.player_index)
+        if player and is_player_in_remote_view(player) then
+            return false  -- Ignore if player is in remote view
+        end
+        surface_name = player and player.surface.name
+
+    -- 3. For entity-related events, check the entity's surface
+    elseif event.entity and event.entity.surface then
+        surface_name = event.entity.surface.name
+    end
+
+    -- Check compatibility with defined surfaces
+    local is_compatible = surface_name and COMPATIBLE_SURFACES[surface_name] == true
+    return is_compatible
+end
+
 -- place tiles under the entity
 local function place_foundation_under_entity(event)
     if not event then return end
+    if not is_compatible_surface(event) then return end
 
     local entity
 
@@ -75,7 +106,7 @@ local function update_button()
     local sprite_path = "tile/" .. storage.tile_names[storage.tile_names_index]
     local tool_tip = { "sprite-button.Foundations-tooltip-" .. storage.tile_names[storage.tile_names_index] }
 
-    if not sprite_path or #sprite_path <= 5 then
+    if not helpers.is_valid_sprite_path(sprite_path) then
         storage.tile_names_index = 1
     end
 
@@ -100,9 +131,8 @@ end
 local function button_clicked(event)
     if event and event.element and event.element.valid and event.element.name == THIS_MOD then
         local player = game.players[storage.player_index]
-        if not player then
-            return
-        end
+        if not player then return end
+        if not is_compatible_surface(player) then return end
 
         if event.button == defines.mouse_button_type.left then
             if event.control then
@@ -149,6 +179,7 @@ end
 
 local function entity_mined(event)
     if not event then return end
+    if not is_compatible_surface(event) then return end
 
     local entity = event.entity
     if not entity then return end
@@ -177,6 +208,7 @@ end
 
 local function player_selected_area(event)
     if not event or not event.item then return end
+    if not is_compatible_surface(event) then return end
 
     local player = game.players[event.player_index] or {}
     if not player then return end
@@ -458,7 +490,6 @@ local function entity_moved(event)
         end
     end
 end
-
 
 local function on_entity_moved(event)
     if not event or storage.foundation == DISABLED then return end

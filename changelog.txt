@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.5
+Date: 27. 10. 2024
+  Bugfixes:
+    - New sprite path helper, improves the bugfix implemented in 2.11.4
+  Changes:
+    - Removed the incompatibility with Space Age
+    - Limited to function only while the character is on Nauvis, remove view not supported.
+---------------------------------------------------------------------------------------------------
 Version: 2.11.4
 Date: 26. 10. 2024
   Bugfixes:

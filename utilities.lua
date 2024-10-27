@@ -309,45 +309,14 @@ function load_global_data()
     -- start fresh, tiles could have been added or removed
     storage.tile_names = {}
 
-    -- add disabled, at positon 1
-    add_to_global_tile_names(DISABLED, DISABLED)
-    add_to_global_tile_to_item(DISABLED, DISABLED)
+    compatibility.base()
 
-    if settings.global["Foundations-stone-path"].value then
-        add_to_global_tile_names("stone-path", "stone-brick")
+    if settings.startup["Foundations-concrete-variants"].value then
+        compatibility.concrete_variants()
     end
-    add_to_global_tile_to_item("stone-path", "stone-brick")
-
-    if settings.global["Foundations-concrete"].value then
-        add_to_global_tile_names("concrete", "concrete")
-    end
-    add_to_global_tile_to_item("concrete", "concrete")
-
-    if settings.global["Foundations-refined-concrete"].value then
-        add_to_global_tile_names("refined-concrete", "refined-concrete")
-    end
-    add_to_global_tile_to_item("refined-concrete", "refined-concrete")
-
-    if settings.global["Foundations-hazard-concrete"].value then
-        add_to_global_tile_names("hazard-concrete-left", "hazard-concrete")
-        add_to_global_tile_names("hazard-concrete-right", "hazard-concrete")
-    end
-    add_to_global_tile_to_item("hazard-concrete-left", "hazard-concrete")
-    add_to_global_tile_to_item("hazard-concrete-right", "hazard-concrete")
-
-    if settings.global["Foundations-refined-hazard-concrete"].value then
-        add_to_global_tile_names("refined-hazard-concrete-left", "refined-hazard-concrete")
-        add_to_global_tile_names("refined-hazard-concrete-right", "refined-hazard-concrete")
-    end
-    add_to_global_tile_to_item("refined-hazard-concrete-left", "refined-hazard-concrete")
-    add_to_global_tile_to_item("refined-hazard-concrete-right", "refined-hazard-concrete")
 
     if script.active_mods["aai-industry"] or script.active_mods["stone-path"] then
         compatibility.rough_stone_path()
-    end
-
-    if settings.startup["Foundations-concrete-variants"].value then
-        compatibility.vanilla()
     end
 
     set_global_tile_names_index()

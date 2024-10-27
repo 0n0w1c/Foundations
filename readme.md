@@ -55,6 +55,7 @@ Foundations is compatible with personal logistics for construction and deconstru
 ---
 
 #### Limitations:  
+All actions *should be limited* to the Nauvis surface, Space Age surfaces are not supported at this time.
 Tiles placed or removed with the selection tools are not "Undo"-able, use them with some caution.  
 Not compatible with multi-player mode, single-player mode only.  
 

@@ -7,7 +7,6 @@ local function get_next_order()
     return string.format("a-%03d", order_counter)
 end
 
--- startup
 data:extend({
     {
         type = "int-setting",
@@ -41,7 +40,6 @@ data:extend({
     },
 })
 
--- runtime-global
 data:extend({
     {
         type = "bool-setting",
