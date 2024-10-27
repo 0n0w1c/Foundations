@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.4
+Date: 26. 10. 2024
+  Bugfixes:
+    - Crash caused by not following the state of AAI Industry's stone path startup setting
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.11.3
 Date: 26. 10. 2024
   Bugfixes:
