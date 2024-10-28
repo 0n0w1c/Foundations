@@ -37,7 +37,9 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Startup setting for the number of rows to add to the player inventory size.
 * Startup setting to select the tile mining time (default = 0.1).  
 * Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
-* Startup setting to enable the hidden refined concrete variants.
+* Startup setting to enable the hidden refined concrete variants.  
+* Startup setting to modify the refined concrete variants' layer.  
+  (higher numbers appear above lower numbers, same numbers merge).  
 
 &NewLine;
 

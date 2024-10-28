@@ -1,11 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.6
+Date: 27. 10. 2024
+  Bugfixes:
+    - None
+  Changes:
+    - Added startup settings to change the refined concrete variant's layer
+---------------------------------------------------------------------------------------------------
 Version: 2.11.5
 Date: 27. 10. 2024
   Bugfixes:
     - New sprite path helper, improves the bugfix implemented in 2.11.4
   Changes:
     - Removed the incompatibility with Space Age
-    - Limited to function only while the character is on Nauvis, remove view not supported.
+    - Limited to function only while the character is on Nauvis, remote view not supported.
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.4
 Date: 26. 10. 2024

@@ -7,6 +7,8 @@ if settings.startup["Foundations-concrete-variants"].value then
         data.raw["tile"][color_tile].hidden = nil
         data.raw["tile"][color_tile].subgroup = "artificial-tiles"
         data.raw["tile"][color_tile].layer_group = "ground-artificial"
+        data.raw["tile"][color_tile].layer =
+            tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27
         if mods["space-age"] then
             data.raw["tile"][color_tile].frozen_variant = "frozen-refined-concrete"
         end
