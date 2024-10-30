@@ -38,7 +38,7 @@ function compatibility.base()
 end
 
 function compatibility.rough_stone_path()
-    if settings.startup["aai-stone-path"].value then
+    if script.active_mods["stone-path"] or (script.active_mods["aai-industry"] and settings.startup["aai-stone-path"].value) then
         if settings.global["Foundations-rough-stone-path"].value then
             add_to_global_tile_names("rough-stone-path", "stone")
         end
