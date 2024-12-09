@@ -5,6 +5,7 @@ if settings.startup["Foundations-concrete-variants"].value then
         local color_tile = color.name .. "-refined-concrete"
 
         data.raw["tile"][color_tile].hidden = nil
+        data.raw["tile"][color_tile].transition_overlay_layer_offset = 0
         data.raw["tile"][color_tile].subgroup = "artificial-tiles"
         data.raw["tile"][color_tile].layer_group = "ground-artificial"
         data.raw["tile"][color_tile].layer =

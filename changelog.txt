@@ -1,20 +1,28 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.8
+Date: 9.12.2024
+  Bugfixes:
+    - Fixed the transition between painted refined concrete variants with adjacent layer numbers
+  Changes:
+    - Added Alien Biomes as a hidden optional dependency
+      Prevents the reordering of the assigned painted refined concrete variant layers
+---------------------------------------------------------------------------------------------------
 Version: 2.11.7
-Date: 30. 10. 2024
+Date: 30.10.2024
   Bugfixes:
     - None
   Changes:
     - Added Fulgora, Gleba and Vulcanus as compatible surfaces (remote view not supported)
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.6
-Date: 27. 10. 2024
+Date: 27.10.2024
   Bugfixes:
     - None
   Changes:
     - Added startup settings to change the refined concrete variant's layer
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.5
-Date: 27. 10. 2024
+Date: 27.10.2024
   Bugfixes:
     - New sprite path helper, improves the bugfix implemented in 2.11.4
   Changes:
@@ -22,14 +30,14 @@ Date: 27. 10. 2024
     - Limited to function only while the character is on Nauvis, remote view not supported.
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.4
-Date: 26. 10. 2024
+Date: 26.10.2024
   Bugfixes:
     - Crash caused by not following the state of AAI Industry's stone path startup setting
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.3
-Date: 26. 10. 2024
+Date: 26.10.2024
   Bugfixes:
     - None
   Changes:
@@ -37,7 +45,7 @@ Date: 26. 10. 2024
     - Added the startup option to enable hidden refined concrete variants (aka painted)
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.2
-Date: 26. 10. 2024
+Date: 26.10.2024
   Bugfixes:
     - Crash caused by using 1.1 persistent memory, changed from global to storage
     - Removed a debug to log
@@ -45,7 +53,7 @@ Date: 26. 10. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.1
-Date: 25. 10. 2024
+Date: 25.10.2024
   Bugfixes:
     - Painted refined concrete placed as regular refined concrete
     - With layering active, refined and painted refined concrete placed at ground tile layer
@@ -59,7 +67,7 @@ Date: 25. 10. 2024
     - Only vanilla and AAI Industry stone path tiles are currently supported
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.0
-Date: 25. 10. 2024
+Date: 25.10.2024
   Bugfixes:
     - None
   Changes:
@@ -69,14 +77,14 @@ Date: 25. 10. 2024
     - Added support for Even Pickier Dollies (2.0 replacement for Picker Dollies)
 ---------------------------------------------------------------------------------------------------
 Version: 2.10.3
-Date: 24. 09. 2024
+Date: 24.09.2024
   Bugfixes:
     - None
   Changes:
     - Hidden mod dependencies are now Optional mod dependencies
 ---------------------------------------------------------------------------------------------------
 Version: 2.10.2
-Date: 23. 09. 2024
+Date: 23.09.2024
   Bugfixes:
     - Crash if a tree spawned while clicking the Foundations button (Industrial Revolution 3)
   Changes:
@@ -84,28 +92,28 @@ Date: 23. 09. 2024
     - Removed the incompatible mod dependency for Easier Vehicles
 ---------------------------------------------------------------------------------------------------
 Version: 2.10.1
-Date: 19. 09. 2024
+Date: 19.09.2024
   Bugfixes:
     - None
   Changes:
     - Refactored the migration for painted refined concrete recipes
 ---------------------------------------------------------------------------------------------------
 Version: 2.10.0
-Date: 17. 09. 2024
+Date: 17.09.2024
   Bugfixes:
     - None
   Changes:
     - Improved mod compatibility, place tiles under script created entities, if the event is raised
 ---------------------------------------------------------------------------------------------------
 Version: 2.9.4
-Date: 15. 09. 2024
+Date: 15.09.2024
   Bugfixes:
     - Do not move tiles under excluded entities, when the entity is moved
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.9.3
-Date: 12. 09. 2024
+Date: 12.09.2024
   Bugfixes:
     - None
   Changes:
@@ -113,42 +121,42 @@ Date: 12. 09. 2024
     - Some refactoring, mostly focused on additional nil checks
 ---------------------------------------------------------------------------------------------------
 Version: 2.9.2
-Date: 12. 09. 2024
+Date: 12.09.2024
   Bugfixes:
     - Add modded electric poles to excluded entities when electric pole runtime setting changes
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.9.1
-Date: 11. 09. 2024
+Date: 11.09.2024
   Bugfixes:
     - Runtime settings for electric poles, inserters, and belts not always recognized
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.9.0
-Date: 09. 09. 2024
+Date: 09.09.2024
   Bugfixes:
     - None
   Changes:
     - New button icon for Foundations disabled
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.7
-Date: 09. 09. 2024
+Date: 09.09.2024
   Bugfixes:
     - None
   Changes:
     - Added a startup setting for number of rows to add to the player inventory size
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.6
-Date: 08. 09. 2024
+Date: 08.09.2024
   Bugfixes:
     - Fill tool now fills under entities excluded from foundation tiles
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.5
-Date: 07. 09. 2024
+Date: 07.09.2024
   Bugfixes:
     - Added check to prevent a crash when attempting to use the selection tools in "god mode"
       Fix provided by mmmilez
@@ -156,14 +164,14 @@ Date: 07. 09. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.4
-Date: 07. 09. 2024
+Date: 07.09.2024
   Bugfixes:
     - Added a minable check when setting the clean sweep probablility
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.3
-Date: 07. 09. 2024
+Date: 07.09.2024
   Bugfixes:
     - None
   Changes:
@@ -171,21 +179,21 @@ Date: 07. 09. 2024
       Select to honor the intent of the tile provider, make no modification to tile mining times
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.2
-Date: 06. 09. 2024
+Date: 06.09.2024
   Bugfixes:
     - Clean sweep probability as intended by tile provider is honored, if clean sweep is disabled
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.1
-Date: 06. 09. 2024
+Date: 06.09.2024
   Bugfixes:
     - Enforce player reach limit for selection based tools, to closest corner of the selected area
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.8.0
-Date: 06. 09. 2024
+Date: 06.09.2024
   Bugfixes:
     - If enabled, clean sweep probability now set to 1
   Changes:
@@ -193,7 +201,7 @@ Date: 06. 09. 2024
     - Added three selection tools: unfill, place, and unplace (remove) tiles en masse
 ---------------------------------------------------------------------------------------------------
 Version: 2.7.3
-Date: 04. 09. 2024
+Date: 04.09.2024
   Bugfixes:
     - Improved handling of tiles on edges, the absense of tiles, and multiple tile types, when
       moving entities and foundations using Picker Dollies.
@@ -201,7 +209,7 @@ Date: 04. 09. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.7.2
-Date: 03. 09. 2024
+Date: 03.09.2024
   Bugfixes:
     - Better handling of placed tiles when using Picker Dollies
       Placed tiles are now moved to fill the void created by moving an entity and foundation
@@ -209,7 +217,7 @@ Date: 03. 09. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.7.1
-Date: 21. 08. 2024
+Date: 21.08.2024
   Bugfixes:
     - Corrected some logic with supported mods and startup settings
   Changes:
@@ -218,28 +226,28 @@ Date: 21. 08. 2024
     - Rearranged the order of runtime settings, moving IR3 and K2 settings before those of Dectorio
 ---------------------------------------------------------------------------------------------------
 Version: 2.7.0
-Date: 17. 08. 2024
+Date: 17.08.2024
   Bugfixes:
     - None
   Changes:
     - Added a startup setting to set the mining time for all minable tiles (default = 0.1)
 ---------------------------------------------------------------------------------------------------
 Version: 2.6.1
-Date: 16. 08. 2024
+Date: 16.08.2024
   Bugfixes:
     - Removed code performing redundant tile mining
   Changes:
     - Improved the efficiency of tile handling when using Picker Dollies
 ---------------------------------------------------------------------------------------------------
 Version: 2.6.0
-Date: 16. 08. 2024
+Date: 16.08.2024
   Bugfixes:
     - None
   Changes:
     - Added support for Picker Dollies
 ---------------------------------------------------------------------------------------------------
 Version: 2.5.2
-Date: 13. 08. 2024
+Date: 13.08.2024
   Bugfixes:
     - Krastorio 2 black and light reinforced plates layer on top of refined concretes
     - Added the tooltip for tarmac
@@ -247,28 +255,28 @@ Date: 13. 08. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.5.1
-Date: 13. 08. 2024
+Date: 13.08.2024
   Bugfixes:
     - None
   Changes:
     - Added a startup setting to enable layering of tarmac on top of the refined concretes
 ---------------------------------------------------------------------------------------------------
 Version: 2.5.0
-Date: 13. 08. 2024
+Date: 13.08.2024
   Bugfixes:
     - Properly implement support for Industrial Revolution 3
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.4.1
-Date: 12. 08. 2024
+Date: 12.08.2024
   Bugfixes:
     - Recipes for the painted refined concrete now unlock with research
   Changes:
     - Added support for Industrial Revolution 3
 ---------------------------------------------------------------------------------------------------
 Version: 2.4.0
-Date: 12. 08. 2024
+Date: 12.08.2024
   Bugfixes:
     - Removed code that likely caused issues when loaded with Space Exploration and Lunar Landings
   Changes:
@@ -276,7 +284,7 @@ Date: 12. 08. 2024
     - Added a migration for the painted refined concrete recipes
 ---------------------------------------------------------------------------------------------------
 Version: 2.3.1
-Date: 11. 08. 2024
+Date: 11.08.2024
   Bugfixes:
     - Existing foundation tiles were mined when placing an entity, and the player had insufficient
       foundation tiles to build
@@ -284,42 +292,42 @@ Date: 11. 08. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.3.0
-Date: 10. 08. 2024
+Date: 10.08.2024
   Bugfixes:
     - None
   Changes:
     - Removed support for Lunar Landings and Space Exploration
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.7
-Date: 10. 08. 2024
+Date: 10.08.2024
   Bugfixes:
     - Launching a spaceship with Space Exploration, result crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.6
-Date: 10. 08. 2024
+Date: 10.08.2024
   Bugfixes:
     - Dectorio wood floor disabled and layering enabled, result crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.5
-Date: 10. 08. 2024
+Date: 10.08.2024
   Bugfixes:
     - Dectorio wood tiles now layer on top
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.4
-Date: 10. 08. 2024
+Date: 10.08.2024
   Bugfixes:
     - None
   Changes:
     - Added runtime setting to clean sweep (remove ground decorations) when foundations are placed
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.3
-Date: 09. 08. 2024
+Date: 09.08.2024
   Bugfixes:
     - Graphical issue with tile transitions when layering the painted refined concretes
   Changes:
@@ -329,42 +337,42 @@ Date: 09. 08. 2024
     - Refactoring
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.2
-Date: 07. 08. 2024
+Date: 07.08.2024
   Bugfixes:
     - None
   Changes:
     - Refactored the Dectorio tile layering code
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.1
-Date: 07. 08. 2024
+Date: 07.08.2024
   Bugfixes:
     - Added a check if Dectorio's painted refined concrete is enabled, before applying layering
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.2.0
-Date: 07. 08. 2024
+Date: 07.08.2024
   Bugfixes:
     - None
   Changes:
     - With the mod Dectorio active, startup option to layer the painted refined concretes
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.6
-Date: 07. 08. 2024
+Date: 07.08.2024
   Bugfixes:
     - Fill tool can be activated and then the foundation set to disabled, result was a crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.5
-Date: 05. 08. 2024
+Date: 05.08.2024
   Bugfixes:
     - Tile placement now raises the script_raised_set_tiles event
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.4
-Date: 04. 08. 2024
+Date: 04.08.2024
   Bugfixes:
     - None
   Changes:
@@ -372,21 +380,21 @@ Date: 04. 08. 2024
     - When robots deconstruct an entity, they will now follow the "Mine Foundation Tiles" setting
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.3
-Date: 04. 08. 2024
+Date: 04.08.2024
   Bugfixes:
     - Fill tool was not excluding tiles with resources
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.2
-Date: 04. 08. 2024
+Date: 04.08.2024
   Bugfixes:
     - Fill tool could be activated with Foundations disabled, result was a crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.1
-Date: 04. 08. 2024
+Date: 04.08.2024
   Bugfixes:
     - None
   Changes:
@@ -394,7 +402,7 @@ Date: 04. 08. 2024
       Fills the selected area with the foundation tile of choice, without disturbing existing tiles
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.0
-Date: 03. 08. 2024
+Date: 03.08.2024
   Bugfixes:
     - None
   Changes:
@@ -402,21 +410,21 @@ Date: 03. 08. 2024
     - Modified the handling of foundation tiles to place and tiles to return
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.9
-Date: 02. 08. 2024
+Date: 02.08.2024
   Bugfixes:
     - None
   Changes:
     - Modifications to enable use in multiplayer games
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.8
-Date: 02. 08. 2024
+Date: 02.08.2024
   Bugfixes:
     - None
   Changes:
     - Modified the global table and related code
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.7
-Date: 02. 08. 2024
+Date: 02.08.2024
   Bugfixes:
     - None
   Changes:
@@ -424,35 +432,35 @@ Date: 02. 08. 2024
     - Refactoring
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.6
-Date: 01. 08. 2024
+Date: 01.08.2024
   Bugfixes:
     - None
   Changes:
     - Added a runtime setting, to mine the selected foundation tiles, when an entity is mined
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.5
-Date: 31. 07. 2024
+Date: 31.07.2024
   Bugfixes:
     - None
   Changes:
     - Refactoring
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.4
-Date: 29. 07. 2024
+Date: 29.07.2024
   Bugfixes:
     - Fixed resource tile detection
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.3
-Date: 29. 07. 2024
+Date: 29.07.2024
   Bugfixes:
     - Adjusted the logic of tile placement and replacement
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.2
-Date: 29. 07. 2024
+Date: 29.07.2024
   Bugfixes:
     - Fixed an issue with attempting to place rails
     - Fixed an issue with placing tiles when insufficient quantity in player inventory
@@ -460,16 +468,16 @@ Date: 29. 07. 2024
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.1
-Date: 28. 07. 2024
+Date: 28.07.2024
   Bugfixes:
-    - None ... yet.
+    - None
   Changes:
     - Moved the exclude lists to the global table
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.0
-Date: 28. 07. 2024
+Date: 28.07.2024
   Bugfixes:
-    - None ... yet.
+    - None
   Features:
     - Complete reimagining, version 2 operates under a completely different premise!  
     - Support added for AAI Industry, Dectorio, Krastorio 2, Lunar Landings, and Space Exploration  
