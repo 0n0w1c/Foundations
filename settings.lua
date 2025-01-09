@@ -176,6 +176,13 @@ end
 data:extend({
     {
         type = "bool-setting",
+        name = "Foundations-stone-path",
+        setting_type = "runtime-global",
+        default_value = true,
+        order = get_next_order(),
+    },
+    {
+        type = "bool-setting",
         name = "Foundations-concrete",
         setting_type = "runtime-global",
         default_value = true,

@@ -6,6 +6,9 @@ function compatibility.base()
     add_to_global_tile_names(DISABLED, DISABLED)
     add_to_global_tile_to_item(DISABLED, DISABLED)
 
+    if settings.global["Foundations-stone-path"].value then
+        add_to_global_tile_names("stone-path", "stone-brick")
+    end
     add_to_global_tile_to_item("stone-path", "stone-brick")
 
     if settings.global["Foundations-concrete"].value then

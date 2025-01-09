@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.9
+Date: 9.1.2025
+  Bugfixes:
+    - Stone bricks were not an option for the Foundations button
+  Changes:
+    - Added runtime setting to enable stone bricks for the Foundations button (default: true)
+---------------------------------------------------------------------------------------------------
 Version: 2.11.8
 Date: 9.12.2024
   Bugfixes:
