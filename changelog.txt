@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.11
+Date: 11.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Fix added for the Dectorio painted concrete variants
+    - Reverted the move of the concrete variants to the Decortio tab
+---------------------------------------------------------------------------------------------------
 Version: 2.11.10
 Date: 11.1.2025
   Bugfixes:

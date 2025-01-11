@@ -133,25 +133,16 @@ if settings.startup["Foundations-concrete-variants"].value then
         table.insert(data.raw.technology["concrete"].effects, { type = "unlock-recipe", recipe = color_tile })
     end
 
-    local group = "logistics"
-    local subgroup = "terrain"
-
-    if mods["Dectorio"] and settings.startup["dectorio-item-group"].value and settings.startup["dectorio-item-group"].value then
-        group = "dectorio"
-        subgroup = "flooring-basic"
-    end
-
     for _, color in pairs(COLORS) do
         local template = util.table.deepcopy(data.raw.item['refined-concrete'])
         if template and template.name then
             template.name = color.name .. "-" .. template.name
             template.localised_name = { "item-name.Foundations-" .. color.name .. "-refined-concrete" }
             template.place_as_tile.result = template.name
-            template.group = group
-            template.subgroup = subgroup
+            template.group = "logisitics"
+            template.subgroup = "terrain"
             template.order = "b[concrete]-e[refined-colors]"
             template.icons = { { icon = template.icon, tint = data.raw["tile"][template.name].tint } }
-            template.hidden = nil
 
             data:extend({ template })
         end
