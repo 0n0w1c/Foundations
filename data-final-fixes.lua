@@ -1,28 +1,5 @@
 require("constants")
 
-if settings.startup["Foundations-concrete-variants"].value then
-    for _, color in pairs(COLORS) do
-        local color_tile = color.name .. "-refined-concrete"
-
-        data.raw["tile"][color_tile].hidden = nil
-        data.raw["tile"][color_tile].transition_overlay_layer_offset = 0
-        data.raw["tile"][color_tile].subgroup = "artificial-tiles"
-        data.raw["tile"][color_tile].layer_group = "ground-artificial"
-        data.raw["tile"][color_tile].layer =
-            tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27
-        if mods["space-age"] then
-            data.raw["tile"][color_tile].frozen_variant = "frozen-refined-concrete"
-        end
-        data.raw["tile"][color_tile].minable = {
-            mining_time = 0.1,
-            result = color_tile
-        }
-
-        table.insert(data.raw.technology["concrete"].effects,
-            { type = "unlock-recipe", recipe = color_tile })
-    end
-end
-
 for _, tile in pairs(data.raw["tile"]) do
     if tile.minable then
         if settings.startup["Foundations-mining-time"].value > 0 then

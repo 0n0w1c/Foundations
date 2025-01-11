@@ -117,35 +117,55 @@ data:extend({
 })
 
 if settings.startup["Foundations-concrete-variants"].value then
-    -- Add items for each color
+    for _, color in pairs(COLORS) do
+        local color_tile = color.name .. "-refined-concrete"
+
+        data.raw["tile"][color_tile].hidden = nil
+        data.raw["tile"][color_tile].minable = { mining_time = 0.1, result = color_tile }
+        data.raw["tile"][color_tile].transition_overlay_layer_offset = 0
+        data.raw["tile"][color_tile].layer_group = "ground-artificial"
+        data.raw["tile"][color_tile].layer =
+            tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27
+        if mods["space-age"] then
+            data.raw["tile"][color_tile].frozen_variant = "frozen-refined-concrete"
+        end
+
+        table.insert(data.raw.technology["concrete"].effects, { type = "unlock-recipe", recipe = color_tile })
+    end
+
+    local group = "logistics"
+    local subgroup = "terrain"
+
+    if mods["Dectorio"] and settings.startup["dectorio-item-group"].value and settings.startup["dectorio-item-group"].value then
+        group = "dectorio"
+        subgroup = "flooring-basic"
+    end
+
     for _, color in pairs(COLORS) do
         local template = util.table.deepcopy(data.raw.item['refined-concrete'])
         if template and template.name then
             template.name = color.name .. "-" .. template.name
             template.localised_name = { "item-name.Foundations-" .. color.name .. "-refined-concrete" }
             template.place_as_tile.result = template.name
-            template.subgroup = "terrain"
-            template.icons = { {
-                icon = template.icon,
-                tint = data.raw["tile"][template.name].tint
-            } }
+            template.group = group
+            template.subgroup = subgroup
+            template.order = "b[concrete]-e[refined-colors]"
+            template.icons = { { icon = template.icon, tint = data.raw["tile"][template.name].tint } }
             template.hidden = nil
 
             data:extend({ template })
         end
     end
 
-    -- Add recipes for each color
     for _, color in pairs(COLORS) do
         local template = util.table.deepcopy(data.raw.recipe['refined-concrete'])
         if template and template.name then
             template.name = color.name .. "-" .. template.name
-            template.localised_name = { "item-name.Foundations-" .. color.name .. "-refined-concrete" }
             template.enabled = false
             template.ingredients = { { type = "item", name = "refined-concrete", amount = 10 } }
-            template.energy_required = 0.25
-            template.products = { { type = "item", name = template.name, amount = 10 } }
             template.results = { { type = "item", name = template.name, amount = 10 } }
+            template.energy_required = 0.25
+
             data:extend({ template })
         end
     end

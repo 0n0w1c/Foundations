@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.11.10
+Date: 11.1.2025
+  Bugfixes:
+    - Refactored the definition of the refined concrete variants
+  Changes:
+    - Dectorio added as a hidden optional dependency
+      Refined concrete variants moved to the Decortio tab
+---------------------------------------------------------------------------------------------------
 Version: 2.11.9
 Date: 9.1.2025
   Bugfixes:
