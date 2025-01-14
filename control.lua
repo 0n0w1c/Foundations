@@ -109,7 +109,7 @@ local function update_button()
     local sprite_path = "tile/" .. storage.foundation
     local tool_tip = { "tile-name." .. storage.foundation }
 
-    if storage.foundation == DISABLED then
+    if storage.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
         sprite_path = "Foundations-disabled"
     end
 
@@ -252,12 +252,10 @@ local function button_clicked(event)
             end
 
             update_button()
-
         elseif event.element.name == "tile_selector_close_button" then
             if player.gui.screen.tile_selector_frame then
                 player.gui.screen.tile_selector_frame.destroy()
             end
-
         elseif string.find(event.element.name, "tile_selector_button_") == 1 then
             local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
             storage.foundation = selected_tile_name -- Store the selected tile
