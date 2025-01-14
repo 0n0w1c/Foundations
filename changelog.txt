@@ -1,6 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.12.1
+Date: 14.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Modified the layer and removed the transtion with concrete for Dectorio's grid concrete
+---------------------------------------------------------------------------------------------------
 Version: 2.12.0
-Date: 13.1.2025
+Date: 14.1.2025
   Bugfixes:
     - Refactored quite a bit
   Changes:

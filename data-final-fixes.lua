@@ -7,6 +7,7 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
     end
 
     local tile = data.raw["tile"]["concrete"]
+    local layer = tile.layer
     local template = table.deepcopy(tile)
     local name = "dect-concrete-grid"
 
@@ -14,8 +15,8 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
     template.minable = { mining_time = 0.1, result = name }
     template.placeable_by = { item = name, count = 1 }
     template.transition_overlay_layer_offset = 0
-    template.layer = data.raw["tile"]["concrete"].layer
-    template.transition_merges_with_tile = "concrete"
+    template.layer = layer + 2
+    --template.transition_merges_with_tile = "concrete"
     template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
 
     data.extend({ template })
