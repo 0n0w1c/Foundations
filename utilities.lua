@@ -285,9 +285,11 @@ function get_placeable_items()
 
     for _, prototype in pairs(prototypes) do
         if not prototype.is_foundation then
-            for _, item in ipairs(prototype.items_to_place_this) do
-                if not items[prototype.name] and string.sub(prototype.name, 1, 7) ~= "frozen-" then
-                    items[prototype.name] = item.name
+            if prototype.items_to_place_this then
+                for _, item in ipairs(prototype.items_to_place_this) do
+                    if not items[prototype.name] and string.sub(prototype.name, 1, 7) ~= "frozen-" then
+                        items[prototype.name] = item.name
+                    end
                 end
             end
         end
