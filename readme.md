@@ -45,8 +45,6 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 * Runtime settings to add small/medium electric poles, inserters, belts, splitters, and loaders as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
 
-* Runtime settings to enable tiles to be selectable via the Foundations button, limits the palette for quicker selection.  
-
 ---
 
 Construction is halted if the player’s inventory lacks a sufficient quantity of the selected tile.  
@@ -57,15 +55,14 @@ Foundations is compatible with personal logistics for construction and deconstru
 ---
 
 #### Limitations:  
-All actions *should be limited* to the Nauvis surface, Space Age surfaces are not supported at this time.
+Aquillo and remote vew not supported for automated tile placement
 Tiles placed or removed with the selection tools are not "Undo"-able, use them with some caution.  
 Not compatible with multi-player mode, single-player mode only.  
 
 ---
 
-#### Supports tiles provided by:
+#### Supported mods:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
+[Dectorio](https://mods.factorio.com/mod/Dectorio)  
 
 Movement via [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  
-
-#### Includes a fix for Dectorio painted concrete

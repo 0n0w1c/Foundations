@@ -1,18 +1,14 @@
 ---------------------------------------------------------------------------------------------------
-Version: 2.11.13
+Version: 2.12.0
 Date: 13.1.2025
   Bugfixes:
-    - None
+    - Refactored quite a bit
   Changes:
-    - Changed Dectorio from hidden to optional dependency
-    - Foundations settings (mining time and decoration removal) apply to Dectorio concrete
----------------------------------------------------------------------------------------------------
-Version: 2.11.12
-Date: 13.1.2025
-  Bugfixes:
-    - Mining Dectorio painted hazard concrete resulted in base hazard concrete
-  Changes:
-    - Hide the Dectorio refined concrete variant recipes
+    - New gui for selecting the Foundations tile
+      Left click the Foundations button to open the tile selector
+      Right click the Foundations button to disable Foundations
+    - Removed the corresponding runtime settings to select tiles for the Foundations button
+    - "Fix" applied to Dectorio grid concrete
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.11
 Date: 11.1.2025

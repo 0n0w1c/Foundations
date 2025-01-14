@@ -1,5 +1,3 @@
-local compatibility = require("compatibility")
-
 function load_excluded_name_list()
     storage.excluded_name_list = {}
 
@@ -73,7 +71,7 @@ function recipe_enabled(force, recipe_name)
     return true
 end
 
--- add to storage.tile_names and storage.tile_to_item, if not already present and recipe enabled
+-- add to storage.tile_names, if not already present and recipe enabled
 function add_to_global_tile_names(tile_name, item_name)
     local force = game.forces["player"]
 
@@ -281,22 +279,34 @@ function load_tiles(entity, area)
     return tiles_to_place, tiles_to_return
 end
 
-function set_global_tile_names_index()
-    local found = false
-    -- try to find the index for storage.foundation
-    for index, tile in ipairs(storage.tile_names) do
-        if tile == storage.foundation then
-            storage.tile_names_index = index
-            found = true
-            break
+function get_placeable_items()
+    local items = {}
+    local prototypes = prototypes.get_tile_filtered { { filter = "minable" } }
+
+    for _, prototype in pairs(prototypes) do
+        if not prototype.is_foundation then
+            for _, item in ipairs(prototype.items_to_place_this) do
+                if not items[prototype.name] and string.sub(prototype.name, 1, 7) ~= "frozen-" then
+                    items[prototype.name] = item.name
+                end
+            end
         end
     end
 
-    -- storage.foundation not found in storage.tile_names, reset
-    if not found then
-        storage.tile_names_index = 1
-        storage.foundation = DISABLED
+    return items
+end
+
+function load_tile_lists()
+    add_to_global_tile_names(DISABLED, DISABLED)
+    add_to_global_tile_to_item(DISABLED, DISABLED)
+
+    local tiles = get_placeable_items()
+    for tile, item in pairs(tiles) do
+        add_to_global_tile_names(tile, item)
+        add_to_global_tile_to_item(tile, item)
     end
+
+    table.sort(storage.tile_names)
 end
 
 function load_global_data()
@@ -306,18 +316,7 @@ function load_global_data()
     load_excluded_name_list()
     load_excluded_type_list()
 
-    -- start fresh, tiles could have been added or removed
     storage.tile_names = {}
 
-    compatibility.base()
-
-    if settings.startup["Foundations-concrete-variants"].value then
-        compatibility.concrete_variants()
-    end
-
-    if script.active_mods["aai-industry"] or script.active_mods["stone-path"] then
-        compatibility.rough_stone_path()
-    end
-
-    set_global_tile_names_index()
+    load_tile_lists()
 end

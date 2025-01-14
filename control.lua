@@ -1,6 +1,9 @@
 require("constants")
 require("utilities")
 
+--log(serpent.block(data))
+--player.print(serpent.block(data))
+
 local mod_gui = require("mod-gui")
 
 local function is_player_in_remote_view(player)
@@ -15,15 +18,15 @@ local function is_compatible_surface(event)
         local surface = game.surfaces[event.surface_index]
         surface_name = surface and surface.name
 
-    -- 2. If it’s a player-based event, check if the player is on a compatible surface and not in remote view
+        -- 2. If it’s a player-based event, check if the player is on a compatible surface and not in remote view
     elseif event.player_index then
         local player = game.get_player(event.player_index)
         if player and is_player_in_remote_view(player) then
-            return false  -- Ignore if player is in remote view
+            return false -- Ignore if player is in remote view
         end
         surface_name = player and player.surface.name
 
-    -- 3. For entity-related events, check the entity's surface
+        -- 3. For entity-related events, check the entity's surface
     elseif event.entity and event.entity.surface then
         surface_name = event.entity.surface.name
     end
@@ -103,14 +106,10 @@ local function update_button()
     if not player then return end
 
     local button_flow = mod_gui.get_button_flow(player)
-    local sprite_path = "tile/" .. storage.tile_names[storage.tile_names_index]
-    local tool_tip = { "sprite-button.Foundations-tooltip-" .. storage.tile_names[storage.tile_names_index] }
+    local sprite_path = "tile/" .. storage.foundation
+    local tool_tip = { "tile-name." .. storage.foundation }
 
-    if not helpers.is_valid_sprite_path(sprite_path) then
-        storage.tile_names_index = 1
-    end
-
-    if storage.tile_names_index == 1 then
+    if storage.foundation == DISABLED then
         sprite_path = "Foundations-disabled"
     end
 
@@ -128,52 +127,147 @@ local function update_button()
     end
 end
 
+local function show_tile_selector_gui(player)
+    if player.gui.screen.tile_selector_frame then
+        player.gui.screen.tile_selector_frame.destroy()
+    end
+
+    local items = storage.tile_names
+    local selected = storage.foundation
+
+    local frame = player.gui.screen.add {
+        type = "frame",
+        name = "tile_selector_frame",
+        direction = "vertical",
+    }
+
+    frame.auto_center = true
+
+    local titlebar_flow = frame.add {
+        type = "flow",
+        direction = "horizontal",
+    }
+    titlebar_flow.style.horizontal_spacing = 6
+
+    titlebar_flow.drag_target = frame
+    titlebar_flow.add {
+        type = "label",
+        caption = { "dialog-name.Foundations-tile-selector" },
+        ignored_by_interaction = true,
+        style = "frame_title",
+    }
+    local spacer = titlebar_flow.add {
+        type = "empty-widget",
+        ignored_by_interaction = true,
+    }
+    spacer.style.height = 24
+    spacer.style.horizontally_stretchable = true
+    spacer.style.left_margin = 4
+    spacer.style.right_margin = 4
+
+    local close_button = titlebar_flow.add {
+        type = "sprite-button",
+        name = "tile_selector_close_button",
+        sprite = "utility/close",
+        hovered_sprite = "utility/close_black",
+        clicked_sprite = "utility/close_black",
+        tooltip = { "tile-selector-gui.close-button-tooltip" },
+    }
+    close_button.style.height = 24
+    close_button.style.width = 24
+
+    local inner_frame = frame.add {
+        type = "frame",
+        name = "inner_frame",
+        direction = "vertical",
+        style = "inside_shallow_frame",
+    }
+
+    local flow = inner_frame.add {
+        type = "flow",
+        direction = "horizontal",
+        name = "tile_selector",
+    }
+
+    for _, item_name in pairs(items) do
+        if item_name ~= DISABLED and not (string.find(item_name, "left") or string.find(item_name, "right")) then
+            --if item_name ~= DISABLED then
+            local style = "slot_sized_button"
+            if item_name == selected then
+                style = "slot_sized_button_pressed"
+            end
+
+            local button = flow.add {
+                type = "choose-elem-button",
+                name = "tile_selector_button_" .. item_name,
+                elem_type = "tile",
+                tile = item_name,
+                style = style,
+            }
+            button.locked = true
+        end
+    end
+end
+
 local function button_clicked(event)
-    if event and event.element and event.element.valid and event.element.name == THIS_MOD then
+    if event and event.element and event.element.valid then
         local player = game.players[storage.player_index]
         if not player then return end
-        if not is_compatible_surface(player) then return end
 
-        if event.button == defines.mouse_button_type.left then
-            if event.control then
-                if storage.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-fill-tool" })
-                end
-            elseif event.shift then
-                if storage.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-unfill-tool" })
-                end
-            elseif event.alt then
-                -- do nothing
-            else
-                if storage.tile_names_index < #storage.tile_names then
-                    storage.tile_names_index = storage.tile_names_index + 1
+        if event.element.name == THIS_MOD then
+            if not is_compatible_surface(player) then return end
+
+            if event.button == defines.mouse_button_type.left then
+                if event.control then
+                    if storage.foundation ~= DISABLED and player.clear_cursor() then
+                        player.cursor_stack.set_stack({ name = "Foundations-fill-tool" })
+                    end
+                elseif event.shift then
+                    if storage.foundation ~= DISABLED and player.clear_cursor() then
+                        player.cursor_stack.set_stack({ name = "Foundations-unfill-tool" })
+                    end
+                elseif event.alt then
+                    -- do nothing
                 else
-                    storage.tile_names_index = 1
+                    if player.gui.screen.tile_selector_frame then
+                        player.gui.screen.tile_selector_frame.destroy()
+                    else
+                        show_tile_selector_gui(player)
+                    end
+                end
+            elseif event.button == defines.mouse_button_type.right then
+                if event.control then
+                    if storage.foundation ~= DISABLED and player.clear_cursor() then
+                        player.cursor_stack.set_stack({ name = "Foundations-place-tool" })
+                    end
+                elseif event.shift then
+                    if storage.foundation ~= DISABLED and player.clear_cursor() then
+                        player.cursor_stack.set_stack({ name = "Foundations-unplace-tool" })
+                    end
+                elseif event.alt then
+                    -- do nothing
+                else
+                    storage.foundation = DISABLED
                 end
             end
-        elseif event.button == defines.mouse_button_type.right then
-            if event.control then
-                if storage.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-place-tool" })
-                end
-            elseif event.shift then
-                if storage.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-unplace-tool" })
-                end
-            elseif event.alt then
-                -- do nothing
-            else
-                if storage.tile_names_index > 1 then
-                    storage.tile_names_index = storage.tile_names_index - 1
-                else
-                    storage.tile_names_index = #storage.tile_names
-                end
+
+            update_button()
+
+        elseif event.element.name == "tile_selector_close_button" then
+            if player.gui.screen.tile_selector_frame then
+                player.gui.screen.tile_selector_frame.destroy()
             end
+
+        elseif string.find(event.element.name, "tile_selector_button_") == 1 then
+            local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
+            storage.foundation = selected_tile_name -- Store the selected tile
+
+            if player.gui.screen.tile_selector_frame then
+                player.gui.screen.tile_selector_frame.destroy()
+            end
+
+            update_button()
         end
-
-        storage.foundation = storage.tile_names[storage.tile_names_index]
-        update_button()
     end
 end
 
@@ -448,6 +542,7 @@ local function entity_moved(event)
         local tiles_to_place = {}
         local tile_name
         local tile_names = {}
+
         -- find the names of the tiles to be moved
         for x = current_area.left_top.x, current_area.right_bottom.x - 1 do
             for y = current_area.left_top.y, current_area.right_bottom.y - 1 do
@@ -462,6 +557,7 @@ local function entity_moved(event)
                 end
             end
         end
+
         -- mine foundation tiles from vacated positions
         for x = previous_area.left_top.x, previous_area.right_bottom.x - 1 do
             for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
@@ -504,8 +600,7 @@ local function init_storage()
     storage = storage or {}
     storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
     storage.tile_names = storage.tile_names or { DISABLED }
-    storage.tile_names_index = storage.tile_names_index or 1
-    storage.foundation = storage.foundation or storage.tile_names[storage.tile_names_index]
+    storage.foundation = storage.foundation or DISABLED
     storage.excluded_name_list = storage.excluded_name_list or {}
     storage.excluded_type_list = storage.excluded_type_list or {}
     storage.player_index = storage.player_index or 1
@@ -530,8 +625,8 @@ local function register_event_handlers()
     script.on_event(defines.events.on_robot_mined_entity, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)
 
-    if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
-        script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), on_entity_moved)
+    if remote.interfaces["selectorDollies"] and remote.interfaces["selectorDollies"]["dolly_moved_entity_id"] then
+        script.on_event(remote.call("selectorDollies", "dolly_moved_entity_id"), on_entity_moved)
     end
 end
 
