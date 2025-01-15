@@ -75,7 +75,7 @@ local function place_foundation_under_entity(event)
     if tiles_to_place then
         -- if not enough storage.foundation, put entity back on cursor and destroy the placed entity, then exit
         if not player_has_sufficient_tiles(player, storage.foundation, #tiles_to_place) then
-            return_entity_to_cursor(player, entity)
+            --return_entity_to_cursor(player, entity)
             return
         end
 

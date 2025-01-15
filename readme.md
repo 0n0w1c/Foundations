@@ -47,9 +47,6 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 ---
 
-Construction is halted if the player’s inventory lacks a sufficient quantity of the selected tile.  
-Make sure to have enough of the selected tile or disable automated tile placement. 
-
 Foundations is compatible with personal logistics for construction and deconstruction.  
 
 ---

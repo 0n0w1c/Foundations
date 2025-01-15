@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.12.5
+Date: 15.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Construction is no longer haulted if insufficient tiles in the player inventory
+---------------------------------------------------------------------------------------------------
 Version: 2.12.4
 Date: 14.1.2025
   Bugfixes:
