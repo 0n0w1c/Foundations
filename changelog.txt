@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.12.6
+Date: 16.1.2025
+  Bugfixes:
+    - Incorrect localised name assigned to Dectorio painted concrete items
+  Changes:
+    - Modified the tile selector to handle a large number of tiles
+    - All researched and recipe enabled tiles should now be available in the tile selector gui
+---------------------------------------------------------------------------------------------------
 Version: 2.12.5
 Date: 15.1.2025
   Bugfixes:
@@ -32,7 +40,7 @@ Date: 14.1.2025
   Bugfixes:
     - None
   Changes:
-    - Modified the layer and removed the transtion with concrete for Dectorio's grid concrete
+    - Modified the layer and removed the transition with concrete for Dectorio's grid concrete
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.0
 Date: 14.1.2025

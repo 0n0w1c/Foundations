@@ -36,7 +36,6 @@ local function is_compatible_surface(event)
     return is_compatible
 end
 
--- place tiles under the entity
 local function place_foundation_under_entity(event)
     if not event then return end
     if not is_compatible_surface(event) then return end
@@ -111,6 +110,7 @@ local function update_button()
 
     if storage.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
         sprite_path = "Foundations-disabled"
+        storage.foundation = DISABLED
     end
 
     if not button_flow[THIS_MOD] then
@@ -149,21 +149,22 @@ local function show_tile_selector_gui(player)
     }
     titlebar_flow.style.horizontal_spacing = 6
 
-    titlebar_flow.drag_target = frame
     titlebar_flow.add {
         type = "label",
         caption = { "dialog-name.Foundations-tile-selector" },
         ignored_by_interaction = true,
         style = "frame_title",
     }
-    local spacer = titlebar_flow.add {
+
+    local draggable_space = titlebar_flow.add {
         type = "empty-widget",
-        ignored_by_interaction = true,
+        name = "tile_selector_draggable_space",
+        style = "draggable_space_header",
+        ignored_by_interaction = false,
     }
-    spacer.style.height = 24
-    spacer.style.horizontally_stretchable = true
-    spacer.style.left_margin = 4
-    spacer.style.right_margin = 4
+    draggable_space.style.height = 24
+    draggable_space.style.horizontally_stretchable = true
+    draggable_space.drag_target = frame
 
     local close_button = titlebar_flow.add {
         type = "sprite-button",
@@ -183,21 +184,31 @@ local function show_tile_selector_gui(player)
         style = "inside_shallow_frame",
     }
 
-    local flow = inner_frame.add {
-        type = "flow",
-        direction = "horizontal",
-        name = "tile_selector",
+    local scroll_pane = inner_frame.add {
+        type = "scroll-pane",
+        name = "tile_scroll_pane",
+        horizontal_scroll_policy = "never",
+        vertical_scroll_policy = "auto",
+    }
+    scroll_pane.style.maximal_height = 300
+    scroll_pane.style.minimal_width = 400
+    scroll_pane.style.padding = 4
+
+    local grid = scroll_pane.add {
+        type = "table",
+        name = "tile_selector_grid",
+        column_count = 10,
+        style = "table",
     }
 
     for _, item_name in pairs(items) do
-        if item_name ~= DISABLED and not (string.find(item_name, "left") or string.find(item_name, "right")) then
-            --if item_name ~= DISABLED then
+        if item_name ~= DISABLED then
             local style = "slot_sized_button"
             if item_name == selected then
                 style = "slot_sized_button_pressed"
             end
 
-            local button = flow.add {
+            local button = grid.add {
                 type = "choose-elem-button",
                 name = "tile_selector_button_" .. item_name,
                 elem_type = "tile",
@@ -576,7 +587,6 @@ local function entity_moved(event)
                 local tile_to_place = { { name = tile, position = tiles_to_place[_].position } }
 
                 if item_name then
-                    -- better to not raise an event if just moving tiles
                     surface.set_tiles(tile_to_place, true, false, true, false)
                     player.remove_item { name = item_name, count = 1 }
                 end

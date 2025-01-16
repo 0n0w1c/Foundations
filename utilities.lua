@@ -287,10 +287,12 @@ function get_placeable_items()
         if not prototype.is_foundation then
             if prototype.items_to_place_this then
                 for _, item in ipairs(prototype.items_to_place_this) do
-                    if not items[prototype.name] and string.sub(prototype.name, 1, 7) ~= "frozen-" then
+                    if not items[prototype.name] and string.sub(prototype.name, 1, 7) ~= "frozen-" and not prototype.hidden then
                         items[prototype.name] = item.name
                     end
                 end
+            else
+                items[prototype.name] = prototype.placeable_by
             end
         end
     end
@@ -312,13 +314,17 @@ function load_tile_lists()
 end
 
 function load_global_data()
-    storage.foundation = storage.foundation or DISABLED
     storage.player_index = storage.player_index or 1
 
     load_excluded_name_list()
     load_excluded_type_list()
 
     storage.tile_names = {}
+    storage.tile_to_item = {}
 
     load_tile_lists()
+
+    if not storage.tile_to_item[storage.foundation] then
+        storage.foundation = DISABLED
+    end
 end
