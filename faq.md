@@ -1,4 +1,3 @@
-
 ### What is the layering order and what are the effects?  
 It is the appearance and behavior of tiles, when two different types of tile are placed on adjacent positions.  
 

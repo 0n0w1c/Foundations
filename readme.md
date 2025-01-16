@@ -38,7 +38,7 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Startup setting to select the tile mining time (default = 0.1).  
 * Startup setting to clean sweep (remove ground decorations), when tiles are placed.  
 * Startup setting to enable the hidden refined concrete variants.  
-* Startup setting to modify the refined concrete variants' layer.  
+* Startup setting to modify the refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq).  
   (higher numbers appear above lower numbers, same numbers merge).  
 
 &NewLine;
