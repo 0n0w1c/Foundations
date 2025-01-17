@@ -5,7 +5,7 @@ function load_excluded_name_list()
         storage.excluded_name_list[key] = value
     end
 
-    if settings.global["Foundations-exclude-small-medium-electric-poles"].value then
+    if storage.excludes["poles"] == true then
         storage.excluded_name_list["small-electric-pole"] = true
         storage.excluded_name_list["medium-electric-pole"] = true
 
@@ -22,11 +22,11 @@ function load_excluded_type_list()
         storage.excluded_type_list[key] = value
     end
 
-    if settings.global["Foundations-exclude-inserters"].value then
+    if storage.excludes["inserters"] == true then
         storage.excluded_type_list["inserter"] = true
     end
 
-    if settings.global["Foundations-exclude-belts"].value then
+    if storage.excludes["belts"] == true then
         storage.excluded_type_list["transport-belt"] = true
         storage.excluded_type_list["underground-belt"] = true
         storage.excluded_type_list["splitter"] = true

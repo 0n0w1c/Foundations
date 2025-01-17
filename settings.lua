@@ -136,27 +136,3 @@ data.extend({
         order = get_next_order()
     }
 })
-
-data.extend({
-    {
-        type = "bool-setting",
-        name = "Foundations-exclude-small-medium-electric-poles",
-        setting_type = "runtime-global",
-        default_value = false,
-        order = get_next_order(),
-    },
-    {
-        type = "bool-setting",
-        name = "Foundations-exclude-inserters",
-        setting_type = "runtime-global",
-        default_value = false,
-        order = get_next_order(),
-    },
-    {
-        type = "bool-setting",
-        name = "Foundations-exclude-belts",
-        setting_type = "runtime-global",
-        default_value = false,
-        order = get_next_order(),
-    },
-})

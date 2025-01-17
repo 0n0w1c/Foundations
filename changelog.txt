@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.12.8
+Date: 16.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Runtime settings for belts, poles, and inserters moved to the tile selector gui
+---------------------------------------------------------------------------------------------------
 Version: 2.12.7
 Date: 16.1.2025
   Bugfixes:

@@ -127,6 +127,25 @@ local function update_button()
     end
 end
 
+local function add_switch_to_flow(flow, label_text, switch_name)
+    local label = flow.add {
+        type = "label",
+        caption = label_text .. ":",
+        tooltip = "Toggle " .. label_text:lower() .. " on/off",
+    }
+    label.style.width = 60
+    label.style.horizontal_align = "right"
+
+    local switch = flow.add {
+        type = "switch",
+        name = switch_name,
+        switch_state = storage.excludes[switch_name] and "left" or "right",
+        left_label_caption = "off",
+        right_label_caption = "on",
+    }
+    switch.style.horizontally_stretchable = false
+end
+
 local function show_tile_selector_gui(player)
     if player.gui.screen.tile_selector_frame then
         player.gui.screen.tile_selector_frame.destroy()
@@ -218,6 +237,18 @@ local function show_tile_selector_gui(player)
             button.locked = true
         end
     end
+
+    local switch_flow = frame.add {
+        type = "flow",
+        name = "switch_flow",
+        direction = "horizontal",
+    }
+    switch_flow.style.horizontal_spacing = 10
+    switch_flow.style.top_padding = 12
+
+    add_switch_to_flow(switch_flow, "Inserters", "inserters")
+    add_switch_to_flow(switch_flow, "Belts", "belts")
+    add_switch_to_flow(switch_flow, "Poles", "poles")
 end
 
 local function button_clicked(event)
@@ -269,7 +300,7 @@ local function button_clicked(event)
             end
         elseif string.find(event.element.name, "tile_selector_button_") == 1 then
             local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
-            storage.foundation = selected_tile_name -- Store the selected tile
+            storage.foundation = selected_tile_name
 
             if player.gui.screen.tile_selector_frame then
                 player.gui.screen.tile_selector_frame.destroy()
@@ -368,11 +399,6 @@ local function player_selected_area(event)
         end
 
         player.clear_cursor()
-
-        -- remove all copies of the Foundations-fill-tool from player inventory
-        while player.get_item_count("Foundations-fill-tool") > 0 do
-            player.remove_item({ name = "Foundations-fill-tool", count = 1 })
-        end
     end
 
     -- [shift][left]
@@ -428,11 +454,6 @@ local function player_selected_area(event)
             for _, tile in pairs(tiles_to_unfill) do
                 player.mine_tile(tile)
             end
-
-            -- remove all copies of the Foundations-unfill-tool from player inventory
-            while player.get_item_count("Foundations-unfill-tool") > 0 do
-                player.remove_item({ name = "Foundations-unfill-tool", count = 1 })
-            end
         end
     end
 
@@ -476,11 +497,6 @@ local function player_selected_area(event)
                 local item_name = storage.tile_to_item[storage.foundation]
                 player.remove_item { name = item_name, count = #tiles_to_place }
             end
-
-            -- remove all copies of the Foundations-place-tool from player inventory
-            while player.get_item_count("Foundations-place-tool") > 0 do
-                player.remove_item({ name = "Foundations-place-tool", count = 1 })
-            end
         end
     end
 
@@ -517,11 +533,6 @@ local function player_selected_area(event)
             -- mine the tiles that need to be unplaced
             for _, tile in pairs(tiles_to_unplace) do
                 player.mine_tile(tile)
-            end
-
-            -- remove all copies of the Foundations-unplace-tool from player inventory
-            while player.get_item_count("Foundations-unplace-tool") > 0 do
-                player.remove_item({ name = "Foundations-unplace-tool", count = 1 })
             end
         end
     end
@@ -604,6 +615,20 @@ local function on_entity_moved(event)
     place_foundation_under_entity(event)
 end
 
+local function on_gui_switch_state_changed(event)
+    local player = game.players[event.player_index]
+    if not player then return end
+    if not event.element then return end
+
+    local storage_key = event.element.name
+    if storage_key then
+        storage.excludes[storage_key] = (event.element.switch_state == "left")
+    end
+
+    load_excluded_name_list()
+    load_excluded_type_list()
+end
+
 local function init_storage()
     storage = storage or {}
     storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
@@ -612,6 +637,11 @@ local function init_storage()
     storage.excluded_name_list = storage.excluded_name_list or {}
     storage.excluded_type_list = storage.excluded_type_list or {}
     storage.player_index = storage.player_index or 1
+    storage.excludes = storage.excludes or {
+        inserters = true,
+        belts = true,
+        poles = true,
+    }
 end
 
 local function configuration_changed()
@@ -622,6 +652,7 @@ end
 
 local function register_event_handlers()
     script.on_event(defines.events.on_gui_click, button_clicked)
+    script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
     script.on_event(defines.events.on_research_finished, configuration_changed)
     script.on_event(defines.events.on_player_created, configuration_changed)
