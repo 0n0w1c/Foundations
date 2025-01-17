@@ -127,23 +127,24 @@ local function update_button()
     end
 end
 
-local function add_switch_to_flow(flow, label_text, switch_name)
-    local label = flow.add {
-        type = "label",
-        caption = label_text .. ":",
-        tooltip = "Toggle " .. label_text:lower() .. " on/off",
+local function add_switch_to_flow(flow, icon_path, switch_name, tooltip)
+    local sprite = flow.add {
+        type = "sprite",
+        sprite = icon_path,
+        tooltip = tooltip,
     }
-    label.style.width = 60
-    label.style.horizontal_align = "right"
+    sprite.style.width = 24
+    sprite.style.height = 24
+    sprite.style.horizontal_align = "right"
 
     local switch = flow.add {
         type = "switch",
         name = switch_name,
         switch_state = storage.excludes[switch_name] and "left" or "right",
-        left_label_caption = "off",
-        right_label_caption = "on",
+        left_label_caption = { "dialog-name.Foundations-toggle-off" },
+        right_label_caption = { "dialog-name.Foundations-toggle-on" },
     }
-    switch.style.horizontally_stretchable = false
+    switch.style.horizontal_align = "right"
 end
 
 local function show_tile_selector_gui(player)
@@ -191,7 +192,7 @@ local function show_tile_selector_gui(player)
         sprite = "utility/close",
         hovered_sprite = "utility/close_black",
         clicked_sprite = "utility/close_black",
-        tooltip = { "tile-selector-gui.close-button-tooltip" },
+        tooltip = { "dialog-name.Foundations-close" },
     }
     close_button.style.height = 24
     close_button.style.width = 24
@@ -243,12 +244,13 @@ local function show_tile_selector_gui(player)
         name = "switch_flow",
         direction = "horizontal",
     }
-    switch_flow.style.horizontal_spacing = 10
+    switch_flow.style.horizontal_spacing = 32
     switch_flow.style.top_padding = 12
+    switch_flow.style.bottom_padding = 10
 
-    add_switch_to_flow(switch_flow, "Inserters", "inserters")
-    add_switch_to_flow(switch_flow, "Belts", "belts")
-    add_switch_to_flow(switch_flow, "Poles", "poles")
+    add_switch_to_flow(switch_flow, "item/inserter", "inserters", { "tool-tip.Foundations-inserters" })
+    add_switch_to_flow(switch_flow, "item/transport-belt", "belts", { "tool-tip.Foundations-belts" })
+    add_switch_to_flow(switch_flow, "item/small-electric-pole", "poles", { "tool-tip.Foundations-poles" })
 end
 
 local function button_clicked(event)
