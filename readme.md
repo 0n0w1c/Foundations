@@ -43,9 +43,6 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 &NewLine;
 
-* Runtime settings enable automated tile placement for small and medium electric poles, inserters,  
-belts, splitters, and loaders. Otherwise, treat them as [excluded entities](https://mods.factorio.com/mod/Foundations/faq).  
-
 ---
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
