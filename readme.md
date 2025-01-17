@@ -43,6 +43,8 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 &NewLine;
 
+* In-game settings for automated tile placement for 1x1 electric poles, inserters, belts, splitters, and loaders.  
+
 ---
 
 Foundations is compatible with personal logistics for construction and deconstruction.  
