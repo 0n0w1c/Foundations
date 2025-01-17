@@ -1,6 +1,24 @@
 require("constants")
 
 data.extend({
+--    {
+--        type = "custom-input",
+--        name = "tile-selection",
+--        key_sequence = "mouse-button-1"
+--    },
+    {
+        type = "custom-input",
+        name = "close-tile-selector-e",
+        key_sequence = "E"
+    },
+    {
+        type = "custom-input",
+        name = "close-tile-selector-esc",
+        key_sequence = "ESCAPE"
+    }
+})
+
+data.extend({
     {
         type = "sprite",
         name = "Foundations-disabled",

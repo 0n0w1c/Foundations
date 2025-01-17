@@ -141,8 +141,8 @@ local function add_switch_to_flow(flow, icon_path, switch_name, tooltip)
         type = "switch",
         name = switch_name,
         switch_state = storage.excludes[switch_name] and "left" or "right",
-        left_label_caption = { "dialog-name.Foundations-toggle-off" },
-        right_label_caption = { "dialog-name.Foundations-toggle-on" },
+        left_label_caption = { "gui.Foundations-toggle-off" },
+        right_label_caption = { "gui.Foundations-toggle-on" },
     }
     switch.style.horizontal_align = "right"
 end
@@ -171,7 +171,7 @@ local function show_tile_selector_gui(player)
 
     titlebar_flow.add {
         type = "label",
-        caption = { "dialog-name.Foundations-tile-selector" },
+        caption = { "gui.Foundations-tile-selector" },
         ignored_by_interaction = true,
         style = "frame_title",
     }
@@ -190,10 +190,10 @@ local function show_tile_selector_gui(player)
         type = "sprite-button",
         name = "tile_selector_close_button",
         sprite = "utility/close",
-        hovered_sprite = "utility/close_black",
-        clicked_sprite = "utility/close_black",
-        tooltip = { "dialog-name.Foundations-close" },
+        style = "close_button",
+        mouse_button_filter = { "left" }
     }
+
     close_button.style.height = 24
     close_button.style.width = 24
 
@@ -251,6 +251,9 @@ local function show_tile_selector_gui(player)
     add_switch_to_flow(switch_flow, "item/inserter", "inserters", { "tool-tip.Foundations-inserters" })
     add_switch_to_flow(switch_flow, "item/transport-belt", "belts", { "tool-tip.Foundations-belts" })
     add_switch_to_flow(switch_flow, "item/small-electric-pole", "poles", { "tool-tip.Foundations-poles" })
+
+    player.opened = frame
+    return frame
 end
 
 local function button_clicked(event)
@@ -299,6 +302,7 @@ local function button_clicked(event)
         elseif event.element.name == "tile_selector_close_button" then
             if player.gui.screen.tile_selector_frame then
                 player.gui.screen.tile_selector_frame.destroy()
+                player.opened = nil
             end
         elseif string.find(event.element.name, "tile_selector_button_") == 1 then
             local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
@@ -306,6 +310,7 @@ local function button_clicked(event)
 
             if player.gui.screen.tile_selector_frame then
                 player.gui.screen.tile_selector_frame.destroy()
+                player.opened = nil
             end
 
             update_button()
@@ -652,9 +657,26 @@ local function configuration_changed()
     update_button()
 end
 
+function close_tile_selector(player)
+    if player.gui.screen.tile_selector_frame then
+        player.gui.screen.tile_selector_frame.destroy()
+        player.opened = nil
+    end
+end
+
+local function handle_close_tile_selector(event)
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
+    if player.gui.screen.tile_selector_frame then
+        close_tile_selector(player)
+    end
+end
+
 local function register_event_handlers()
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
+    script.on_event({ "close-tile-selector-e", "close-tile-selector-esc" }, handle_close_tile_selector)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
     script.on_event(defines.events.on_research_finished, configuration_changed)
     script.on_event(defines.events.on_player_created, configuration_changed)
