@@ -6,6 +6,8 @@ require("utilities")
 
 local mod_gui = require("mod-gui")
 
+local save = nil
+
 local function is_player_in_remote_view(player)
     return player.controller_type == defines.controllers.remote
 end
@@ -106,7 +108,7 @@ local function update_button()
 
     local button_flow = mod_gui.get_button_flow(player)
     local sprite_path = "tile/" .. storage.foundation
-    local tool_tip = { "tile-name." .. storage.foundation }
+    local tool_tip = { "", { "tile-name." .. storage.foundation }, "\n", { "tool-tip.Foundations-tool-tip" } }
 
     if storage.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
         sprite_path = "Foundations-disabled"
@@ -262,6 +264,7 @@ local function button_clicked(event)
         if not player then return end
 
         if event.element.name == THIS_MOD then
+            if player.controller_type == defines.controllers.remote then return end
             if not is_compatible_surface(player) then return end
 
             if event.button == defines.mouse_button_type.left then
@@ -673,7 +676,25 @@ local function handle_close_tile_selector(event)
     end
 end
 
+local function controller_changed(event)
+    local player = game.get_player(event.player_index)
+
+    if player.controller_type == defines.controllers.remote then
+        save = storage.foundation
+        storage.foundation = DISABLED
+        update_button()
+    else
+        if save then
+            storage.foundation = save
+            update_button()
+            save = nil
+        end
+    end
+end
+
 local function register_event_handlers()
+    script.on_event(defines.events.on_player_controller_changed, controller_changed)
+
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
     script.on_event({ "close-tile-selector-e", "close-tile-selector-esc" }, handle_close_tile_selector)

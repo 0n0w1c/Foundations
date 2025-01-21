@@ -75,6 +75,12 @@ for _, tile in pairs(data.raw["tile"]) do
             tile.decorative_removal_probability = 1
         end
     end
+
+    if string.sub(tile.name, 1, 14) == "frozen-refined" then
+        tile.layer = data.raw["tile"]["refined-concrete"].layer
+    elseif string.sub(tile.name, 1, 6) == "frozen" then
+        tile.layer = data.raw["tile"]["concrete"].layer
+    end
 end
 
 if settings.startup["Foundations-added-inventory-rows"].value > 0 then

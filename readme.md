@@ -52,7 +52,7 @@ Foundations is compatible with personal logistics for construction and deconstru
 ---
 
 #### Limitations:  
-Aquillo and remote vew not supported for automated tile placement
+Remote vew not supported for automated tile placement
 Tiles placed or removed with the selection tools are not "Undo"-able, use them with some caution.  
 Not compatible with multi-player mode, single-player mode only.  
 

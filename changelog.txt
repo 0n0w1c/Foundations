@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.0
+Date: 21.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Support added for Aquilo
+    - Foundations button switches to Disabled when entering remote view and restores on exit
+    - Tool-tip now displays selection tool options
+---------------------------------------------------------------------------------------------------
 Version: 2.12.10
 Date: 17.1.2025
   Bugfixes:

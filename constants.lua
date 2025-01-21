@@ -10,7 +10,7 @@ COMPATIBLE_SURFACES = {
     ["vulcanus"] = true,
     ["fulgora"] = true,
     ["gleba"] = true,
-    --["aquilo"] = true
+    ["aquilo"] = true
 }
 
 COLORS = {
