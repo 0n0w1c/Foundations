@@ -343,7 +343,7 @@ local function entity_mined(event)
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local tile = surface.get_tile(x, y)
-            if tile and tile.name == storage.foundation then
+            if tile and (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation) then
                 player.mine_tile(tile)
             end
         end
@@ -438,7 +438,7 @@ local function player_selected_area(event)
 
                             if entity.name == "character" or entity_excluded(entity) then
                                 -- include tiles under excluded entities or the player for unfill
-                                if tile.name == storage.foundation then
+                                if tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation then
                                     table.insert(tiles_to_unfill, tile)
                                 end
                             end
@@ -454,7 +454,11 @@ local function player_selected_area(event)
                 if tile then
                     local tile_key = position.position.x .. "," .. position.position.y
                     -- check if the tile is mineable, not under any entity, and matches the foundation
-                    if not tiles_under_entities[tile_key] and mineable_tiles[tile.name] and not tiles_to_exclude[tile.name] and tile.name == storage.foundation then
+                    if not tiles_under_entities[tile_key]
+                        and mineable_tiles[tile.name]
+                        and not tiles_to_exclude[tile.name]
+                        and (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation)
+                    then
                         table.insert(tiles_to_unfill, tile)
                     end
                 end
@@ -531,7 +535,7 @@ local function player_selected_area(event)
                             local tile = surface.get_tile(x, y)
                             if not tile then return end
 
-                            if tile.name == storage.foundation and mineable_tiles[tile.name] and not entity_excluded(entity) and entity.name ~= "character" then
+                            if (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation) and mineable_tiles[tile.name] and not entity_excluded(entity) and entity.name ~= "character" then
                                 player.mine_tile(tile)
                                 table.insert(tiles_to_unplace, tile)
                             end
