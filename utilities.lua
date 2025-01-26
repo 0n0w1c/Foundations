@@ -225,17 +225,11 @@ function is_within_reach(player, area)
 end
 
 function get_mineable_tiles()
-    local tiles_to_exclude = TILES_TO_EXCLUDE
     local mineable_tiles = {}
+    local tiles = prototypes.get_tile_filtered({ { filter = "minable" } })
 
-    -- Fetch mineable tiles directly using prototypes.get_tile_filtered
-    local blueprintable_tiles = prototypes.get_tile_filtered({ { filter = "minable" } })
-
-    -- Filter out excluded tiles
-    for name, tile in pairs(blueprintable_tiles) do
-        if not tiles_to_exclude[name] then
-            mineable_tiles[name] = true
-        end
+    for name, tile in pairs(tiles) do
+        mineable_tiles[name] = true
     end
 
     return mineable_tiles
@@ -264,7 +258,7 @@ function load_tiles(entity, area)
             local tiles_to_exclude = TILES_TO_EXCLUDE
 
             -- check to make sure the tile is not a resource tile or an excluded tile
-            if #resources == 0 and not tiles_to_exclude["current_tile.name"] then
+            if #resources == 0 and not tiles_to_exclude[current_tile.name] then
                 -- prepare to return the current tile and to place a foundation tile
                 if current_tile.name ~= storage.foundation then
                     if mineable_tiles[current_tile.name] then

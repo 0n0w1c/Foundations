@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.2
+Date: 26.1.2025
+  Bugfixes:
+    - Corrected the fill tool logic
+    - Automated tile placement was not working properly on landfill
+    - Movement via Even Pickier Dollies remote interface was not working due to an API change
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.1
 Date: 21.1.2025
   Bugfixes:

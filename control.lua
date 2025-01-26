@@ -1,9 +1,6 @@
 require("constants")
 require("utilities")
 
---log(serpent.block(data))
---player.print(serpent.block(data))
-
 local mod_gui = require("mod-gui")
 
 local save = nil
@@ -366,9 +363,6 @@ local function player_selected_area(event)
             local surface = player.surface
             if not surface then return end
 
-            local mineable_tiles = get_mineable_tiles()
-            if not mineable_tiles then return end
-
             local tiles_to_exclude = TILES_TO_EXCLUDE
             local tiles_to_place = {}
 
@@ -378,21 +372,26 @@ local function player_selected_area(event)
                 local search_area = { { position.position.x, position.position.y }, { position.position.x + 1, position.position.y + 1 } }
                 local entities = surface.find_entities_filtered({ area = search_area })
 
+                local placeable_tiles = storage.tile_to_item
+
                 local place_tile = true
 
-                -- if character or excluded entity, don't stop placement
-                -- anything else, stop placement
                 for _, entity in pairs(entities) do
-                    if entity.name == "character" or entity_excluded(entity) then
-                        -- do nothing here so the tile will be placed
-                    else
+                    if entity.name ~= "character" and not entity_excluded(entity) then
                         place_tile = false
                         break
                     end
                 end
 
-                -- if no other entities found or only the player or excluded entity is present, place the tile
-                if place_tile and not mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
+                if tile and tile.name and tiles_to_exclude[tile.name] then
+                    place_tile = false
+                end
+
+                if tile and tile.name and placeable_tiles[tile.name] then
+                    place_tile = false
+                end
+
+                if place_tile then
                     table.insert(tiles_to_place,
                         { name = storage.foundation, position = { x = position.position.x, y = position.position.y } })
                 end
@@ -417,9 +416,6 @@ local function player_selected_area(event)
             local surface = player.surface
             if not surface then return end
 
-            local mineable_tiles = get_mineable_tiles()
-            if not surface or not mineable_tiles then return end
-
             -- scan the area for entities and find tiles under excluded entities
             local entities = surface.find_entities_filtered({ area = event.area })
             if not entities then return end
@@ -437,7 +433,6 @@ local function player_selected_area(event)
                             if not tile then return end
 
                             if entity.name == "character" or entity_excluded(entity) then
-                                -- include tiles under excluded entities or the player for unfill
                                 if tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation then
                                     table.insert(tiles_to_unfill, tile)
                                 end
@@ -453,11 +448,12 @@ local function player_selected_area(event)
                 local tile = surface.get_tile(position.position.x, position.position.y)
                 if tile then
                     local tile_key = position.position.x .. "," .. position.position.y
-                    -- check if the tile is mineable, not under any entity, and matches the foundation
+                    local placeable_tiles = storage.tile_to_item
+
                     if not tiles_under_entities[tile_key]
-                        and mineable_tiles[tile.name]
-                        and not tiles_to_exclude[tile.name]
                         and (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation)
+                        and placeable_tiles[tile.name]
+                        and not tiles_to_exclude[tile.name]
                     then
                         table.insert(tiles_to_unfill, tile)
                     end
@@ -520,9 +516,6 @@ local function player_selected_area(event)
             local surface = player.surface
             if not surface then return end
 
-            local mineable_tiles = get_mineable_tiles()
-            if not mineable_tiles then return end
-
             local tiles_to_unplace = {}
 
             -- scan the area for entities and mine the tiles under them if they match storage.foundation
@@ -535,7 +528,9 @@ local function player_selected_area(event)
                             local tile = surface.get_tile(x, y)
                             if not tile then return end
 
-                            if (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation) and mineable_tiles[tile.name] and not entity_excluded(entity) and entity.name ~= "character" then
+                            local placeable_tiles = storage.tile_to_item
+
+                            if (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation) and placeable_tiles[tile.name] and (not entity_excluded(entity)) and entity.name ~= "character" then
                                 player.mine_tile(tile)
                                 table.insert(tiles_to_unplace, tile)
                             end
@@ -564,10 +559,8 @@ local function entity_moved(event)
     local player = game.players[storage.player_index]
     if not player then return end
 
-    local mineable_tiles = get_mineable_tiles()
-    if not mineable_tiles then return end
-
-    local tiles_to_exclude = TILES_TO_EXCLUDE
+    local placeable_tiles = storage.tile_to_item
+    if not placeable_tiles then return end
 
     local previous_area = get_area_under_entity_at_position(entity, event.start_pos)
     local current_area = get_area_under_entity(entity)
@@ -584,7 +577,7 @@ local function entity_moved(event)
                 local tile = surface.get_tile(position.x, position.y)
 
                 if tile and not within_area(position, previous_area) then
-                    if tile.name and mineable_tiles[tile.name] and (not tiles_to_exclude[tile.name] or tile.name == "landfill") then
+                    if tile.name and placeable_tiles[tile.name] then
                         tile_name = tile.name
                         table.insert(tile_names, tile_name)
                     end
@@ -622,7 +615,6 @@ end
 
 local function on_entity_moved(event)
     if not event or storage.foundation == DISABLED then return end
-
     if not event.moved_entity or entity_excluded(event.moved_entity) then return end
 
     entity_moved(event)
@@ -713,8 +705,8 @@ local function register_event_handlers()
     script.on_event(defines.events.on_robot_mined_entity, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)
 
-    if remote.interfaces["selectorDollies"] and remote.interfaces["selectorDollies"]["dolly_moved_entity_id"] then
-        script.on_event(remote.call("selectorDollies", "dolly_moved_entity_id"), on_entity_moved)
+    if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
+        script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), on_entity_moved)
     end
 end
 
