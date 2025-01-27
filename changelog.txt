@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.5
+Date: 27.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Added event handlers for script_raised_revive and script_raised_destroy
+    - Compatible with Quantum Fabrication
+---------------------------------------------------------------------------------------------------
 Version: 2.13.4
 Date: 26.1.2025
   Bugfixes:

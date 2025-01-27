@@ -697,7 +697,6 @@ end
 
 local function register_event_handlers()
     script.on_event(defines.events.on_player_controller_changed, controller_changed)
-
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
     script.on_event({ "close-tile-selector-e", "close-tile-selector-esc" }, handle_close_tile_selector)
@@ -708,8 +707,10 @@ local function register_event_handlers()
     script.on_event(defines.events.on_robot_built_entity, place_foundation_under_entity)
     script.on_event(defines.events.on_entity_cloned, place_foundation_under_entity)
     script.on_event(defines.events.script_raised_built, place_foundation_under_entity)
+    script.on_event(defines.events.script_raised_revive, place_foundation_under_entity)
     script.on_event(defines.events.on_player_mined_entity, entity_mined)
     script.on_event(defines.events.on_robot_mined_entity, entity_mined)
+    script.on_event(defines.events.script_raised_destroy, entity_mined)
     script.on_event(defines.events.on_player_selected_area, player_selected_area)
 
     if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
