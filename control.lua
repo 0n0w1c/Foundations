@@ -366,20 +366,22 @@ local function player_selected_area(event)
             local tiles_to_exclude = TILES_TO_EXCLUDE
             local tiles_to_place = {}
 
+            --local mineable_tiles = get_mineable_tiles()
+            local placeable_tiles = storage.tile_to_item
+
             -- scan the area, find valid empty positions that need a tile
             for _, position in pairs(event.tiles) do
                 local tile = surface.get_tile(position.position.x, position.position.y)
                 local search_area = { { position.position.x, position.position.y }, { position.position.x + 1, position.position.y + 1 } }
                 local entities = surface.find_entities_filtered({ area = search_area })
 
-                local placeable_tiles = storage.tile_to_item
-
                 local place_tile = true
 
                 for _, entity in pairs(entities) do
-                    if entity.name ~= "character" and not entity_excluded(entity) then
-                        place_tile = false
+                    if entity_excluded(entity) or entity.name == "character" then
                         break
+                    else
+                        place_tile = false
                     end
                 end
 
@@ -388,6 +390,7 @@ local function player_selected_area(event)
                 end
 
                 if tile and tile.name and placeable_tiles[tile.name] then
+                    --if tile and tile.name and mineable_tiles[tile.name] then
                     place_tile = false
                 end
 

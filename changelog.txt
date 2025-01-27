@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.3
+Date: 26.1.2025
+  Bugfixes:
+    - More adjustment to the fill tool logic
+    - Fill tool will no longer fill the water-like tiles of the Space Age surfaces
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.2
 Date: 26.1.2025
   Bugfixes:
