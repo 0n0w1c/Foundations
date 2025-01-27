@@ -18,6 +18,13 @@ end
 
 data.extend({
     {
+        type = "bool-setting",
+        name = "Foundations-halt-construction",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order()
+    },
+    {
         type = "int-setting",
         name = "Foundations-added-inventory-rows",
         setting_type = "startup",

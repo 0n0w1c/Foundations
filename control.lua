@@ -4,6 +4,7 @@ require("utilities")
 local mod_gui = require("mod-gui")
 
 local save = nil
+local halt_construction = settings.startup["Foundations-halt-construction"].value or false
 
 local function is_player_in_remote_view(player)
     return player.controller_type == defines.controllers.remote
@@ -73,7 +74,10 @@ local function place_foundation_under_entity(event)
     if tiles_to_place then
         -- if not enough storage.foundation, put entity back on cursor and destroy the placed entity, then exit
         if not player_has_sufficient_tiles(player, storage.foundation, #tiles_to_place) then
-            --return_entity_to_cursor(player, entity)
+            if halt_construction then
+                return_entity_to_cursor(player, entity)
+            end
+
             return
         end
 

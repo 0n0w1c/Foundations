@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.4
+Date: 26.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Added startup setting to halt construction without sufficient tiles in player inventory
+---------------------------------------------------------------------------------------------------
 Version: 2.13.3
 Date: 26.1.2025
   Bugfixes:
