@@ -124,6 +124,22 @@ data.extend({
     }
 })
 
+data.extend({
+    {
+        type = "shortcut",
+        name = "Foundations-toggle-button",
+        action = "lua",
+        icon = MOD_PATH .. "/graphics/icons/disabled.png",
+        icon_size = 64,
+        small_icon = MOD_PATH .. "/graphics/icons/disabled_32x32.png",
+        small_icon_size = 32,
+        associated_control_input = "give-Foundations-toggle-button",
+        style = "default",
+        toggleable = true,
+        order = "f[toggle-button]"
+    }
+})
+
 if settings.startup["Foundations-concrete-variants"].value then
     for _, color in pairs(COLORS) do
         local color_tile = color.name .. "-refined-concrete"

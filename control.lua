@@ -116,18 +116,26 @@ local function update_button()
         storage.foundation = DISABLED
     end
 
-    if not button_flow[THIS_MOD] then
-        button_flow.add {
-            type = "sprite-button",
-            name = THIS_MOD,
-            sprite = sprite_path,
-            tooltip = tool_tip,
-            style = mod_gui.button_style
-        }
+    if storage.button_on then
+        if not button_flow[THIS_MOD] then
+            button_flow.add {
+                type = "sprite-button",
+                name = THIS_MOD,
+                sprite = sprite_path,
+                tooltip = tool_tip,
+                style = mod_gui.button_style
+            }
+        else
+            button_flow[THIS_MOD].sprite = sprite_path
+            button_flow[THIS_MOD].tooltip = tool_tip
+        end
     else
-        button_flow[THIS_MOD].sprite = sprite_path
-        button_flow[THIS_MOD].tooltip = tool_tip
+        if button_flow[THIS_MOD] then
+            button_flow[THIS_MOD].destroy()
+        end
     end
+
+    player.set_shortcut_toggled("Foundations-toggle-button", storage.button_on)
 end
 
 local function add_switch_to_flow(flow, icon_path, switch_name, tooltip)
@@ -647,6 +655,7 @@ local function init_storage()
     storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
     storage.tile_names = storage.tile_names or { DISABLED }
     storage.foundation = storage.foundation or DISABLED
+    storage.button_on = storage.button_on or true
     storage.excluded_name_list = storage.excluded_name_list or {}
     storage.excluded_type_list = storage.excluded_type_list or {}
     storage.player_index = storage.player_index or 1
@@ -679,6 +688,13 @@ local function handle_close_tile_selector(event)
     end
 end
 
+local function on_shortcut_clicked(event)
+    if (not event) or (not event.prototype_name) or (event.prototype_name ~= "Foundations-toggle-button") then return end
+
+    storage.button_on = not storage.button_on
+    update_button()
+end
+
 local function controller_changed(event)
     local player = game.get_player(event.player_index)
 
@@ -697,6 +713,7 @@ end
 
 local function register_event_handlers()
     script.on_event(defines.events.on_player_controller_changed, controller_changed)
+    script.on_event(defines.events.on_lua_shortcut, on_shortcut_clicked)
     script.on_event(defines.events.on_gui_click, button_clicked)
     script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
     script.on_event({ "close-tile-selector-e", "close-tile-selector-esc" }, handle_close_tile_selector)

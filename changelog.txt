@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.6
+Date: 27.1.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Added a shortcut to the shortcut bar, to toggle the display of the Foundations button
+---------------------------------------------------------------------------------------------------
 Version: 2.13.5
 Date: 27.1.2025
   Bugfixes:
