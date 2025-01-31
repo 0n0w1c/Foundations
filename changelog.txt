@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.10
+Date: 31.1.2025
+  Bugfixes:
+    - On Aquilo the painted concretes would freeze and convert to frozen concretes
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.9
 Date: 31.1.2025
   Bugfixes:

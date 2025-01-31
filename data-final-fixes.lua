@@ -81,6 +81,7 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
             template.minable = { mining_time = 0.1, result = "dect-paint-" .. variant }
             template.placeable_by = { item = "dect-paint-" .. variant, count = 1 }
             template.next_direction = "dect-paint-" .. variant .. "-" .. opp_dir
+            template.frozen_variant = nil
             template.variants.material_background.picture =
                 "__Dectorio__/graphics/terrain/concrete/" .. variant .. "-" .. dir .. "/hr-concrete.png"
 
@@ -91,6 +92,7 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
             refined_template.minable = { mining_time = 0.1, result = "dect-paint-refined-" .. variant }
             refined_template.placeable_by = { item = "dect-paint-refined-" .. variant, count = 1 }
             refined_template.next_direction = "dect-paint-refined-" .. variant .. "-" .. opp_dir
+            refined_template.frozen_variant = nil
             refined_template.variants.material_background.picture =
                 "__Dectorio__/graphics/terrain/refined-concrete/" .. variant .. "-" .. dir .. "/hr-refined-concrete.png"
 

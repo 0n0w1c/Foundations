@@ -149,6 +149,7 @@ if settings.startup["Foundations-concrete-variants"].value then
         data.raw["tile"][color_tile].minable = { mining_time = 0.1, result = color_tile }
         data.raw["tile"][color_tile].placeable_by = { item = color_tile, count = 1 }
         data.raw["tile"][color_tile].transition_overlay_layer_offset = 0
+        data.raw["tile"][color_tile].frozen_variant = nil
         data.raw["tile"][color_tile].layer_group = "ground-artificial"
         data.raw["tile"][color_tile].layer =
             tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27
