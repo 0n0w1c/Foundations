@@ -1,5 +1,10 @@
 require("constants")
 
+if mods["space-age"] then
+    data.raw["tile"]["frozen-refined-concrete"].layer = data.raw["tile"]["refined-concrete"].layer
+    data.raw["tile"]["frozen-concrete"].layer = data.raw["tile"]["concrete"].layer
+end
+
 if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value) then
     for _, color in pairs(COLORS) do
         data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"].hidden = true
@@ -65,8 +70,9 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
     end
 end
 
-for _, tile in pairs(data.raw["tile"]) do
-    if tile.minable then
+local tiles = data.raw["tile"]
+for _, tile in pairs(tiles) do
+    if tile.minable and not tile.minable.mining_time == settings.startup["Foundations-mining-time"].value then
         if settings.startup["Foundations-mining-time"].value > 0 then
             tile.minable.mining_time = tonumber(settings.startup["Foundations-mining-time"].value) or 0.1
         end
@@ -74,12 +80,6 @@ for _, tile in pairs(data.raw["tile"]) do
         if settings.startup["Foundations-clean-sweep"].value then
             tile.decorative_removal_probability = 1
         end
-    end
-
-    if string.sub(tile.name, 1, 14) == "frozen-refined" then
-        tile.layer = data.raw["tile"]["refined-concrete"].layer
-    elseif string.sub(tile.name, 1, 6) == "frozen" then
-        tile.layer = data.raw["tile"]["concrete"].layer
     end
 end
 
