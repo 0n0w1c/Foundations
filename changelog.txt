@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.9
+Date: 31.1.2025
+  Bugfixes:
+    - Removed grid concrete's transition with concrete
+    - On Aquilo grid concrete would freeze and convert to frozen concrete
+    - Refactored data-final-fixes.lua
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.8
 Date: 31.1.2025
   Bugfixes:

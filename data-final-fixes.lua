@@ -1,18 +1,35 @@
 require("constants")
 
-if mods["space-age"] then
-    local tiles = data.raw["tile"]
-    for _, tile in pairs(tiles) do
-        if string.sub(tile.name, 1, 13) == "frozen-hazard" then
-            tile.layer = data.raw["tile"]["concrete"].layer
-        elseif string.sub(tile.name, 1, 21) == "frozen-refined-hazard" then
-            tile.layer = data.raw["tile"]["refined-concrete"].layer
-        elseif tile.name == "frozen-concrete" then
-            tile.layer = data.raw["tile"]["concrete"].layer
-        elseif tile.name == "frozen-refined-concrete" then
-            tile.layer = data.raw["tile"]["refined-concrete"].layer
+if settings.startup["Foundations-added-inventory-rows"].value > 0 then
+    data.raw.character.character.inventory_size = data.raw.character.character.inventory_size +
+        (settings.startup["Foundations-added-inventory-rows"].value * 10)
+end
+
+local tiles = data.raw["tile"]
+
+for _, tile in pairs(tiles) do
+    if tile.minable then
+        if settings.startup["Foundations-mining-time"].value > 0 then
+            tile.minable.mining_time = tonumber(settings.startup["Foundations-mining-time"].value) or 0.1
+        end
+
+        if settings.startup["Foundations-clean-sweep"].value then
+            tile.decorative_removal_probability = 1
         end
     end
+end
+
+if mods["space-age"] then
+    local concrete_layer = tiles["concrete"].layer
+    local refined_concrete_layer = tiles["refined-concrete"].layer
+
+    tiles["frozen-concrete"].layer = concrete_layer
+    tiles["frozen-hazard-concrete-left"].layer = concrete_layer
+    tiles["frozen-hazard-concrete-right"].layer = concrete_layer
+
+    tiles["frozen-refined-concrete"].layer = refined_concrete_layer
+    tiles["frozen-refined-hazard-concrete-left"].layer = refined_concrete_layer
+    tiles["frozen-refined-hazard-concrete-right"].layer = refined_concrete_layer
 end
 
 if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value) then
@@ -30,8 +47,10 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
     template.minable = { mining_time = 0.1, result = name }
     template.placeable_by = { item = name, count = 1 }
     template.transition_overlay_layer_offset = 0
-    template.layer = layer + 2
+    template.layer = layer + 3
     --template.transition_merges_with_tile = "concrete"
+    template.transition_merges_with_tile = nil
+    template.frozen_variant = nil
     template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
 
     data.extend({ template })
@@ -78,22 +97,4 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
             data.extend({ template, refined_template })
         end
     end
-end
-
-local tiles = data.raw["tile"]
-for _, tile in pairs(tiles) do
-    if tile.minable and not tile.minable.mining_time == settings.startup["Foundations-mining-time"].value then
-        if settings.startup["Foundations-mining-time"].value > 0 then
-            tile.minable.mining_time = tonumber(settings.startup["Foundations-mining-time"].value) or 0.1
-        end
-
-        if settings.startup["Foundations-clean-sweep"].value then
-            tile.decorative_removal_probability = 1
-        end
-    end
-end
-
-if settings.startup["Foundations-added-inventory-rows"].value > 0 then
-    data.raw.character.character.inventory_size = data.raw.character.character.inventory_size +
-        (settings.startup["Foundations-added-inventory-rows"].value * 10)
 end
