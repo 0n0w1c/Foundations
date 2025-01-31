@@ -2,7 +2,7 @@
 Version: 2.13.7
 Date: 27.1.2025
   Bugfixes:
-    - Alien Biomes: frozen-snow tiles' layer was inadvertently modified
+    - Alien Biomes: frozen-snow tiles' layer were inadvertently modified
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
