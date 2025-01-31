@@ -1,6 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.8
+Date: 31.1.2025
+  Bugfixes:
+    - Aquilo: Frozen hazard tiles' layer not set due to 2.13.7 bugfix
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.7
-Date: 27.1.2025
+Date: 31.1.2025
   Bugfixes:
     - Alien Biomes: frozen-snow tiles' layer were inadvertently modified
   Changes:

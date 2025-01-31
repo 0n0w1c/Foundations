@@ -1,8 +1,18 @@
 require("constants")
 
 if mods["space-age"] then
-    data.raw["tile"]["frozen-refined-concrete"].layer = data.raw["tile"]["refined-concrete"].layer
-    data.raw["tile"]["frozen-concrete"].layer = data.raw["tile"]["concrete"].layer
+    local tiles = data.raw["tile"]
+    for _, tile in pairs(tiles) do
+        if string.sub(tile.name, 1, 13) == "frozen-hazard" then
+            tile.layer = data.raw["tile"]["concrete"].layer
+        elseif string.sub(tile.name, 1, 21) == "frozen-refined-hazard" then
+            tile.layer = data.raw["tile"]["refined-concrete"].layer
+        elseif tile.name == "frozen-concrete" then
+            tile.layer = data.raw["tile"]["concrete"].layer
+        elseif tile.name == "frozen-refined-concrete" then
+            tile.layer = data.raw["tile"]["refined-concrete"].layer
+        end
+    end
 end
 
 if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value) then
