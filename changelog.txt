@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.11
+Date: 11.2.2025
+  Bugfixes:
+    - Adjustments for Dectorio's gravel tiles
+      Alien Biomes changes the layer of the gravel tiles
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.10
 Date: 31.1.2025
   Bugfixes:

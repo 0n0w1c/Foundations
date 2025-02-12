@@ -32,12 +32,8 @@ if mods["space-age"] then
     tiles["frozen-refined-hazard-concrete-right"].layer = refined_concrete_layer
 end
 
-if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value) then
-    for _, color in pairs(COLORS) do
-        data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"].hidden = true
-        data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].hidden_in_factoriopedia = true
-    end
-
+--if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value) then
+if mods["Dectorio"] then
     local tile = data.raw["tile"]["concrete"]
     local layer = tile.layer
     local template = table.deepcopy(tile)
@@ -48,55 +44,82 @@ if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and setti
     template.placeable_by = { item = name, count = 1 }
     template.transition_overlay_layer_offset = 0
     template.layer = layer + 3
-    --template.transition_merges_with_tile = "concrete"
     template.transition_merges_with_tile = nil
     template.frozen_variant = nil
     template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
 
     data.extend({ template })
 
-    -- "fix" for the Dectorio painted concrete
-    local variants = {
-        "danger",
-        "emergency",
-        "caution",
-        "radiation",
-        "defect",
-        "operations",
-        "safety"
-    }
+    if data.raw["tile"]["dect-wood-floor"] then
+        data.raw["tile"]["dect-wood-floor"].layer_group = "ground-artificial"
+    end
 
-    local directions =
-    {
-        ["left"] = "right",
-        ["right"] = "left"
-    }
+    if data.raw["tile"]["dect-stone-gravel"] then
+        data.raw["tile"]["dect-stone-gravel"].layer = layer - 3
+        data.raw["tile"]["dect-stone-gravel"].layer_group = "ground-natural"
 
-    for _, variant in ipairs(variants) do
-        for dir, opp_dir in pairs(directions) do
-            tile = data.raw["tile"]["hazard-concrete-" .. dir]
-            template = table.deepcopy(tile)
+        data.raw["tile"]["dect-coal-gravel"].layer = layer - 4
+        data.raw["tile"]["dect-coal-gravel"].layer_group = "ground-natural"
 
-            template.name = "dect-paint-" .. variant .. "-" .. dir
-            template.minable = { mining_time = 0.1, result = "dect-paint-" .. variant }
-            template.placeable_by = { item = "dect-paint-" .. variant, count = 1 }
-            template.next_direction = "dect-paint-" .. variant .. "-" .. opp_dir
-            template.frozen_variant = nil
-            template.variants.material_background.picture =
-                "__Dectorio__/graphics/terrain/concrete/" .. variant .. "-" .. dir .. "/hr-concrete.png"
+        data.raw["tile"]["dect-copper-ore-gravel"].layer = layer - 5
+        data.raw["tile"]["dect-copper-ore-gravel"].layer_group = "ground-natural"
 
-            local refined_tile = data.raw["tile"]["refined-hazard-concrete-" .. dir]
-            local refined_template = table.deepcopy(refined_tile)
+        data.raw["tile"]["dect-iron-ore-gravel"].layer = layer - 6
+        data.raw["tile"]["dect-iron-ore-gravel"].layer_group = "ground-natural"
+    end
 
-            refined_template.name = "dect-paint-refined-" .. variant .. "-" .. dir
-            refined_template.minable = { mining_time = 0.1, result = "dect-paint-refined-" .. variant }
-            refined_template.placeable_by = { item = "dect-paint-refined-" .. variant, count = 1 }
-            refined_template.next_direction = "dect-paint-refined-" .. variant .. "-" .. opp_dir
-            refined_template.frozen_variant = nil
-            refined_template.variants.material_background.picture =
-                "__Dectorio__/graphics/terrain/refined-concrete/" .. variant .. "-" .. dir .. "/hr-refined-concrete.png"
+    for _, color in pairs(COLORS) do
+        if data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"] then
+            data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"].hidden = true
+            data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].hidden_in_factoriopedia = true
+        end
+    end
 
-            data.extend({ template, refined_template })
+    if settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
+        -- "fix" for the Dectorio painted concrete
+        local variants = {
+            "danger",
+            "emergency",
+            "caution",
+            "radiation",
+            "defect",
+            "operations",
+            "safety"
+        }
+
+        local directions =
+        {
+            ["left"] = "right",
+            ["right"] = "left"
+        }
+
+        for _, variant in ipairs(variants) do
+            for dir, opp_dir in pairs(directions) do
+                tile = data.raw["tile"]["hazard-concrete-" .. dir]
+                template = table.deepcopy(tile)
+
+                template.name = "dect-paint-" .. variant .. "-" .. dir
+                template.minable = { mining_time = 0.1, result = "dect-paint-" .. variant }
+                template.placeable_by = { item = "dect-paint-" .. variant, count = 1 }
+                template.next_direction = "dect-paint-" .. variant .. "-" .. opp_dir
+                template.frozen_variant = nil
+                template.variants.material_background.picture =
+                    "__Dectorio__/graphics/terrain/concrete/" .. variant .. "-" .. dir .. "/hr-concrete.png"
+
+                local refined_tile = data.raw["tile"]["refined-hazard-concrete-" .. dir]
+                local refined_template = table.deepcopy(refined_tile)
+
+                refined_template.name = "dect-paint-refined-" .. variant .. "-" .. dir
+                refined_template.minable = { mining_time = 0.1, result = "dect-paint-refined-" .. variant }
+                refined_template.placeable_by = { item = "dect-paint-refined-" .. variant, count = 1 }
+                refined_template.next_direction = "dect-paint-refined-" .. variant .. "-" .. opp_dir
+                refined_template.frozen_variant = nil
+                refined_template.variants.material_background.picture =
+                    "__Dectorio__/graphics/terrain/refined-concrete/" ..
+                    variant .. "-" .. dir .. "/hr-refined-concrete.png"
+
+                data.extend({ template, refined_template })
+            end
         end
     end
 end
