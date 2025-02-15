@@ -36,6 +36,8 @@ end
 
 -- check if an entity is excluded based on name or type
 function entity_excluded(entity)
+    if not entity or not entity.valid then return true end
+
     if entity and (storage.excluded_name_list[entity.name] or storage.excluded_type_list[entity.type]) then
         return true
     end

@@ -54,7 +54,7 @@ local function place_foundation_under_entity(event)
         entity = event.entity
     end
 
-    if not entity then return end
+    if not entity or not entity.valid then return end
 
     if storage.foundation == DISABLED or entity_excluded(entity) then
         return
@@ -335,7 +335,7 @@ local function entity_mined(event)
     if not is_compatible_surface(event) then return end
 
     local entity = event.entity
-    if not entity then return end
+    if not entity or not entity.valid then return end
 
     local surface = entity.surface
     if not surface then return end

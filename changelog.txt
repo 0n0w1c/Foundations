@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.12
+Date: 15.2.2025
+  Bugfixes:
+    - Crash due to an invalid entity in entity_excluded, added some entity.valid checks
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.11
 Date: 11.2.2025
   Bugfixes:
