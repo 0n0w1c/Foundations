@@ -69,11 +69,28 @@ if mods["Dectorio"] then
     end
 
     for _, color in pairs(COLORS) do
+        local item = data.raw["item"][color.name .. "-refined-concrete"]
+
+        if item and settings.startup["Foundations-concrete-variants"] then
+            item.group = data.raw["item"]["refined-concrete"].group
+            item.subgroup = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].subgroup
+            item.order = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].order
+        end
+
         if data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"] then
             data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"].hidden = true
             data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].hidden_in_factoriopedia = true
         end
     end
+
+    local subgroup = data.raw["item"]["landfill"].subgroup
+
+    data.raw["item"]["artificial-yumako-soil"].subgroup = subgroup
+    data.raw["item"]["artificial-jellynut-soil"].subgroup = subgroup
+    data.raw["item"]["overgrowth-yumako-soil"].subgroup = subgroup
+    data.raw["item"]["overgrowth-jellynut-soil"].subgroup = subgroup
+    data.raw["item"]["ice-platform"].subgroup = subgroup
+    data.raw["item"]["foundation"].subgroup = subgroup
 
     if settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
         -- "fix" for the Dectorio painted concrete

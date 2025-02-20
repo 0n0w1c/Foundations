@@ -51,7 +51,7 @@ data.extend({
         type = "bool-setting",
         name = "Foundations-concrete-variants",
         setting_type = "startup",
-        default_value = false,
+        default_value = true,
         order = get_next_order(),
     },
     {

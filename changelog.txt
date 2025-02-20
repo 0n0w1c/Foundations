@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.13
+Date: 20.2.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Startup setting to enable refined concrete variants default value changed to enabled
+    - Dectorio: refined concrete variants, soils, and foundation recipes moved to the Dectorio tab
+---------------------------------------------------------------------------------------------------
 Version: 2.13.12
 Date: 15.2.2025
   Bugfixes:
