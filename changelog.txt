@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.13.14
+Date: 20.2.2025
+  Bugfixes:
+    - Crash due to moving soils when Dectorio is active and Space Age is not active
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.13.13
 Date: 20.2.2025
   Bugfixes:

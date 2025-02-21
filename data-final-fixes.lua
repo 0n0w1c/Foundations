@@ -85,12 +85,14 @@ if mods["Dectorio"] then
 
     local subgroup = data.raw["item"]["landfill"].subgroup
 
-    data.raw["item"]["artificial-yumako-soil"].subgroup = subgroup
-    data.raw["item"]["artificial-jellynut-soil"].subgroup = subgroup
-    data.raw["item"]["overgrowth-yumako-soil"].subgroup = subgroup
-    data.raw["item"]["overgrowth-jellynut-soil"].subgroup = subgroup
-    data.raw["item"]["ice-platform"].subgroup = subgroup
-    data.raw["item"]["foundation"].subgroup = subgroup
+    if mods["space-age"] then
+        data.raw["item"]["artificial-yumako-soil"].subgroup = subgroup
+        data.raw["item"]["artificial-jellynut-soil"].subgroup = subgroup
+        data.raw["item"]["overgrowth-yumako-soil"].subgroup = subgroup
+        data.raw["item"]["overgrowth-jellynut-soil"].subgroup = subgroup
+        data.raw["item"]["ice-platform"].subgroup = subgroup
+        data.raw["item"]["foundation"].subgroup = subgroup
+    end
 
     if settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
         -- "fix" for the Dectorio painted concrete
