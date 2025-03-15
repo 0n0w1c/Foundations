@@ -267,7 +267,7 @@ local function show_tile_selector_gui(player)
     return frame
 end
 
-local function button_clicked(event)
+local function on_gui_click(event)
     if event and event.element and event.element.valid then
         local player = game.players[storage.player_index]
         if not player then return end
@@ -641,13 +641,15 @@ local function on_gui_switch_state_changed(event)
     if not player then return end
     if not event.element then return end
 
-    local storage_key = event.element.name
-    if storage_key then
-        storage.excludes[storage_key] = (event.element.switch_state == "left")
-    end
+    if player.gui.screen.tile_selector_frame then
+        local storage_key = event.element.name
+        if storage_key then
+            storage.excludes[storage_key] = (event.element.switch_state == "left")
+        end
 
-    load_excluded_name_list()
-    load_excluded_type_list()
+        load_excluded_name_list()
+        load_excluded_type_list()
+    end
 end
 
 local function init_storage()
@@ -672,14 +674,14 @@ local function configuration_changed()
     update_button()
 end
 
-function close_tile_selector(player)
+local function close_tile_selector(player)
     if player.gui.screen.tile_selector_frame then
         player.gui.screen.tile_selector_frame.destroy()
         player.opened = nil
     end
 end
 
-local function handle_close_tile_selector(event)
+local function on_gui_closed(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
@@ -688,7 +690,7 @@ local function handle_close_tile_selector(event)
     end
 end
 
-local function on_shortcut_clicked(event)
+local function on_lua_shortcut(event)
     if (not event) or (not event.prototype_name) or (event.prototype_name ~= "Foundations-toggle-button") then return end
 
     storage.button_on = not storage.button_on
@@ -713,10 +715,10 @@ end
 
 local function register_event_handlers()
     script.on_event(defines.events.on_player_controller_changed, controller_changed)
-    script.on_event(defines.events.on_lua_shortcut, on_shortcut_clicked)
-    script.on_event(defines.events.on_gui_click, button_clicked)
+    script.on_event(defines.events.on_lua_shortcut, on_lua_shortcut)
+    script.on_event(defines.events.on_gui_click, on_gui_click)
     script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
-    script.on_event({ "close-tile-selector-e", "close-tile-selector-esc" }, handle_close_tile_selector)
+    script.on_event(defines.events.on_gui_closed, on_gui_closed)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
     script.on_event(defines.events.on_research_finished, configuration_changed)
     script.on_event(defines.events.on_player_created, configuration_changed)

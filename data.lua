@@ -2,19 +2,6 @@ require("constants")
 
 data.extend({
     {
-        type = "custom-input",
-        name = "close-tile-selector-e",
-        key_sequence = "E"
-    },
-    {
-        type = "custom-input",
-        name = "close-tile-selector-esc",
-        key_sequence = "ESCAPE"
-    }
-})
-
-data.extend({
-    {
         type = "sprite",
         name = "Foundations-disabled",
         filename = MOD_PATH .. "/graphics/icons/disabled.png",
