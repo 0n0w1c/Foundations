@@ -32,6 +32,10 @@ if mods["space-age"] then
     tiles["frozen-refined-hazard-concrete-right"].layer = refined_concrete_layer
 end
 
+if mods["space-platform-for-ground"] then
+    tiles["space-platform-for-ground"].layer = tiles["acid-refined-concrete"].layer + 3
+end
+
 --if (mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value) then
 if mods["Dectorio"] then
     local tile = data.raw["tile"]["concrete"]

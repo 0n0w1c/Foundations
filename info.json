@@ -10,6 +10,7 @@
         "? aai-industry >= 0.6.4",
         "? even-pickier-dollies >= 2.0.1",
         "? Dectorio >= 0.13.1",
+        "? space-platform-for-ground",
         "(?) alien-biomes"
     ]
 }

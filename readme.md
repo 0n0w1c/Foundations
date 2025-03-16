@@ -63,5 +63,6 @@ Not compatible with multi-player mode, single-player mode only.
 #### Supported mods:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio)  
+[Space platform, for ground](https://mods.factorio.com/mod/space-platform-for-ground)  
 
 Movement via [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  

@@ -1,20 +1,28 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.14.0
+Date: 16.03.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Added support for Space platform, for ground
+      Layers above all forms of concrete and refined concrete
+---------------------------------------------------------------------------------------------------
 Version: 2.13.15
-Date: 15.3.2025
+Date: 15.03.2025
   Bugfixes:
     - Refactored: added on_gui_closed and removed custom-inputs 
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.14
-Date: 20.2.2025
+Date: 20.02.2025
   Bugfixes:
     - Crash due to moving soils when Dectorio is active and Space Age is not active
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.13
-Date: 20.2.2025
+Date: 20.02.2025
   Bugfixes:
     - None
   Changes:
@@ -22,14 +30,14 @@ Date: 20.2.2025
     - Dectorio: refined concrete variants, soils, and foundation recipes moved to the Dectorio tab
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.12
-Date: 15.2.2025
+Date: 15.02.2025
   Bugfixes:
     - Crash due to an invalid entity in entity_excluded, added some entity.valid checks
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.11
-Date: 11.2.2025
+Date: 11.02.2025
   Bugfixes:
     - Adjustments for Dectorio's gravel tiles
       Alien Biomes changes the layer of the gravel tiles
@@ -37,14 +45,14 @@ Date: 11.2.2025
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.10
-Date: 31.1.2025
+Date: 31.01.2025
   Bugfixes:
     - On Aquilo the painted concretes would freeze and convert to frozen concretes
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.9
-Date: 31.1.2025
+Date: 31.01.2025
   Bugfixes:
     - Removed grid concrete's transition with concrete
     - On Aquilo grid concrete would freeze and convert to frozen concrete
@@ -53,28 +61,28 @@ Date: 31.1.2025
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.8
-Date: 31.1.2025
+Date: 31.01.2025
   Bugfixes:
     - Aquilo: Frozen hazard tiles' layer not set due to 2.13.7 bugfix
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.7
-Date: 31.1.2025
+Date: 31.01.2025
   Bugfixes:
     - Alien Biomes: frozen-snow tiles' layer were inadvertently modified
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.6
-Date: 27.1.2025
+Date: 27.01.2025
   Bugfixes:
     - None
   Changes:
     - Added a shortcut to the shortcut bar, to toggle the display of the Foundations button
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.5
-Date: 27.1.2025
+Date: 27.01.2025
   Bugfixes:
     - None
   Changes:
@@ -82,14 +90,14 @@ Date: 27.1.2025
     - Compatible with Quantum Fabrication
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.4
-Date: 26.1.2025
+Date: 26.01.2025
   Bugfixes:
     - None
   Changes:
     - Added startup setting to halt construction without sufficient tiles in player inventory
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.3
-Date: 26.1.2025
+Date: 26.01.2025
   Bugfixes:
     - More adjustment to the fill tool logic
     - Fill tool will no longer fill the water-like tiles of the Space Age surfaces
@@ -97,7 +105,7 @@ Date: 26.1.2025
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.2
-Date: 26.1.2025
+Date: 26.01.2025
   Bugfixes:
     - Corrected the fill tool logic
     - Automated tile placement was not working properly on landfill
@@ -106,14 +114,14 @@ Date: 26.1.2025
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.1
-Date: 21.1.2025
+Date: 21.01.2025
   Bugfixes:
     - Properly mine frozen concrete and frozen refined concrete
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.13.0
-Date: 21.1.2025
+Date: 21.01.2025
   Bugfixes:
     - None
   Changes:
@@ -122,35 +130,35 @@ Date: 21.1.2025
     - Tool-tip now displays selection tool options
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.10
-Date: 17.1.2025
+Date: 17.01.2025
   Bugfixes:
     - None
   Changes:
     - Added keyboard shortcuts ([E] and [Esc]) to close the tile selector window
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.9
-Date: 16.1.2025
+Date: 16.01.2025
   Bugfixes:
     - None
   Changes:
     - Updated the gui, uses localisation
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.8
-Date: 16.1.2025
+Date: 16.01.2025
   Bugfixes:
     - None
   Changes:
     - Runtime settings for belts, poles, and inserters moved to the tile selector gui
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.7
-Date: 16.1.2025
+Date: 16.01.2025
   Bugfixes:
     - Replaced debug version, printed to the console when a tile was selected
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.6
-Date: 16.1.2025
+Date: 16.01.2025
   Bugfixes:
     - Incorrect localised name assigned to Dectorio painted concrete items
   Changes:
@@ -158,42 +166,42 @@ Date: 16.1.2025
     - All researched and recipe enabled tiles should now be available in the tile selector gui
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.5
-Date: 15.1.2025
+Date: 15.01.2025
   Bugfixes:
     - None
   Changes:
     - Construction is no longer haulted if insufficient tiles in the player inventory
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.4
-Date: 14.1.2025
+Date: 14.01.2025
   Bugfixes:
     - Crash due to not providing a migration
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.3
-Date: 14.1.2025
+Date: 14.01.2025
   Bugfixes:
     - Crash running on_configuration_changed due to invalid sprite path
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.2
-Date: 14.1.2025
+Date: 14.01.2025
   Bugfixes:
     - Added a nil check to prevent a crash
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.1
-Date: 14.1.2025
+Date: 14.01.2025
   Bugfixes:
     - None
   Changes:
     - Modified the layer and removed the transition with concrete for Dectorio's grid concrete
 ---------------------------------------------------------------------------------------------------
 Version: 2.12.0
-Date: 14.1.2025
+Date: 14.01.2025
   Bugfixes:
     - Refactored quite a bit
   Changes:
@@ -204,7 +212,7 @@ Date: 14.1.2025
     - "Fix" applied to Dectorio grid concrete
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.11
-Date: 11.1.2025
+Date: 11.01.2025
   Bugfixes:
     - None
   Changes:
@@ -212,7 +220,7 @@ Date: 11.1.2025
     - Reverted the move of the concrete variants to the Decortio tab
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.10
-Date: 11.1.2025
+Date: 11.01.2025
   Bugfixes:
     - Refactored the definition of the refined concrete variants
   Changes:
@@ -220,14 +228,14 @@ Date: 11.1.2025
       Refined concrete variants moved to the Decortio tab
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.9
-Date: 9.1.2025
+Date: 09.01.2025
   Bugfixes:
     - Stone bricks were not an option for the Foundations button
   Changes:
     - Added runtime setting to enable stone bricks for the Foundations button (default: true)
 ---------------------------------------------------------------------------------------------------
 Version: 2.11.8
-Date: 9.12.2024
+Date: 09.12.2024
   Bugfixes:
     - Fixed the transition between painted refined concrete variants with adjacent layer numbers
   Changes:
