@@ -56,7 +56,6 @@ Foundations button is disabled while in remote view.
 
 #### Limitations:  
 Tiles placed or removed with the selection tools are not "Undo"-able, use them with some caution.  
-Not compatible with multi-player mode, single-player mode only.  
 
 ---
 

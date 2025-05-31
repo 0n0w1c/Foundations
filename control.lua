@@ -13,25 +13,19 @@ end
 local function is_compatible_surface(event)
     local surface_name = nil
 
-    -- 1. If the event has a `surface_index`, check the surface directly
     if event.surface_index then
         local surface = game.surfaces[event.surface_index]
         surface_name = surface and surface.name
-
-        -- 2. If it’s a player-based event, check if the player is on a compatible surface and not in remote view
     elseif event.player_index then
         local player = game.get_player(event.player_index)
         if player and is_player_in_remote_view(player) then
             return false -- Ignore if player is in remote view
         end
         surface_name = player and player.surface.name
-
-        -- 3. For entity-related events, check the entity's surface
     elseif event.entity and event.entity.surface then
         surface_name = event.entity.surface.name
     end
 
-    -- Check compatibility with defined surfaces
     local is_compatible = surface_name and COMPATIBLE_SURFACES[surface_name] == true
     return is_compatible
 end
@@ -40,31 +34,24 @@ local function place_foundation_under_entity(event)
     if not event then return end
     if not is_compatible_surface(event) then return end
 
-    local entity
-
-    if event.created_entity then
-        entity = event.created_entity
-    end
-
-    if not entity and event.moved_entity then
-        entity = event.moved_entity
-    end
-
-    if not entity and event.entity then
-        entity = event.entity
-    end
-
+    local entity = event.created_entity or event.moved_entity or event.entity
     if not entity or not entity.valid then return end
 
-    if storage.foundation == DISABLED or entity_excluded(entity) then
+    local player = nil
+    if event.player_index then
+        player = game.get_player(event.player_index)
+    elseif entity.last_user and entity.last_user.is_player() then
+        player = entity.last_user
+    end
+    if not player then return end
+
+    local pdata = get_player_data(player.index)
+    if pdata.foundation == DISABLED or entity_excluded(entity) then
         return
     end
 
     local surface = entity.surface
     if not surface then return end
-
-    local player = game.players[storage.player_index]
-    if not player then return end
 
     local area = get_area_under_entity(entity)
     if not area then return end
@@ -72,16 +59,13 @@ local function place_foundation_under_entity(event)
     local tiles_to_place, tiles_to_return = load_tiles(entity, area)
 
     if tiles_to_place then
-        -- if not enough storage.foundation, put entity back on cursor and destroy the placed entity, then exit
-        if not player_has_sufficient_tiles(player, storage.foundation, #tiles_to_place) then
+        if not player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
             if halt_construction then
                 return_entity_to_cursor(player, entity)
             end
-
             return
         end
 
-        -- mine tiles that are not storage.foundation
         if tiles_to_return then
             for _, tile in pairs(tiles_to_return) do
                 local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
@@ -91,11 +75,10 @@ local function place_foundation_under_entity(event)
             end
         end
 
-        -- place tiles and remove items from player inventory
         if #tiles_to_place > 0 then
             surface.set_tiles(tiles_to_place, true, false, true, true)
 
-            local item_name = storage.tile_to_item[storage.foundation]
+            local item_name = storage.tile_to_item[pdata.foundation]
             if item_name then
                 player.remove_item { name = item_name, count = #tiles_to_place }
             end
@@ -103,20 +86,20 @@ local function place_foundation_under_entity(event)
     end
 end
 
-local function update_button()
-    local player = game.players[storage.player_index]
+local function update_button(player)
     if not player then return end
 
+    local pdata = get_player_data(player.index)
     local button_flow = mod_gui.get_button_flow(player)
-    local sprite_path = "tile/" .. storage.foundation
-    local tool_tip = { "", { "tile-name." .. storage.foundation }, "\n", { "tool-tip.Foundations-tool-tip" } }
+    local sprite_path = "tile/" .. pdata.foundation
+    local tool_tip = { "", { "tile-name." .. pdata.foundation }, "\n", { "tool-tip.Foundations-tool-tip" } }
 
-    if storage.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
+    if pdata.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
         sprite_path = "Foundations-disabled"
-        storage.foundation = DISABLED
+        pdata.foundation = DISABLED
     end
 
-    if storage.button_on then
+    if pdata.button_on then
         if not button_flow[THIS_MOD] then
             button_flow.add {
                 type = "sprite-button",
@@ -135,10 +118,10 @@ local function update_button()
         end
     end
 
-    player.set_shortcut_toggled("Foundations-toggle-button", storage.button_on)
+    player.set_shortcut_toggled("Foundations-toggle-button", pdata.button_on)
 end
 
-local function add_switch_to_flow(flow, icon_path, switch_name, tooltip)
+local function add_switch_to_flow(flow, icon_path, switch_name, tooltip, excludes)
     local sprite = flow.add {
         type = "sprite",
         sprite = icon_path,
@@ -151,7 +134,7 @@ local function add_switch_to_flow(flow, icon_path, switch_name, tooltip)
     local switch = flow.add {
         type = "switch",
         name = switch_name,
-        switch_state = storage.excludes[switch_name] and "left" or "right",
+        switch_state = excludes[switch_name] and "left" or "right",
         left_label_caption = { "gui.Foundations-toggle-off" },
         right_label_caption = { "gui.Foundations-toggle-on" },
     }
@@ -163,8 +146,9 @@ local function show_tile_selector_gui(player)
         player.gui.screen.tile_selector_frame.destroy()
     end
 
+    local pdata = get_player_data(player.index)
     local items = storage.tile_names
-    local selected = storage.foundation
+    local selected = pdata.foundation
 
     local frame = player.gui.screen.add {
         type = "frame",
@@ -204,7 +188,6 @@ local function show_tile_selector_gui(player)
         style = "close_button",
         mouse_button_filter = { "left" }
     }
-
     close_button.style.height = 24
     close_button.style.width = 24
 
@@ -259,74 +242,76 @@ local function show_tile_selector_gui(player)
     switch_flow.style.top_padding = 12
     switch_flow.style.bottom_padding = 10
 
-    add_switch_to_flow(switch_flow, "item/inserter", "inserters", { "tool-tip.Foundations-inserters" })
-    add_switch_to_flow(switch_flow, "item/transport-belt", "belts", { "tool-tip.Foundations-belts" })
-    add_switch_to_flow(switch_flow, "item/small-electric-pole", "poles", { "tool-tip.Foundations-poles" })
+    add_switch_to_flow(switch_flow, "item/inserter", "inserters", { "tool-tip.Foundations-inserters" }, pdata.excludes)
+    add_switch_to_flow(switch_flow, "item/transport-belt", "belts", { "tool-tip.Foundations-belts" }, pdata.excludes)
+    add_switch_to_flow(switch_flow, "item/small-electric-pole", "poles", { "tool-tip.Foundations-poles" },
+        pdata.excludes)
 
     player.opened = frame
     return frame
 end
 
 local function on_gui_click(event)
-    if event and event.element and event.element.valid then
-        local player = game.players[storage.player_index]
-        if not player then return end
+    if not (event and event.element and event.element.valid) then return end
 
-        if event.element.name == THIS_MOD then
-            if player.controller_type == defines.controllers.remote then return end
-            if not is_compatible_surface(player) then return end
+    local player = game.get_player(event.player_index)
+    if not player then return end
 
-            if event.button == defines.mouse_button_type.left then
-                if event.control then
-                    if storage.foundation ~= DISABLED and player.clear_cursor() then
-                        player.cursor_stack.set_stack({ name = "Foundations-fill-tool" })
-                    end
-                elseif event.shift then
-                    if storage.foundation ~= DISABLED and player.clear_cursor() then
-                        player.cursor_stack.set_stack({ name = "Foundations-unfill-tool" })
-                    end
-                elseif event.alt then
-                    -- do nothing
-                else
-                    if player.gui.screen.tile_selector_frame then
-                        player.gui.screen.tile_selector_frame.destroy()
-                    else
-                        show_tile_selector_gui(player)
-                    end
+    local pdata = get_player_data(player.index)
+
+    if event.element.name == THIS_MOD then
+        if player.controller_type == defines.controllers.remote then return end
+        if not is_compatible_surface(player) then return end
+
+        if event.button == defines.mouse_button_type.left then
+            if event.control then
+                if pdata.foundation ~= DISABLED and player.clear_cursor() then
+                    player.cursor_stack.set_stack({ name = "Foundations-fill-tool" })
                 end
-            elseif event.button == defines.mouse_button_type.right then
-                if event.control then
-                    if storage.foundation ~= DISABLED and player.clear_cursor() then
-                        player.cursor_stack.set_stack({ name = "Foundations-place-tool" })
-                    end
-                elseif event.shift then
-                    if storage.foundation ~= DISABLED and player.clear_cursor() then
-                        player.cursor_stack.set_stack({ name = "Foundations-unplace-tool" })
-                    end
-                elseif event.alt then
-                    -- do nothing
+            elseif event.shift then
+                if pdata.foundation ~= DISABLED and player.clear_cursor() then
+                    player.cursor_stack.set_stack({ name = "Foundations-unfill-tool" })
+                end
+            elseif event.alt then
+                -- do nothing
+            else
+                if player.gui.screen.tile_selector_frame then
+                    player.gui.screen.tile_selector_frame.destroy()
                 else
-                    storage.foundation = DISABLED
+                    show_tile_selector_gui(player)
                 end
             end
-
-            update_button()
-        elseif event.element.name == "tile_selector_close_button" then
-            if player.gui.screen.tile_selector_frame then
-                player.gui.screen.tile_selector_frame.destroy()
-                player.opened = nil
+        elseif event.button == defines.mouse_button_type.right then
+            if event.control then
+                if pdata.foundation ~= DISABLED and player.clear_cursor() then
+                    player.cursor_stack.set_stack({ name = "Foundations-place-tool" })
+                end
+            elseif event.shift then
+                if pdata.foundation ~= DISABLED and player.clear_cursor() then
+                    player.cursor_stack.set_stack({ name = "Foundations-unplace-tool" })
+                end
+            elseif event.alt then
+                -- do nothing
+            else
+                pdata.foundation = DISABLED
             end
-        elseif string.find(event.element.name, "tile_selector_button_") == 1 then
-            local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
-            storage.foundation = selected_tile_name
-
-            if player.gui.screen.tile_selector_frame then
-                player.gui.screen.tile_selector_frame.destroy()
-                player.opened = nil
-            end
-
-            update_button()
         end
+        update_button(player)
+    elseif event.element.name == "tile_selector_close_button" then
+        if player.gui.screen.tile_selector_frame then
+            player.gui.screen.tile_selector_frame.destroy()
+            player.opened = nil
+        end
+    elseif string.find(event.element.name, "tile_selector_button_") == 1 then
+        local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
+        pdata.foundation = selected_tile_name
+
+        if player.gui.screen.tile_selector_frame then
+            player.gui.screen.tile_selector_frame.destroy()
+            player.opened = nil
+        end
+
+        update_button(player)
     end
 end
 
@@ -340,19 +325,24 @@ local function entity_mined(event)
     local surface = entity.surface
     if not surface then return end
 
-    local player = game.players[storage.player_index]
+    local player = nil
+    if event.player_index then
+        player = game.get_player(event.player_index)
+    elseif entity.last_user and entity.last_user.is_player() then
+        player = entity.last_user
+    end
     if not player then return end
 
-    if storage.foundation == DISABLED or entity_excluded(entity) then return end
+    local pdata = get_player_data(player.index)
+    if pdata.foundation == DISABLED or entity_excluded(entity) then return end
 
     local area = get_area_under_entity(entity)
     if not area then return end
 
-    -- mine the storage.foundation tiles
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local tile = surface.get_tile(x, y)
-            if tile and (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation) then
+            if tile and (tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation) then
                 player.mine_tile(tile)
             end
         end
@@ -363,25 +353,24 @@ local function player_selected_area(event)
     if not event or not event.item then return end
     if not is_compatible_surface(event) then return end
 
-    local player = game.players[event.player_index] or {}
+    local player = game.get_player(event.player_index)
     if not player then return end
 
-    -- abort if the player is out of reach
+    local pdata = get_player_data(player.index)
+
     if not is_within_reach(player, event.area) then return end
+
+    local surface = player.surface
+    if not surface then return end
+
+    local placeable_tiles = storage.tile_to_item
 
     -- [ctrl][left]
     if event.item == "Foundations-fill-tool" then
-        if storage.foundation ~= DISABLED then
-            local surface = player.surface
-            if not surface then return end
-
+        if pdata.foundation ~= DISABLED then
             local tiles_to_exclude = TILES_TO_EXCLUDE
             local tiles_to_place = {}
 
-            --local mineable_tiles = get_mineable_tiles()
-            local placeable_tiles = storage.tile_to_item
-
-            -- scan the area, find valid empty positions that need a tile
             for _, position in pairs(event.tiles) do
                 local tile = surface.get_tile(position.position.x, position.position.y)
                 local search_area = { { position.position.x, position.position.y }, { position.position.x + 1, position.position.y + 1 } }
@@ -402,20 +391,17 @@ local function player_selected_area(event)
                 end
 
                 if tile and tile.name and placeable_tiles[tile.name] then
-                    --if tile and tile.name and mineable_tiles[tile.name] then
                     place_tile = false
                 end
 
                 if place_tile then
-                    table.insert(tiles_to_place,
-                        { name = storage.foundation, position = { x = position.position.x, y = position.position.y } })
+                    table.insert(tiles_to_place, { name = pdata.foundation, position = position.position })
                 end
             end
 
-            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, storage.foundation, #tiles_to_place) then
+            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
                 surface.set_tiles(tiles_to_place, true, false, true, true)
-
-                local item_name = storage.tile_to_item[storage.foundation]
+                local item_name = placeable_tiles[pdata.foundation]
                 if item_name then
                     player.remove_item { name = item_name, count = #tiles_to_place }
                 end
@@ -427,11 +413,7 @@ local function player_selected_area(event)
 
     -- [shift][left]
     if event.item == "Foundations-unfill-tool" then
-        if storage.foundation ~= DISABLED then
-            local surface = player.surface
-            if not surface then return end
-
-            -- scan the area for entities and find tiles under excluded entities
+        if pdata.foundation ~= DISABLED then
             local entities = surface.find_entities_filtered({ area = event.area })
             if not entities then return end
 
@@ -448,7 +430,7 @@ local function player_selected_area(event)
                             if not tile then return end
 
                             if entity.name == "character" or entity_excluded(entity) then
-                                if tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation then
+                                if tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation then
                                     table.insert(tiles_to_unfill, tile)
                                 end
                             end
@@ -458,24 +440,19 @@ local function player_selected_area(event)
                 end
             end
 
-            -- scan the area again to find tiles that are not under any entity
             for _, position in pairs(event.tiles) do
                 local tile = surface.get_tile(position.position.x, position.position.y)
-                if tile then
-                    local tile_key = position.position.x .. "," .. position.position.y
-                    local placeable_tiles = storage.tile_to_item
+                local tile_key = position.position.x .. "," .. position.position.y
 
-                    if not tiles_under_entities[tile_key]
-                        and (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation)
-                        and placeable_tiles[tile.name]
-                        and not tiles_to_exclude[tile.name]
-                    then
-                        table.insert(tiles_to_unfill, tile)
-                    end
+                if tile and not tiles_under_entities[tile_key]
+                    and (tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation)
+                    and placeable_tiles[tile.name]
+                    and not tiles_to_exclude[tile.name]
+                then
+                    table.insert(tiles_to_unfill, tile)
                 end
             end
 
-            -- mine the tiles that need to be unfilling
             for _, tile in pairs(tiles_to_unfill) do
                 player.mine_tile(tile)
             end
@@ -484,18 +461,13 @@ local function player_selected_area(event)
 
     -- [ctrl][right]
     if event.item == "Foundations-place-tool" then
-        if storage.foundation ~= DISABLED then
-            local surface = player.surface
-            if not surface then return end
-
-            -- scan the area for entities and place foundation tiles under them
+        if pdata.foundation ~= DISABLED then
             local entities = surface.find_entities_filtered({ area = event.area })
             if not entities then return end
 
             local tiles_to_place = {}
 
             for _, entity in pairs(entities) do
-                -- skip excluded entities and the player
                 if not entity_excluded(entity) and entity.name ~= "character" then
                     local entity_area = get_area_under_entity(entity)
                     if entity_area then
@@ -504,10 +476,8 @@ local function player_selected_area(event)
                                 local tile = surface.get_tile(x, y)
                                 if not tile then return end
 
-                                -- place storage.foundation tile if it's not already the same tile
-                                if tile.name ~= storage.foundation then
-                                    table.insert(tiles_to_place,
-                                        { name = storage.foundation, position = { x = x, y = y } })
+                                if tile.name ~= pdata.foundation then
+                                    table.insert(tiles_to_place, { name = pdata.foundation, position = { x = x, y = y } })
                                 end
                             end
                         end
@@ -515,11 +485,9 @@ local function player_selected_area(event)
                 end
             end
 
-            -- place the foundation tiles
-            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, storage.foundation, #tiles_to_place) then
+            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
                 surface.set_tiles(tiles_to_place, true, false, true, true)
-
-                local item_name = storage.tile_to_item[storage.foundation]
+                local item_name = placeable_tiles[pdata.foundation]
                 player.remove_item { name = item_name, count = #tiles_to_place }
             end
         end
@@ -527,13 +495,9 @@ local function player_selected_area(event)
 
     -- [shift][right]
     if event.item == "Foundations-unplace-tool" then
-        if storage.foundation ~= DISABLED then
-            local surface = player.surface
-            if not surface then return end
-
+        if pdata.foundation ~= DISABLED then
             local tiles_to_unplace = {}
 
-            -- scan the area for entities and mine the tiles under them if they match storage.foundation
             local entities = surface.find_entities_filtered({ area = event.area })
             for _, entity in pairs(entities) do
                 local entity_area = get_area_under_entity(entity)
@@ -543,9 +507,11 @@ local function player_selected_area(event)
                             local tile = surface.get_tile(x, y)
                             if not tile then return end
 
-                            local placeable_tiles = storage.tile_to_item
-
-                            if (tile.name == storage.foundation or tile.name == "frozen-" .. storage.foundation) and placeable_tiles[tile.name] and (not entity_excluded(entity)) and entity.name ~= "character" then
+                            if (tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation)
+                                and placeable_tiles[tile.name]
+                                and not entity_excluded(entity)
+                                and entity.name ~= "character"
+                            then
                                 player.mine_tile(tile)
                                 table.insert(tiles_to_unplace, tile)
                             end
@@ -554,7 +520,6 @@ local function player_selected_area(event)
                 end
             end
 
-            -- mine the tiles that need to be unplaced
             for _, tile in pairs(tiles_to_unplace) do
                 player.mine_tile(tile)
             end
@@ -571,7 +536,12 @@ local function entity_moved(event)
     local surface = entity.surface
     if not surface then return end
 
-    local player = game.players[storage.player_index]
+    local player = nil
+    if event.player_index then
+        player = game.get_player(event.player_index)
+    elseif entity.last_user and entity.last_user.is_player() then
+        player = entity.last_user
+    end
     if not player then return end
 
     local placeable_tiles = storage.tile_to_item
@@ -585,7 +555,6 @@ local function entity_moved(event)
         local tile_name
         local tile_names = {}
 
-        -- find the names of the tiles to be moved
         for x = current_area.left_top.x, current_area.right_bottom.x - 1 do
             for y = current_area.left_top.y, current_area.right_bottom.y - 1 do
                 local position = { x = x, y = y }
@@ -600,7 +569,6 @@ local function entity_moved(event)
             end
         end
 
-        -- mine foundation tiles from vacated positions
         for x = previous_area.left_top.x, previous_area.right_bottom.x - 1 do
             for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
                 local position = { x = x, y = y }
@@ -613,7 +581,6 @@ local function entity_moved(event)
             end
         end
 
-        -- fill vacated positions
         if #tile_names > 0 then
             for _, tile in ipairs(tile_names) do
                 local item_name = storage.tile_to_item[tile]
@@ -629,8 +596,18 @@ local function entity_moved(event)
 end
 
 local function on_entity_moved(event)
-    if not event or storage.foundation == DISABLED then return end
-    if not event.moved_entity or entity_excluded(event.moved_entity) then return end
+    if not event or not event.moved_entity or entity_excluded(event.moved_entity) then return end
+
+    local player = nil
+    if event.player_index then
+        player = game.get_player(event.player_index)
+    elseif event.moved_entity.last_user and event.moved_entity.last_user.is_player() then
+        player = event.moved_entity.last_user
+    end
+    if not player then return end
+
+    local pdata = get_player_data(player.index)
+    if pdata.foundation == DISABLED then return end
 
     entity_moved(event)
     place_foundation_under_entity(event)
@@ -647,8 +624,9 @@ local function on_gui_switch_state_changed(event)
             storage.excludes[storage_key] = (event.element.switch_state == "left")
         end
 
-        load_excluded_name_list()
-        load_excluded_type_list()
+        local pdata = get_player_data(player.index)
+        load_excluded_name_list(pdata)
+        load_excluded_type_list(pdata)
     end
 end
 
@@ -656,22 +634,18 @@ local function init_storage()
     storage = storage or {}
     storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
     storage.tile_names = storage.tile_names or { DISABLED }
-    storage.foundation = storage.foundation or DISABLED
-    storage.button_on = storage.button_on or true
     storage.excluded_name_list = storage.excluded_name_list or {}
     storage.excluded_type_list = storage.excluded_type_list or {}
-    storage.player_index = storage.player_index or 1
-    storage.excludes = storage.excludes or {
-        inserters = true,
-        belts = true,
-        poles = true,
-    }
+    storage.player_data = storage.player_data or {}
 end
 
 local function configuration_changed()
     init_storage()
     load_global_data()
-    update_button()
+    for _, player in pairs(game.connected_players) do
+        get_player_data(player.index)
+        update_button(player)
+    end
 end
 
 local function close_tile_selector(player)
@@ -691,24 +665,31 @@ local function on_gui_closed(event)
 end
 
 local function on_lua_shortcut(event)
-    if (not event) or (not event.prototype_name) or (event.prototype_name ~= "Foundations-toggle-button") then return end
+    if not event or event.prototype_name ~= "Foundations-toggle-button" then return end
 
-    storage.button_on = not storage.button_on
-    update_button()
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
+    local pdata = get_player_data(player.index)
+    pdata.button_on = not pdata.button_on
+    update_button(player)
 end
 
 local function controller_changed(event)
     local player = game.get_player(event.player_index)
+    if not player then return end
+
+    local pdata = get_player_data(player.index)
 
     if player.controller_type == defines.controllers.remote then
-        save = storage.foundation
-        storage.foundation = DISABLED
-        update_button()
+        pdata.last_selected = pdata.foundation
+        pdata.foundation = DISABLED
+        update_button(player)
     else
-        if save then
-            storage.foundation = save
-            update_button()
-            save = nil
+        if pdata.last_selected then
+            pdata.foundation = pdata.last_selected
+            pdata.last_selected = nil
+            update_button(player)
         end
     end
 end

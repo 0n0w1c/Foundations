@@ -1,11 +1,25 @@
-function load_excluded_name_list()
+function get_player_data(player_index)
+    storage.player_data[player_index] = storage.player_data[player_index] or {
+        foundation = DISABLED,
+        button_on = true,
+        last_selected = nil, -- for remote view controller toggling
+        excludes = {
+            inserters = true,
+            belts = true,
+            poles = true,
+        },
+    }
+    return storage.player_data[player_index]
+end
+
+function load_excluded_name_list(pdata)
     storage.excluded_name_list = {}
 
     for key, value in pairs(EXCLUDED_NAME_LIST) do
         storage.excluded_name_list[key] = value
     end
 
-    if storage.excludes["poles"] == true then
+    if pdata.excludes["poles"] == true then
         storage.excluded_name_list["small-electric-pole"] = true
         storage.excluded_name_list["medium-electric-pole"] = true
 
@@ -15,18 +29,18 @@ function load_excluded_name_list()
     end
 end
 
-function load_excluded_type_list()
+function load_excluded_type_list(pdata)
     storage.excluded_type_list = {}
 
     for key, value in pairs(EXCLUDED_TYPE_LIST) do
         storage.excluded_type_list[key] = value
     end
 
-    if storage.excludes["inserters"] == true then
+    if pdata.excludes["inserters"] == true then
         storage.excluded_type_list["inserter"] = true
     end
 
-    if storage.excludes["belts"] == true then
+    if pdata.excludes["belts"] == true then
         storage.excluded_type_list["transport-belt"] = true
         storage.excluded_type_list["underground-belt"] = true
         storage.excluded_type_list["splitter"] = true
@@ -34,18 +48,16 @@ function load_excluded_type_list()
     end
 end
 
--- check if an entity is excluded based on name or type
-function entity_excluded(entity)
+function entity_excluded(entity, pdata)
     if not entity or not entity.valid then return true end
 
-    if entity and (storage.excluded_name_list[entity.name] or storage.excluded_type_list[entity.type]) then
+    if storage.excluded_name_list[entity.name] or storage.excluded_type_list[entity.type] then
         return true
     end
 
     return false
 end
 
--- check if the tile is in storage.tile_names
 function tile_in_global_tile_names(tile)
     if tile then
         for _, tile_name in ipairs(storage.tile_names) do
@@ -58,7 +70,6 @@ function tile_in_global_tile_names(tile)
     return false
 end
 
--- check if the recipe has been enabled
 function recipe_enabled(force, recipe_name)
     if not force or not recipe_name then
         return false
@@ -69,11 +80,9 @@ function recipe_enabled(force, recipe_name)
         return recipe.enabled
     end
 
-    -- no recipe (ex. stone to rough-stone-path has no recipe)
     return true
 end
 
--- add to storage.tile_names, if not already present and recipe enabled
 function add_to_global_tile_names(tile_name, item_name)
     local force = game.forces["player"]
 
@@ -84,7 +93,6 @@ function add_to_global_tile_names(tile_name, item_name)
     end
 end
 
--- add to storage.tile_to_item, if not already present and recipe enabled
 function add_to_global_tile_to_item(tile_name, item_name)
     local force = game.forces["player"]
 
@@ -95,7 +103,6 @@ function add_to_global_tile_to_item(tile_name, item_name)
     end
 end
 
--- check if the player has sufficient tiles in their inventory
 function player_has_sufficient_tiles(player, tile_name, count)
     if not player or not tile_name or count == nil then
         return false
@@ -105,7 +112,6 @@ function player_has_sufficient_tiles(player, tile_name, count)
     return item_name and player.get_item_count(item_name) >= count
 end
 
--- when player does not have sufficent tiles in their inventory
 function return_entity_to_cursor(player, entity)
     if not player or not entity or not entity.valid or not entity.prototype then return end
 
@@ -115,11 +121,9 @@ function return_entity_to_cursor(player, entity)
         player.cursor_stack.count = player.cursor_stack.count + 1
     end
 
-    -- build halted
     entity.destroy()
 end
 
--- check if a position is within an area
 function within_area(position, area)
     if not position or not area then
         return false
@@ -142,7 +146,6 @@ function get_area_under_entity(entity)
 
     local area = {}
 
-    -- adjust collision_box based on entity direction
     if entity.direction == defines.direction.east or entity.direction == defines.direction.west then
         area.left_top = {
             x = math.floor(position.x + collision_box.left_top.y),
@@ -178,7 +181,6 @@ function get_area_under_entity_at_position(entity, position)
 
     local area = {}
 
-    -- adjust collision_box based on entity direction
     if entity.direction == defines.direction.east or entity.direction == defines.direction.west then
         area.left_top = {
             x = math.floor(position.x + collision_box.left_top.y),
@@ -203,7 +205,6 @@ function get_area_under_entity_at_position(entity, position)
 end
 
 function is_within_reach(player, area)
-    -- no reach limit for players without characters (e.g., god mode)
     if not player.character or not player.character.valid then
         return true
     end
@@ -215,14 +216,11 @@ function is_within_reach(player, area)
     local player_position = player.position
     local reach = player.character.reach_distance or 0
 
-    -- find the closest corner of the area
     local closest_x = math.max(area.left_top.x, math.min(player_position.x, area.right_bottom.x))
     local closest_y = math.max(area.left_top.y, math.min(player_position.y, area.right_bottom.y))
 
-    -- calculate the distance between the player and the closest point
     local distance = math.sqrt((closest_x - player_position.x) ^ 2 + (closest_y - player_position.y) ^ 2)
 
-    -- check if the distance is within the player's reach
     return distance <= reach
 end
 
@@ -248,10 +246,18 @@ function load_tiles(entity, area)
         return
     end
 
+    local player = nil
+    if entity.last_user and entity.last_user.is_player() then
+        player = entity.last_user
+    end
+    if not player then return end
+
+    local pdata = get_player_data(player.index)
+    local foundation = pdata.foundation
+
     local tiles_to_place = {}
     local tiles_to_return = {}
 
-    -- check each tile under the entity
     for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local current_tile = surface.get_tile(x, y)
@@ -259,14 +265,12 @@ function load_tiles(entity, area)
             local resources = surface.find_entities_filtered({ area = search_area, type = "resource" })
             local tiles_to_exclude = TILES_TO_EXCLUDE
 
-            -- check to make sure the tile is not a resource tile or an excluded tile
             if #resources == 0 and not tiles_to_exclude[current_tile.name] then
-                -- prepare to return the current tile and to place a foundation tile
-                if current_tile.name ~= storage.foundation then
+                if current_tile.name ~= foundation then
                     if mineable_tiles[current_tile.name] then
                         table.insert(tiles_to_return, { name = current_tile.name, position = { x = x, y = y } })
                     end
-                    table.insert(tiles_to_place, { name = storage.foundation, position = { x = x, y = y } })
+                    table.insert(tiles_to_place, { name = foundation, position = { x = x, y = y } })
                 end
             end
         end
@@ -310,17 +314,17 @@ function load_tile_lists()
 end
 
 function load_global_data()
-    storage.player_index = storage.player_index or 1
-
-    load_excluded_name_list()
-    load_excluded_type_list()
-
     storage.tile_names = {}
     storage.tile_to_item = {}
 
     load_tile_lists()
 
-    if not storage.tile_to_item[storage.foundation] then
-        storage.foundation = DISABLED
+    for player_index, pdata in pairs(storage.player_data) do
+        if not storage.tile_to_item[pdata.foundation] then
+            pdata.foundation = DISABLED
+        end
+
+        load_excluded_name_list(pdata)
+        load_excluded_type_list(pdata)
     end
 end
