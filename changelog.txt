@@ -5,7 +5,7 @@ Date: 30.05.2025
     - None
   Changes:
     - Removed support for Dectorio and is now flagged as incompatible
-    - Even Pickier Dollies is now flagged a required dependency
+    - Even Pickier Dollies is now flagged as a required dependency
 ---------------------------------------------------------------------------------------------------
 Version: 2.14.0
 Date: 16.03.2025
