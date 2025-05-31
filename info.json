@@ -1,15 +1,15 @@
 {
     "name": "Foundations",
-    "version": "2.14.0",
+    "version": "2.15.0",
     "title": "Foundations",
     "author": "0n0w1c",
     "description": "Settings, tools and automation for a multi-layered tile appearance, button controlled",
     "factorio_version": "2.0",
     "dependencies": [
         "base >= 2.0",
+        "even-pickier-dollies >= 2.0.1",
+        "! Dectorio",
         "? aai-industry >= 0.6.4",
-        "? even-pickier-dollies >= 2.0.1",
-        "? Dectorio >= 0.13.1",
         "? space-platform-for-ground",
         "(?) alien-biomes"
     ]

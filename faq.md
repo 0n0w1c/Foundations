@@ -13,8 +13,6 @@ It is the appearance and behavior of tiles, when two different types of tile are
 This is the layering order the startup settings adjusts, tiles with higher numbers layer on top of tiles with lower numbers.  
 Tiles set to the same layering order merge.  
 
-*Hazard and Dectorio's Safety Refined concrete are set to the same layering order as Refined concrete.*  
-
 ### What are excluded entities?  
 There are two categories of excluded entities.  
 
