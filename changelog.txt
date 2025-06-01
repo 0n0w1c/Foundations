@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.16.2
+Date: 01.06.2025
+  Bugfixes:
+    - Dectorio: Load error when startup settings for concrete and/or painted concrete were disabled
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.16.1
 Date: 01.06.2025
   Bugfixes:

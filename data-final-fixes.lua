@@ -19,27 +19,31 @@ for _, tile in pairs(tiles) do
     end
 end
 
-if mods["space-platform-for-ground"] then
+if mods["space-platform-for-ground"] and tiles["acid-refined-concrete"] and data.raw["item"]["stone-brick"] then
     tiles["space-platform-for-ground"].layer = tiles["acid-refined-concrete"].layer + 4
+    data.raw["item"]["space-platform-for-ground"].subgroup = data.raw["item"]["stone-brick"].subgroup
+    data.raw["item"]["space-platform-for-ground"].order = "00[a-x]"
 end
 
 if mods["Dectorio"] then
     local tile = data.raw["tile"]["concrete"]
     local layer = tile.layer
 
-    local template = table.deepcopy(tile)
-    local name = "dect-concrete-grid"
+    if data.raw["item"]["dect-concrete-grid"] then
+        local template = table.deepcopy(tile)
+        local name = "dect-concrete-grid"
 
-    template.name = name
-    template.minable = { mining_time = 0.1, result = name }
-    template.placeable_by = { item = name, count = 1 }
-    template.transition_overlay_layer_offset = 0
-    template.layer = tiles["acid-refined-concrete"].layer + 3
-    template.transition_merges_with_tile = nil
-    template.frozen_variant = nil
-    template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
+        template.name = name
+        template.minable = { mining_time = 0.1, result = name }
+        template.placeable_by = { item = name, count = 1 }
+        template.transition_overlay_layer_offset = 0
+        template.layer = tiles["acid-refined-concrete"].layer + 3
+        template.transition_merges_with_tile = nil
+        template.frozen_variant = nil
+        template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
 
-    data.extend({ template })
+        data.extend({ template })
+    end
 
     if tiles["dect-wood-floor"] then
         tiles["dect-wood-floor"].layer_group = "ground-artificial"
@@ -61,8 +65,10 @@ if mods["Dectorio"] then
         local item = data.raw["item"][color.name .. "-refined-concrete"]
 
         if item and settings.startup["Foundations-concrete-variants"] then
-            item.subgroup = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].subgroup
-            item.order = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].order
+            --item.subgroup = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].subgroup
+            --item.order = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].order
+            item.subgroup = data.raw["item"]["refined-hazard-concrete"].subgroup
+            item.order = data.raw["item"]["refined-hazard-concrete"].order .. "z"
         end
 
         if data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"] then
