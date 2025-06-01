@@ -65,10 +65,8 @@ if mods["Dectorio"] then
         local item = data.raw["item"][color.name .. "-refined-concrete"]
 
         if item and settings.startup["Foundations-concrete-variants"] then
-            --item.subgroup = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].subgroup
-            --item.order = data.raw["item"]["dect-" .. color.name .. "-refined-concrete"].order
             item.subgroup = data.raw["item"]["refined-hazard-concrete"].subgroup
-            item.order = data.raw["item"]["refined-hazard-concrete"].order .. "z"
+            item.order = "00[c-refined-variants]"
         end
 
         if data.raw["recipe"]["dect-" .. color.name .. "-refined-concrete"] then

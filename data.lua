@@ -154,7 +154,6 @@ if settings.startup["Foundations-concrete-variants"].value then
         if template then
             template.name = name
             template.place_as_tile.result = name
-            template.group = "logisitics"
             template.subgroup = "terrain"
             template.order = "b[concrete]-e[refined-colors]"
             template.icons = { { icon = template.icon, tint = data.raw["tile"][name].tint } }
