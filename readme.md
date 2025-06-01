@@ -65,3 +65,6 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 [Dectorio](https://mods.factorio.com/mod/Dectorio) - *Enable the startup setting 'Use default Factorio Hazard concrete style'*  
 
 Movement via [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  
+
+#### Alternate locales:  
+`cs`, `de`, `es`, `fr`, `it`, `ja`, `pl`, `pt-BR`, `ru`, `tr`, `uk`, `zh-CN`, `zh-TW`
