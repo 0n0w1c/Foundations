@@ -62,6 +62,6 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 #### Supported mods:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Space platform, for ground](https://mods.factorio.com/mod/space-platform-for-ground)  
-[Dectorio](https://mods.factorio.com/mod/Dectorio) *Enable the startup setting 'Use default Factorio Hazard concrete style'*  
+[Dectorio](https://mods.factorio.com/mod/Dectorio) - *Enable the startup setting 'Use default Factorio Hazard concrete style'*  
 
 Movement via [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  
