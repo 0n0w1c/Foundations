@@ -3,8 +3,11 @@ require("utilities")
 
 local mod_gui = require("mod-gui")
 
-local save = nil
 local halt_construction = settings.startup["Foundations-halt-construction"].value or false
+local dectorio_hazard = true
+if settings.startup["dectorio-vanilla-hazard-concrete-style"] then
+    dectorio_hazard = settings.startup["dectorio-vanilla-hazard-concrete-style"].value
+end
 
 local function is_player_in_remote_view(player)
     return player.controller_type == defines.controllers.remote
@@ -645,6 +648,10 @@ local function configuration_changed()
     for _, player in pairs(game.connected_players) do
         get_player_data(player.index)
         update_button(player)
+    end
+    if not dectorio_hazard then
+        game.print(
+            "Foundations warning: Dectorio startup setting 'Use default Factorio Hazard concrete style' should be enabled")
     end
 end
 

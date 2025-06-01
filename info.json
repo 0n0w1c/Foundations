@@ -1,6 +1,6 @@
 {
     "name": "Foundations",
-    "version": "2.16.0",
+    "version": "2.16.1",
     "title": "Foundations",
     "author": "0n0w1c",
     "description": "Settings, tools and automation for a multi-layered tile appearance, button controlled",
@@ -8,7 +8,7 @@
     "dependencies": [
         "base >= 2.0",
         "even-pickier-dollies >= 2.0.1",
-        "! Dectorio",
+        "? Dectorio",
         "? aai-industry >= 0.6.4",
         "? space-platform-for-ground",
         "(?) alien-biomes"

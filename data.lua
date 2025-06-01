@@ -131,6 +131,11 @@ if settings.startup["Foundations-concrete-variants"].value then
     for _, color in pairs(COLORS) do
         local color_tile = color.name .. "-refined-concrete"
 
+        local offset = 0
+        if mods["Dectorio"] then
+            offset = 65
+        end
+
         data.raw["tile"][color_tile].name = color_tile
         data.raw["tile"][color_tile].hidden = nil
         data.raw["tile"][color_tile].minable = { mining_time = 0.1, result = color_tile }
@@ -139,7 +144,7 @@ if settings.startup["Foundations-concrete-variants"].value then
         data.raw["tile"][color_tile].frozen_variant = nil
         data.raw["tile"][color_tile].layer_group = "ground-artificial"
         data.raw["tile"][color_tile].layer =
-            tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27
+            tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27 + offset
     end
 
     for _, color in pairs(COLORS) do

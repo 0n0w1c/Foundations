@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.16.1
+Date: 01.06.2025
+  Bugfixes:
+    - Improved support for Dectorio
+  Changes:
+    - Re-added Dectorio as an optional dependency
+      Enable Dectorio's startup setting 'Use default Factorio Hazard concrete style'
+---------------------------------------------------------------------------------------------------
 Version: 2.16.0
 Date: 31.05.2025
   Bugfixes:
