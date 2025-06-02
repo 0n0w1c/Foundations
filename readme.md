@@ -52,6 +52,8 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 Foundations is compatible with personal logistics for construction and deconstruction.  
 Foundations button is disabled while in remote view.  
 
+*Multi-player compatible*
+
 ---
 
 #### Limitations:  
