@@ -13,49 +13,46 @@ function get_player_data(player_index)
 end
 
 function load_excluded_name_list(pdata)
-    storage.excluded_name_list = {}
+    pdata.excluded_name_list = {}
 
     for key, value in pairs(EXCLUDED_NAME_LIST) do
-        storage.excluded_name_list[key] = value
+        pdata.excluded_name_list[key] = value
     end
 
     if pdata.excludes["poles"] == true then
-        storage.excluded_name_list["small-electric-pole"] = true
-        storage.excluded_name_list["medium-electric-pole"] = true
+        pdata.excluded_name_list["small-electric-pole"] = true
+        pdata.excluded_name_list["medium-electric-pole"] = true
 
         if script.active_mods["aai-industry"] then
-            storage.excluded_name_list["small-iron-electric-pole"] = true
+            pdata.excluded_name_list["small-iron-electric-pole"] = true
         end
     end
 end
 
 function load_excluded_type_list(pdata)
-    storage.excluded_type_list = {}
+    pdata.excluded_type_list = {}
 
     for key, value in pairs(EXCLUDED_TYPE_LIST) do
-        storage.excluded_type_list[key] = value
+        pdata.excluded_type_list[key] = value
     end
 
     if pdata.excludes["inserters"] == true then
-        storage.excluded_type_list["inserter"] = true
+        pdata.excluded_type_list["inserter"] = true
     end
 
     if pdata.excludes["belts"] == true then
-        storage.excluded_type_list["transport-belt"] = true
-        storage.excluded_type_list["underground-belt"] = true
-        storage.excluded_type_list["splitter"] = true
-        storage.excluded_type_list["loader"] = true
+        pdata.excluded_type_list["transport-belt"] = true
+        pdata.excluded_type_list["underground-belt"] = true
+        pdata.excluded_type_list["splitter"] = true
+        pdata.excluded_type_list["loader"] = true
     end
 end
 
 function entity_excluded(entity, pdata)
     if not entity or not entity.valid then return true end
 
-    if storage.excluded_name_list[entity.name] or storage.excluded_type_list[entity.type] then
-        return true
-    end
-
-    return false
+    return pdata.excluded_name_list[entity.name]
+        or pdata.excluded_type_list[entity.type] or false
 end
 
 function tile_in_global_tile_names(tile)
@@ -235,25 +232,18 @@ function get_mineable_tiles()
     return mineable_tiles
 end
 
-function load_tiles(entity, area)
-    if not entity or not area then
-        return
-    end
+function load_tiles(entity, area, player)
+    if not entity or not area then return end
 
     local surface = entity.surface
     local mineable_tiles = get_mineable_tiles()
-    if not surface or not mineable_tiles then
-        return
-    end
+    if not surface or not mineable_tiles then return end
 
-    local player = nil
-    if entity.last_user and entity.last_user.is_player() then
-        player = entity.last_user
-    end
     if not player then return end
 
     local pdata = get_player_data(player.index)
     local foundation = pdata.foundation
+    if foundation == DISABLED then return end
 
     local tiles_to_place = {}
     local tiles_to_return = {}

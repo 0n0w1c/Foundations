@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.16.6
+Date: 02.06.2025
+  Bugfixes:
+    - Migration from a global excluded entity list to per player list
+    - Refactored entity/tile movement for multi-player and other inconsistencies
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.16.5
 Date: 02.06.2025
   Bugfixes:

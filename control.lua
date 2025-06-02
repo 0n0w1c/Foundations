@@ -59,7 +59,7 @@ local function place_foundation_under_entity(event)
     local area = get_area_under_entity(entity)
     if not area then return end
 
-    local tiles_to_place, tiles_to_return = load_tiles(entity, area)
+    local tiles_to_place, tiles_to_return = load_tiles(entity, area, player)
 
     if tiles_to_place then
         if not player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
@@ -614,6 +614,27 @@ local function on_entity_moved(event)
 
     if entity_excluded(event.moved_entity, pdata) then return end
 
+    local surface = event.moved_entity.surface
+    if not surface then return end
+
+    local start_area = get_area_under_entity_at_position(event.moved_entity, event.start_pos)
+    if not start_area then return end
+
+    local move_tile = false
+    local frozen_name = "frozen-" .. pdata.foundation
+    for x = math.floor(start_area.left_top.x), math.ceil(start_area.right_bottom.x) - 1 do
+        for y = math.floor(start_area.left_top.y), math.ceil(start_area.right_bottom.y) - 1 do
+            local tile = surface.get_tile(x, y)
+            if tile.name == pdata.foundation or tile.name == frozen_name then
+                move_tile = true
+                break
+            end
+        end
+        if move_tile then break end
+    end
+
+    if not move_tile then return end
+
     entity_moved(event)
     place_foundation_under_entity(event)
 end
@@ -640,8 +661,6 @@ local function init_storage()
     storage = storage or {}
     storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
     storage.tile_names = storage.tile_names or { DISABLED }
-    storage.excluded_name_list = storage.excluded_name_list or {}
-    storage.excluded_type_list = storage.excluded_type_list or {}
     storage.player_data = storage.player_data or {}
 end
 
