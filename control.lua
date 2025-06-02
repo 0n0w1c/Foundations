@@ -61,10 +61,12 @@ local function place_foundation_under_entity(event)
 
     local tiles_to_place, tiles_to_return = load_tiles(entity, area, player)
 
+    local robot_built = event.robot
+
     if tiles_to_place then
         if not player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
             if halt_construction then
-                return_entity_to_cursor(player, entity)
+                return_entity_to_player(player, entity, robot_built)
             end
             return
         end
@@ -662,11 +664,13 @@ local function init_storage()
     storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
     storage.tile_names = storage.tile_names or { DISABLED }
     storage.player_data = storage.player_data or {}
+
+    load_tile_lists()
 end
 
 local function configuration_changed()
     init_storage()
-    load_global_data()
+
     for _, player in pairs(game.connected_players) do
         get_player_data(player.index)
         update_button(player)

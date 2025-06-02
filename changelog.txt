@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.16.7
+Date: 02.06.2025
+  Bugfixes:
+    - Added more entities to exclude from tile placement, missing several types of rails
+    - Refactored the return of the item to the player
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.16.6
 Date: 02.06.2025
   Bugfixes:

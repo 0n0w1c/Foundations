@@ -43,30 +43,42 @@ COLORS = {
 }
 
 EXCLUDED_NAME_LIST = {
-    ["curved-rail"] = true,
     ["entity-ghost"] = true,
-    ["straight-rail"] = true,
     ["tile-ghost"] = true
 }
 
 EXCLUDED_TYPE_LIST = {
+    ["artillery-wagon"] = true,
     ["car"] = true,
     ["cargo-wagon"] = true,
     ["cliff"] = true,
+    ["curved-rail-a"] = true,
+    ["curved-rail-b"] = true,
+    ["elevated-curved-rail-a"] = true,
+    ["elevated-curved-rail-b"] = true,
+    ["elevated-half-diagonal-rail"] = true,
+    ["elevated-straight-rail"] = true,
     ["entity-ghost"] = true,
     ["fish"] = true,
     ["fluid-wagon"] = true,
+    ["half-diagonal-rail"] = true,
+    ["land-mine"] = true,
+    ["legacy-curved-rail"] = true,
+    ["legacy-straight-rail"] = true,
     ["locomotive"] = true,
     ["mining-drill"] = true,
     ["offshore-pump"] = true,
     ["rail-chain-signal"] = true,
     ["rail-planner"] = true,
+    ["rail-ramp"] = true,
     ["rail-signal"] = true,
+    ["rail-support"] = true,
     ["simple-entity"] = true,
     ["spider-vehicle"] = true,
     ["straight-rail"] = true,
     ["tile-ghost"] = true,
-    ["tree"] = true
+    ["tree"] = true,
+    ["wall"] = true
 }
 
 TILES_TO_EXCLUDE = {

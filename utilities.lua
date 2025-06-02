@@ -1,15 +1,22 @@
 function get_player_data(player_index)
-    storage.player_data[player_index] = storage.player_data[player_index] or {
-        foundation = DISABLED,
-        button_on = true,
-        last_selected = nil,
-        excludes = {
-            inserters = true,
-            belts = true,
-            poles = true,
-        },
-    }
-    return storage.player_data[player_index]
+    storage.player_data[player_index] = storage.player_data[player_index] or
+        {
+            foundation = DISABLED,
+            button_on = true,
+            last_selected = nil,
+            excludes =
+            {
+                inserters = true,
+                belts = true,
+                poles = true
+            }
+        }
+
+    local pdata = storage.player_data[player_index]
+    load_excluded_name_list(pdata)
+    load_excluded_type_list(pdata)
+
+    return pdata
 end
 
 function load_excluded_name_list(pdata)
@@ -50,6 +57,7 @@ end
 
 function entity_excluded(entity, pdata)
     if not entity or not entity.valid then return true end
+    if not pdata.excluded_name_list or not pdata.excluded_type_list then return end
 
     return pdata.excluded_name_list[entity.name]
         or pdata.excluded_type_list[entity.type] or false
@@ -109,13 +117,24 @@ function player_has_sufficient_tiles(player, tile_name, count)
     return item_name and player.get_item_count(item_name) >= count
 end
 
-function return_entity_to_cursor(player, entity)
+function return_entity_to_player(player, entity, robot_built)
     if not player or not entity or not entity.valid or not entity.prototype then return end
 
-    if not player.cursor_stack.valid_for_read then
-        player.cursor_stack.set_stack({ name = entity.name, count = 1 })
+    local item_to_return = entity.prototype.items_to_place_this and entity.prototype.items_to_place_this[1]
+    if not item_to_return then return end
+
+    if robot_built then
+        player.insert({ name = item_to_return.name, count = 1 })
     else
-        player.cursor_stack.count = player.cursor_stack.count + 1
+        if not player.cursor_stack.valid_for_read then
+            player.cursor_stack.set_stack({ name = item_to_return.name, count = 1 })
+        else
+            if player.cursor_stack.name == item_to_return.name then
+                player.cursor_stack.count = player.cursor_stack.count + 1
+            else
+                player.insert({ name = item_to_return.name, count = 1 })
+            end
+        end
     end
 
     entity.destroy()
@@ -301,20 +320,4 @@ function load_tile_lists()
     end
 
     table.sort(storage.tile_names)
-end
-
-function load_global_data()
-    storage.tile_names = {}
-    storage.tile_to_item = {}
-
-    load_tile_lists()
-
-    for player_index, pdata in pairs(storage.player_data) do
-        if not storage.tile_to_item[pdata.foundation] then
-            pdata.foundation = DISABLED
-        end
-
-        load_excluded_name_list(pdata)
-        load_excluded_type_list(pdata)
-    end
 end
