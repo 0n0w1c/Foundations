@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.16.5
+Date: 02.06.2025
+  Bugfixes:
+    - Fixed crash due to excluded entities not properly stored and retrieved per player
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.16.4
 Date: 01.06.2025
   Bugfixes:

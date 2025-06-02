@@ -22,7 +22,7 @@ local function is_compatible_surface(event)
     elseif event.player_index then
         local player = game.get_player(event.player_index)
         if player and is_player_in_remote_view(player) then
-            return false -- Ignore if player is in remote view
+            return false
         end
         surface_name = player and player.surface.name
     elseif event.entity and event.entity.surface then
@@ -49,7 +49,7 @@ local function place_foundation_under_entity(event)
     if not player then return end
 
     local pdata = get_player_data(player.index)
-    if pdata.foundation == DISABLED or entity_excluded(entity) then
+    if pdata.foundation == DISABLED or entity_excluded(entity, pdata) then
         return
     end
 
@@ -337,7 +337,7 @@ local function entity_mined(event)
     if not player then return end
 
     local pdata = get_player_data(player.index)
-    if pdata.foundation == DISABLED or entity_excluded(entity) then return end
+    if pdata.foundation == DISABLED or entity_excluded(entity, pdata) then return end
 
     local area = get_area_under_entity(entity)
     if not area then return end
@@ -382,7 +382,7 @@ local function player_selected_area(event)
                 local place_tile = true
 
                 for _, entity in pairs(entities) do
-                    if entity_excluded(entity) or entity.name == "character" then
+                    if entity_excluded(entity, pdata) or entity.name == "character" then
                         break
                     else
                         place_tile = false
@@ -428,11 +428,11 @@ local function player_selected_area(event)
                 local entity_area = get_area_under_entity(entity)
                 if entity_area then
                     for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
-                        for y = math.floor(entity_area.left_top.y), math.ceil(entity_area.right_bottom.y) - 1 do
+                        for y = math.floor(entity_area.right_bottom.y), math.ceil(entity_area.right_bottom.y) - 1 do
                             local tile = surface.get_tile(x, y)
                             if not tile then return end
 
-                            if entity.name == "character" or entity_excluded(entity) then
+                            if entity.name == "character" or entity_excluded(entity, pdata) then
                                 if tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation then
                                     table.insert(tiles_to_unfill, tile)
                                 end
@@ -471,7 +471,7 @@ local function player_selected_area(event)
             local tiles_to_place = {}
 
             for _, entity in pairs(entities) do
-                if not entity_excluded(entity) and entity.name ~= "character" then
+                if not entity_excluded(entity, pdata) and entity.name ~= "character" then
                     local entity_area = get_area_under_entity(entity)
                     if entity_area then
                         for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
@@ -512,7 +512,7 @@ local function player_selected_area(event)
 
                             if (tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation)
                                 and placeable_tiles[tile.name]
-                                and not entity_excluded(entity)
+                                and not entity_excluded(entity, pdata)
                                 and entity.name ~= "character"
                             then
                                 player.mine_tile(tile)
@@ -599,7 +599,7 @@ local function entity_moved(event)
 end
 
 local function on_entity_moved(event)
-    if not event or not event.moved_entity or entity_excluded(event.moved_entity) then return end
+    if not event or not event.moved_entity then return end
 
     local player = nil
     if event.player_index then
@@ -611,6 +611,8 @@ local function on_entity_moved(event)
 
     local pdata = get_player_data(player.index)
     if pdata.foundation == DISABLED then return end
+
+    if entity_excluded(event.moved_entity, pdata) then return end
 
     entity_moved(event)
     place_foundation_under_entity(event)
@@ -624,7 +626,8 @@ local function on_gui_switch_state_changed(event)
     if player.gui.screen.tile_selector_frame then
         local storage_key = event.element.name
         if storage_key then
-            storage.excludes[storage_key] = (event.element.switch_state == "left")
+            local pdata = get_player_data(event.player_index)
+            pdata.excludes[storage_key] = (event.element.switch_state == "left")
         end
 
         local pdata = get_player_data(player.index)

@@ -2,7 +2,7 @@ function get_player_data(player_index)
     storage.player_data[player_index] = storage.player_data[player_index] or {
         foundation = DISABLED,
         button_on = true,
-        last_selected = nil, -- for remote view controller toggling
+        last_selected = nil,
         excludes = {
             inserters = true,
             belts = true,
