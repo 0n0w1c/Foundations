@@ -42,7 +42,7 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 ---
 
-#### Startup settings  
+#### Startup settings:  
 * Halt construction if insufficient tiles in player inventory  
 * Number of rows to add to the player inventory size  
 * Select the tile mining time (default = 0.1)  
