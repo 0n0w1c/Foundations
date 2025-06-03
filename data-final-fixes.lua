@@ -5,6 +5,10 @@ if settings.startup["Foundations-added-inventory-rows"].value > 0 then
         (settings.startup["Foundations-added-inventory-rows"].value * 10)
 end
 
+if mods["quality"] then
+    recycling = require("__quality__/prototypes/recycling")
+end
+
 local tiles = data.raw["tile"]
 
 for _, tile in pairs(tiles) do
@@ -19,8 +23,67 @@ for _, tile in pairs(tiles) do
     end
 end
 
+local hidden = settings.startup["Foundations-concrete-variants"].value == false
+
+for _, color in pairs(COLORS) do
+    local color_tile = color.name .. "-refined-concrete"
+
+    local offset = 0
+    if mods["Dectorio"] then
+        offset = 65
+    end
+
+    tiles[color_tile].name = color_tile
+    tiles[color_tile].hidden = hidden
+    tiles[color_tile].minable = { mining_time = 0.1, result = color_tile }
+    tiles[color_tile].placeable_by = { item = color_tile, count = 1 }
+    tiles[color_tile].transition_overlay_layer_offset = 0
+    tiles[color_tile].frozen_variant = nil
+    tiles[color_tile].layer_group = "ground-artificial"
+    tiles[color_tile].layer = tonumber(settings.startup["Foundations-" .. color_tile .. "-layer"].value) + 27 + offset
+end
+
+for _, color in pairs(COLORS) do
+    local template = table.deepcopy(data.raw.item["refined-concrete"])
+    local name = color.name .. "-refined-concrete"
+
+    if template then
+        template.name = name
+        template.place_as_tile.result = name
+        template.subgroup = "terrain"
+        template.hidden = hidden
+        template.order = "b[concrete]-e[refined-colors]"
+        template.icons = { { icon = template.icon, tint = data.raw["tile"][name].tint } }
+
+        data.extend({ template })
+    end
+end
+
+for _, color in pairs(COLORS) do
+    local template = table.deepcopy(data.raw.recipe["refined-concrete"])
+    local name = color.name .. "-refined-concrete"
+
+    if template then
+        template.name = name
+        template.enabled = false
+        template.hidden = hidden
+        template.ingredients = { { type = "item", name = "refined-concrete", amount = 10 } }
+        template.results = { { type = "item", name = template.name, amount = 10 } }
+        template.energy_required = 0.25
+        template.auto_recycle = true
+
+        data.extend({ template })
+
+        if mods["quality"] then
+            recycling.generate_recycling_recipe(template)
+        end
+    end
+
+    table.insert(data.raw.technology["concrete"].effects, { type = "unlock-recipe", recipe = name })
+end
+
 if mods["space-platform-for-ground"] and tiles["acid-refined-concrete"] and data.raw["item"]["stone-brick"] then
-    tiles["space-platform-for-ground"].layer = tiles["acid-refined-concrete"].layer + 4
+    tiles["space-platform-for-ground"].layer = tiles["acid-refined-concrete"].layer + 2
     data.raw["item"]["space-platform-for-ground"].subgroup = data.raw["item"]["stone-brick"].subgroup
     data.raw["item"]["space-platform-for-ground"].order = "00[a-x]"
 end
@@ -37,7 +100,7 @@ if mods["Dectorio"] then
         template.minable = { mining_time = 0.1, result = name }
         template.placeable_by = { item = name, count = 1 }
         template.transition_overlay_layer_offset = 0
-        template.layer = tiles["acid-refined-concrete"].layer + 3
+        template.layer = tiles["acid-refined-concrete"].layer + 1
         template.transition_merges_with_tile = nil
         template.frozen_variant = nil
         template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
@@ -47,7 +110,7 @@ if mods["Dectorio"] then
 
     if tiles["dect-wood-floor"] then
         tiles["dect-wood-floor"].layer_group = "ground-artificial"
-        tiles["dect-wood-floor"].layer = tiles["acid-refined-concrete"].layer + 5
+        tiles["dect-wood-floor"].layer = tiles["acid-refined-concrete"].layer + 3
     end
 
     if tiles["dect-stone-gravel"] then
@@ -133,13 +196,15 @@ if mods["Dectorio"] then
         tiles["frozen-refined-hazard-concrete-right"].layer = refined_concrete_layer
     end
 
-    local subgroup = data.raw["item"]["landfill"].subgroup
     if mods["space-age"] then
-        data.raw["item"]["artificial-yumako-soil"].subgroup = subgroup
-        data.raw["item"]["artificial-jellynut-soil"].subgroup = subgroup
-        data.raw["item"]["overgrowth-yumako-soil"].subgroup = subgroup
-        data.raw["item"]["overgrowth-jellynut-soil"].subgroup = subgroup
-        data.raw["item"]["ice-platform"].subgroup = subgroup
-        data.raw["item"]["foundation"].subgroup = subgroup
+        local items = data.raw["item"]
+        local subgroup = items["landfill"].subgroup
+
+        items["artificial-yumako-soil"].subgroup = subgroup
+        items["artificial-jellynut-soil"].subgroup = subgroup
+        items["overgrowth-yumako-soil"].subgroup = subgroup
+        items["overgrowth-jellynut-soil"].subgroup = subgroup
+        items["ice-platform"].subgroup = subgroup
+        items["foundation"].subgroup = subgroup
     end
 end

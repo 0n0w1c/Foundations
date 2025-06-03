@@ -108,6 +108,19 @@ function add_to_global_tile_to_item(tile_name, item_name)
     end
 end
 
+function load_tile_lists()
+    add_to_global_tile_names(DISABLED, DISABLED)
+    add_to_global_tile_to_item(DISABLED, DISABLED)
+
+    local tiles = get_placeable_items()
+    for tile, item in pairs(tiles) do
+        add_to_global_tile_names(tile, item)
+        add_to_global_tile_to_item(tile, item)
+    end
+
+    table.sort(storage.tile_names)
+end
+
 function player_has_sufficient_tiles(player, tile_name, count)
     if not player or not tile_name or count == nil then
         return false
@@ -274,7 +287,7 @@ function load_tiles(entity, area, player)
             local resources = surface.find_entities_filtered({ area = search_area, type = "resource" })
             local tiles_to_exclude = TILES_TO_EXCLUDE
 
-            if #resources == 0 and not tiles_to_exclude[current_tile.name] then
+            if table_size(resources) == 0 and not tiles_to_exclude[current_tile.name] then
                 if current_tile.name ~= foundation then
                     if mineable_tiles[current_tile.name] then
                         table.insert(tiles_to_return, { name = current_tile.name, position = { x = x, y = y } })
@@ -307,17 +320,4 @@ function get_placeable_items()
     end
 
     return items
-end
-
-function load_tile_lists()
-    add_to_global_tile_names(DISABLED, DISABLED)
-    add_to_global_tile_to_item(DISABLED, DISABLED)
-
-    local tiles = get_placeable_items()
-    for tile, item in pairs(tiles) do
-        add_to_global_tile_names(tile, item)
-        add_to_global_tile_to_item(tile, item)
-    end
-
-    table.sort(storage.tile_names)
 end

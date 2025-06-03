@@ -3,10 +3,14 @@ require("utilities")
 
 local mod_gui = require("mod-gui")
 
-local halt_construction = settings.startup["Foundations-halt-construction"].value or false
+local halt_construction = false
+if settings.startup["Foundations-halt-construction"] then
+    halt_construction = settings.startup["Foundations-halt-construction"].value == true
+end
+
 local dectorio_hazard = true
 if settings.startup["dectorio-vanilla-hazard-concrete-style"] then
-    dectorio_hazard = settings.startup["dectorio-vanilla-hazard-concrete-style"].value
+    dectorio_hazard = settings.startup["dectorio-vanilla-hazard-concrete-style"].value == true
 end
 
 local function is_player_in_remote_view(player)
@@ -64,7 +68,8 @@ local function place_foundation_under_entity(event)
     local robot_built = event.robot
 
     if tiles_to_place then
-        if not player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
+        local count = table_size(tiles_to_place)
+        if not player_has_sufficient_tiles(player, pdata.foundation, count) then
             if halt_construction then
                 return_entity_to_player(player, entity, robot_built)
             end
@@ -80,12 +85,12 @@ local function place_foundation_under_entity(event)
             end
         end
 
-        if #tiles_to_place > 0 then
+        if count > 0 then
             surface.set_tiles(tiles_to_place, true, false, true, true)
 
             local item_name = storage.tile_to_item[pdata.foundation]
             if item_name then
-                player.remove_item { name = item_name, count = #tiles_to_place }
+                player.remove_item { name = item_name, count = count }
             end
         end
     end
@@ -404,11 +409,12 @@ local function player_selected_area(event)
                 end
             end
 
-            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
+            local count = table_size(tiles_to_place)
+            if count > 0 and player_has_sufficient_tiles(player, pdata.foundation, count) then
                 surface.set_tiles(tiles_to_place, true, false, true, true)
                 local item_name = placeable_tiles[pdata.foundation]
                 if item_name then
-                    player.remove_item { name = item_name, count = #tiles_to_place }
+                    player.remove_item { name = item_name, count = count }
                 end
             end
         end
@@ -490,10 +496,11 @@ local function player_selected_area(event)
                 end
             end
 
-            if #tiles_to_place > 0 and player_has_sufficient_tiles(player, pdata.foundation, #tiles_to_place) then
+            local count = table_size(tiles_to_place)
+            if count > 0 and player_has_sufficient_tiles(player, pdata.foundation, count) then
                 surface.set_tiles(tiles_to_place, true, false, true, true)
                 local item_name = placeable_tiles[pdata.foundation]
-                player.remove_item { name = item_name, count = #tiles_to_place }
+                player.remove_item { name = item_name, count = count }
             end
         end
     end
@@ -586,13 +593,15 @@ local function entity_moved(event)
             end
         end
 
-        if #tile_names > 0 then
-            for _, tile in ipairs(tile_names) do
+        local count = table_size(tile_names)
+        if count > 0 then
+            for i = 1, count do
+                local tile = tile_names[i]
                 local item_name = storage.tile_to_item[tile]
-                local tile_to_place = { { name = tile, position = tiles_to_place[_].position } }
+                local tile_position = tiles_to_place[i] and tiles_to_place[i].position
 
-                if item_name then
-                    surface.set_tiles(tile_to_place, true, false, true, false)
+                if item_name and tile_position then
+                    surface.set_tiles({ { name = tile, position = tile_position } }, true, false, true, false)
                     player.remove_item { name = item_name, count = 1 }
                 end
             end
