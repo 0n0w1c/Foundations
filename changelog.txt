@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.16.9
+Date: 02.06.2025
+  Bugfixes:
+    - Added entity.valid checks while using the selection tools
+    - Fixed an error while using the unfill-tool
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.16.8
 Date: 02.06.2025
   Bugfixes:

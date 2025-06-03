@@ -389,10 +389,12 @@ local function player_selected_area(event)
                 local place_tile = true
 
                 for _, entity in pairs(entities) do
-                    if entity_excluded(entity, pdata) or entity.name == "character" then
-                        break
-                    else
-                        place_tile = false
+                    if entity.valid then
+                        if entity_excluded(entity, pdata) or entity.name == "character" then
+                            break
+                        else
+                            place_tile = false
+                        end
                     end
                 end
 
@@ -433,19 +435,21 @@ local function player_selected_area(event)
             local tiles_under_entities = {}
 
             for _, entity in pairs(entities) do
-                local entity_area = get_area_under_entity(entity)
-                if entity_area then
-                    for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
-                        for y = math.floor(entity_area.right_bottom.y), math.ceil(entity_area.right_bottom.y) - 1 do
-                            local tile = surface.get_tile(x, y)
-                            if not tile then return end
+                if entity.valid then
+                    local entity_area = get_area_under_entity(entity)
+                    if entity_area then
+                        for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
+                            for y = math.floor(entity_area.right_bottom.y), math.ceil(entity_area.right_bottom.y) - 1 do
+                                local tile = surface.get_tile(x, y)
+                                if not tile then return end
 
-                            if entity.name == "character" or entity_excluded(entity, pdata) then
-                                if tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation then
-                                    table.insert(tiles_to_unfill, tile)
+                                if entity.name == "character" or entity_excluded(entity, pdata) then
+                                    if tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation then
+                                        table.insert(tiles_to_unfill, tile)
+                                    end
                                 end
+                                tiles_under_entities[x .. "," .. y] = true
                             end
-                            tiles_under_entities[x .. "," .. y] = true
                         end
                     end
                 end
@@ -479,16 +483,19 @@ local function player_selected_area(event)
             local tiles_to_place = {}
 
             for _, entity in pairs(entities) do
-                if not entity_excluded(entity, pdata) and entity.name ~= "character" then
-                    local entity_area = get_area_under_entity(entity)
-                    if entity_area then
-                        for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
-                            for y = math.floor(entity_area.left_top.y), math.ceil(entity_area.right_bottom.y) - 1 do
-                                local tile = surface.get_tile(x, y)
-                                if not tile then return end
+                if entity.valid then
+                    if not entity_excluded(entity, pdata) and entity.name ~= "character" then
+                        local entity_area = get_area_under_entity(entity)
+                        if entity_area then
+                            for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
+                                for y = math.floor(entity_area.left_top.y), math.ceil(entity_area.right_bottom.y) - 1 do
+                                    local tile = surface.get_tile(x, y)
+                                    if not tile then return end
 
-                                if tile.name ~= pdata.foundation then
-                                    table.insert(tiles_to_place, { name = pdata.foundation, position = { x = x, y = y } })
+                                    if tile.name ~= pdata.foundation then
+                                        table.insert(tiles_to_place,
+                                            { name = pdata.foundation, position = { x = x, y = y } })
+                                    end
                                 end
                             end
                         end
@@ -512,20 +519,21 @@ local function player_selected_area(event)
 
             local entities = surface.find_entities_filtered({ area = event.area })
             for _, entity in pairs(entities) do
-                local entity_area = get_area_under_entity(entity)
-                if entity_area then
-                    for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
-                        for y = math.floor(entity_area.left_top.y), math.ceil(entity_area.right_bottom.y) - 1 do
-                            local tile = surface.get_tile(x, y)
-                            if not tile then return end
+                if entity.valid then
+                    local entity_area = get_area_under_entity(entity)
+                    if entity_area then
+                        for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
+                            for y = math.floor(entity_area.left_top.y), math.ceil(entity_area.right_bottom.y) - 1 do
+                                local tile = surface.get_tile(x, y)
+                                if not tile then return end
 
-                            if (tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation)
-                                and placeable_tiles[tile.name]
-                                and not entity_excluded(entity, pdata)
-                                and entity.name ~= "character"
-                            then
-                                player.mine_tile(tile)
-                                table.insert(tiles_to_unplace, tile)
+                                if (tile.name == pdata.foundation or tile.name == "frozen-" .. pdata.foundation)
+                                    and placeable_tiles[tile.name]
+                                    and not entity_excluded(entity, pdata)
+                                    and entity.name ~= "character"
+                                then
+                                    table.insert(tiles_to_unplace, tile)
+                                end
                             end
                         end
                     end
