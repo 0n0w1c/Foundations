@@ -34,8 +34,8 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 ---
 
-* Compatible with personal logistics for construction and deconstruction.  
-* Foundations button is disabled while in remote view.  
+* Compatible with personal logistics for construction and deconstruction  
+* Foundations button is disabled while in remote view  
 * Shortcut to toggle display of the Foundations button  
 * In-game settings for automated tile placement for 1x1 electric poles, inserters, belts, splitters, and loaders  
 * Multi-player compatible
