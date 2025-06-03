@@ -35,12 +35,14 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 ---
 
 * Shortcut to toggle display of the Foundations button  
-* Startup setting to halt construction if insufficient tiles in player inventory  
-* Startup setting for the number of rows to add to the player inventory size  
-* Startup setting to select the tile mining time (default = 0.1)  
-* Startup setting to clean sweep (remove ground decorations), when tiles are placed  
-* Startup setting to enable the hidden refined concrete variants  
-* Startup setting to modify the refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
+
+#### Startup settings  
+* Halt construction if insufficient tiles in player inventory  
+* Number of rows to add to the player inventory size  
+* Select the tile mining time (default = 0.1)  
+* Clean sweep (remove ground decorations), when tiles are placed  
+* Enable the hidden refined concrete variants  
+* Modify the refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
   (higher numbers appear above lower numbers, same numbers merge)  
 
 &NewLine;
