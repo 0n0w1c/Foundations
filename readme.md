@@ -47,6 +47,7 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Number of rows to add to the player inventory size  
 * Select the tile mining time (default = 0.1)  
 * Clean sweep (remove ground decorations), when tiles are placed  
+* Enable the refined concrete variants 
 * Modify refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
   (higher numbers appear above lower numbers, same numbers merge)  
 
@@ -60,6 +61,8 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 #### Required mods:
 [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  
 [Concrete Tints](https://mods.factorio.com/mod/Concrete-Tints)
+
+---
 
 #### Supported mods:
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
