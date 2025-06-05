@@ -13,7 +13,7 @@ local function get_default_layer(tile_color)
             return color.default - 27
         end
     end
-    return nil
+    return 1
 end
 
 data.extend({
