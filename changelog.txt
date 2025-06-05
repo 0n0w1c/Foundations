@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.17.0
+Date: 05.06.2025
+  Bugfixes:
+    - Corrected all alternate locales
+    - Tile lists are now regenerated when the configuration changes
+  Changes:
+    - Removed refined concrete variants
+    - Added Concrete Tints as a required dependency
+---------------------------------------------------------------------------------------------------
 Version: 2.16.9
 Date: 02.06.2025
   Bugfixes:

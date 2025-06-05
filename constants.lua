@@ -14,18 +14,20 @@ COMPATIBLE_SURFACES = {
 }
 
 BASE_TILES = {
-    { name = "stone-path",                     default = 11 },
-    { name = "frozen-stone-path",              default = 12 },
-    { name = "concrete",                       default = 13 },
-    { name = "frozen-concrete",                default = 14 },
-    { name = "hazard-concrete",                default = 15 },
-    { name = "frozen-hazard-concrete-left",    default = 15 },
-    { name = "frozen-hazard-concrete-right",   default = 15 },
-    { name = "refined-concrete",               default = 17 },
-    { name = "frozen-refined-concrete",        default = 18 },
-    { name = "refined-hazard-concrete-left",   default = 19 },
-    { name = "refined-hazard-concrete-right",  default = 19 },
-    { name = "frozen-refined-hazard-concrete", default = 20 }
+    { name = "stone-path",                           default = 11 },
+    { name = "frozen-stone-path",                    default = 12 },
+    { name = "concrete",                             default = 13 },
+    { name = "frozen-concrete",                      default = 14 },
+    { name = "hazard-concrete-left",                 default = 15 },
+    { name = "hazard-concrete-right",                default = 15 },
+    { name = "frozen-hazard-concrete-left",          default = 16 },
+    { name = "frozen-hazard-concrete-right",         default = 16 },
+    { name = "refined-concrete",                     default = 17 },
+    { name = "frozen-refined-concrete",              default = 18 },
+    { name = "refined-hazard-concrete-left",         default = 19 },
+    { name = "refined-hazard-concrete-right",        default = 19 },
+    { name = "frozen-refined-hazard-concrete-left",  default = 20 },
+    { name = "frozen-refined-hazard-concrete-right", default = 20 }
 }
 
 COLORS = {

@@ -678,8 +678,8 @@ end
 
 local function init_storage()
     storage = storage or {}
-    storage.tile_to_item = storage.tile_to_item or { [DISABLED] = DISABLED }
-    storage.tile_names = storage.tile_names or { DISABLED }
+    storage.tile_to_item = { [DISABLED] = DISABLED }
+    storage.tile_names = { DISABLED }
     storage.player_data = storage.player_data or {}
 
     load_tile_lists()
