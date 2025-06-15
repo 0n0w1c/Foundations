@@ -71,4 +71,4 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 [Space platform, for ground](https://mods.factorio.com/mod/space-platform-for-ground)  
 
 #### Alternate locales:  
-`cs`, `de`, `es`, `fr`, `it`, `ja`, `pl`, `pt-BR`, `ru`, `tr`, `uk`, `zh-CN`, `zh-TW`
+`cs`, `de`, `es`, `fr`, `it`, `ja`, `ko`, `pl`, `pt-BR`, `ru`, `tr`, `uk`, `zh-CN`, `zh-TW`
