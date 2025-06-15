@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.17.2
+Date: 15.06.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Dectorio and Crushing Industry: set hazard concrete variant's recipe ingredient to concrete
+    - Added ko as an alternate locale
+---------------------------------------------------------------------------------------------------
 Version: 2.17.1
 Date: 05.06.2025
   Bugfixes:

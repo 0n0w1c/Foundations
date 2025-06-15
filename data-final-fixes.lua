@@ -21,7 +21,6 @@ for _, color in pairs(COLORS) do
     if mods["Dectorio"] then offset = 68 end
 
     if tiles[tile_name] and items[tile_name] then
-        tiles[tile_name].hidden = false
         tiles[tile_name].transition_overlay_layer_offset = 0
         tiles[tile_name].transition_merges_with_tile = nil
         tiles[tile_name].layer = tonumber(settings.startup["Foundations-" .. tile_name .. "-layer"].value) + offset
@@ -35,6 +34,7 @@ for _, color in pairs(COLORS) do
         end
 
         local hidden = settings.startup["Foundations-concrete-variants"].value == false
+        tiles[tile_name].hidden = hidden
         items[tile_name].hidden = hidden
         recipes[tile_name].hidden = hidden
     end
@@ -121,6 +121,14 @@ if mods["Dectorio"] then
                     variant .. "-" .. dir .. "/hr-refined-concrete.png"
 
                 data.extend({ template, refined_template })
+
+                if mods["crushing-industry"] then
+                    data.raw["recipe"]["dect-paint-" .. variant].ingredients = {}
+                    local recipe = data.raw["recipe"]["dect-paint-" .. variant]
+                    if recipe then
+                        recipe.ingredients = { { type = "item", name = "concrete", amount = 10 } }
+                    end
+                end
             end
         end
     end
