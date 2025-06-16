@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.17.3
+Date: 15.06.2025
+  Bugfixes:
+    - Dectorio and Crushing Industry: set hazard concrete vairant's recipe category to crafing
+  Changes:
+    - Dectorio and Crushing Industry: hazard concrete variants are now hand-craftable
+---------------------------------------------------------------------------------------------------
 Version: 2.17.2
 Date: 15.06.2025
   Bugfixes:

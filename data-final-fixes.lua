@@ -127,6 +127,7 @@ if mods["Dectorio"] then
                     local recipe = data.raw["recipe"]["dect-paint-" .. variant]
                     if recipe then
                         recipe.ingredients = { { type = "item", name = "concrete", amount = 10 } }
+                        recipe.category = "crafting"
                     end
                 end
             end
