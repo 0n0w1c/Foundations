@@ -15,11 +15,11 @@ local items = data.raw["item"]
 local recipes = data.raw["recipe"]
 local concrete_layer = tiles["concrete"].layer
 
+local offset = 31
+if mods["Dectorio"] then offset = 71 end
+
 for _, color in pairs(COLORS) do
     local tile_name = color.name .. "-refined-concrete"
-
-    local offset = 28
-    if mods["Dectorio"] then offset = 68 end
 
     if tiles[tile_name] and items[tile_name] then
         tiles[tile_name].transition_overlay_layer_offset = 0
@@ -41,49 +41,73 @@ for _, color in pairs(COLORS) do
     end
 end
 
+local highest_layer = offset + 11
+local lowest_layer = concrete_layer - 2
+
 if mods["aai-industry"] and tiles["rough-stone-path"] then
-    data.raw["tile"]["rough-stone-path"].layer = concrete_layer - 3
+    lowest_layer = lowest_layer - 1
+    data.raw["tile"]["rough-stone-path"].layer = lowest_layer
 end
 
-if mods["space-platform-for-ground"] and tiles["acid-refined-concrete"] and items["stone-brick"] then
-    tiles["space-platform-for-ground"].layer = tiles["acid-refined-concrete"].layer + 2
+if mods["Dectorio"] and tiles["dect-stone-gravel"] then
+    lowest_layer = lowest_layer - 1
+    tiles["dect-stone-gravel"].layer = lowest_layer
+    tiles["dect-stone-gravel"].layer_group = "ground-artificial"
+
+    lowest_layer = lowest_layer - 1
+    tiles["dect-coal-gravel"].layer = lowest_layer
+    tiles["dect-coal-gravel"].layer_group = "ground-artificial"
+
+    lowest_layer = lowest_layer - 1
+    tiles["dect-copper-ore-gravel"].layer = lowest_layer
+    tiles["dect-copper-ore-gravel"].layer_group = "ground-artificial"
+
+    lowest_layer = lowest_layer - 1
+    tiles["dect-iron-ore-gravel"].layer = lowest_layer
+    tiles["dect-iron-ore-gravel"].layer_group = "ground-artificial"
+end
+
+if mods["AsphaltRoadsPatched"] then
+    lowest_layer = lowest_layer - 1
+
+    for _, tile in pairs(tiles) do
+        if string.match(tile.name, "^Arci") then
+            tile.layer = lowest_layer
+        end
+    end
+end
+
+if mods["Dectorio"] and tiles["dect-concrete-grid"] then
+    local name = "dect-concrete-grid"
+    local template = table.deepcopy(tiles["concrete"])
+
+    template.name = name
+    template.minable = { mining_time = 0.1, result = name }
+    template.placeable_by = { item = name, count = 1 }
+    template.transition_overlay_layer_offset = 0
+    highest_layer = highest_layer + 1
+    template.layer = highest_layer
+    template.transition_merges_with_tile = nil
+    template.frozen_variant = nil
+    template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
+
+    data.extend({ template })
+end
+
+if mods["space-platform-for-ground"] then
+    highest_layer = highest_layer + 1
+    tiles["space-platform-for-ground"].layer = highest_layer
     items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
     items["space-platform-for-ground"].order = "00[a-x]"
 end
 
+if mods["Dectorio"] and tiles["dect-wood-floor"] then
+    highest_layer = highest_layer + 1
+    tiles["dect-wood-floor"].layer_group = "ground-artificial"
+    tiles["dect-wood-floor"].layer = highest_layer
+end
+
 if mods["Dectorio"] then
-    if tiles["dect-concrete-grid"] then
-        local name = "dect-concrete-grid"
-
-        local template = table.deepcopy(tiles["concrete"])
-        template.name = name
-        template.minable = { mining_time = 0.1, result = name }
-        template.placeable_by = { item = name, count = 1 }
-        template.transition_overlay_layer_offset = 0
-        template.layer = tiles["acid-refined-concrete"].layer + 1
-        template.transition_merges_with_tile = nil
-        template.frozen_variant = nil
-        template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
-
-        data.extend({ template })
-    end
-
-    if tiles["dect-wood-floor"] then
-        tiles["dect-wood-floor"].layer_group = "ground-artificial"
-        tiles["dect-wood-floor"].layer = tiles["acid-refined-concrete"].layer + 3
-    end
-
-    if tiles["dect-stone-gravel"] then
-        tiles["dect-stone-gravel"].layer = concrete_layer - 4
-        tiles["dect-stone-gravel"].layer_group = "ground-artificial"
-        tiles["dect-coal-gravel"].layer = concrete_layer - 5
-        tiles["dect-coal-gravel"].layer_group = "ground-artificial"
-        tiles["dect-copper-ore-gravel"].layer = concrete_layer - 6
-        tiles["dect-copper-ore-gravel"].layer_group = "ground-artificial"
-        tiles["dect-iron-ore-gravel"].layer = concrete_layer - 7
-        tiles["dect-iron-ore-gravel"].layer_group = "ground-artificial"
-    end
-
     if settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
         local variants =
         {
