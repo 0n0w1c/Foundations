@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.17.4
+Date: 26.06.2025
+  Bugfixes:
+    - AAI Industry: set the layer for rough stone path to be below stone path
+    - Dectorio: set the group_layer for gravel tiles to be ground-artificial
+  Changes:
+    - Some modded tile layer adjustments for improved consistency when Alien Biomes is active
+---------------------------------------------------------------------------------------------------
 Version: 2.17.3
 Date: 15.06.2025
   Bugfixes:

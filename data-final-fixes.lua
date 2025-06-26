@@ -13,6 +13,7 @@ end
 local tiles = data.raw["tile"]
 local items = data.raw["item"]
 local recipes = data.raw["recipe"]
+local concrete_layer = tiles["concrete"].layer
 
 for _, color in pairs(COLORS) do
     local tile_name = color.name .. "-refined-concrete"
@@ -40,6 +41,10 @@ for _, color in pairs(COLORS) do
     end
 end
 
+if mods["aai-industry"] and tiles["rough-stone-path"] then
+    data.raw["tile"]["rough-stone-path"].layer = concrete_layer - 3
+end
+
 if mods["space-platform-for-ground"] and tiles["acid-refined-concrete"] and items["stone-brick"] then
     tiles["space-platform-for-ground"].layer = tiles["acid-refined-concrete"].layer + 2
     items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
@@ -47,8 +52,6 @@ if mods["space-platform-for-ground"] and tiles["acid-refined-concrete"] and item
 end
 
 if mods["Dectorio"] then
-    local concrete_layer = tiles["concrete"].layer
-
     if tiles["dect-concrete-grid"] then
         local name = "dect-concrete-grid"
 
@@ -71,14 +74,14 @@ if mods["Dectorio"] then
     end
 
     if tiles["dect-stone-gravel"] then
-        tiles["dect-stone-gravel"].layer = concrete_layer - 3
-        tiles["dect-stone-gravel"].layer_group = "ground-natural"
-        tiles["dect-coal-gravel"].layer = concrete_layer - 4
-        tiles["dect-coal-gravel"].layer_group = "ground-natural"
-        tiles["dect-copper-ore-gravel"].layer = concrete_layer - 5
-        tiles["dect-copper-ore-gravel"].layer_group = "ground-natural"
-        tiles["dect-iron-ore-gravel"].layer = concrete_layer - 6
-        tiles["dect-iron-ore-gravel"].layer_group = "ground-natural"
+        tiles["dect-stone-gravel"].layer = concrete_layer - 4
+        tiles["dect-stone-gravel"].layer_group = "ground-artificial"
+        tiles["dect-coal-gravel"].layer = concrete_layer - 5
+        tiles["dect-coal-gravel"].layer_group = "ground-artificial"
+        tiles["dect-copper-ore-gravel"].layer = concrete_layer - 6
+        tiles["dect-copper-ore-gravel"].layer_group = "ground-artificial"
+        tiles["dect-iron-ore-gravel"].layer = concrete_layer - 7
+        tiles["dect-iron-ore-gravel"].layer_group = "ground-artificial"
     end
 
     if settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
