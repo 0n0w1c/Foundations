@@ -102,9 +102,26 @@ if mods["space-platform-for-ground"] then
 end
 
 if mods["Dectorio"] and tiles["dect-wood-floor"] then
-    highest_layer = highest_layer + 1
+    highest_layer = highest_layer + 3
     tiles["dect-wood-floor"].layer_group = "ground-artificial"
     tiles["dect-wood-floor"].layer = highest_layer
+end
+
+if mods["electric-tiles"] then
+    if tiles["F077ET-stone-path"] then
+        highest_layer = highest_layer + 3
+        tiles["F077ET-stone-path"].layer = highest_layer
+    end
+
+    if tiles["F077ET-concrete"] then
+        highest_layer = highest_layer + 3
+        tiles["F077ET-concrete"].layer = highest_layer
+    end
+
+    if tiles["F077ET-refined-concrete"] then
+        highest_layer = highest_layer + 3
+        tiles["F077ET-refined-concrete"].layer = highest_layer
+    end
 end
 
 if mods["Dectorio"] then

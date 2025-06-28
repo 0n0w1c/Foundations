@@ -69,6 +69,7 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 [Asphalt Roads Patched](https://mods.factorio.com/mod/AsphaltRoadsPatched)  
 [Conrete Retexture NX](https://mods.factorio.com/mod/conrete-retexture-nx)  
 [Dectorio](https://mods.factorio.com/mod/Dectorio) - Enable the startup setting *Use default Factorio Hazard concrete style*  
+[Electric Tiles](https://mods.factorio.com/mod/electric-tiles)  
 [Space platform, for ground](https://mods.factorio.com/mod/space-platform-for-ground)  
 
 #### Alternate locales:  

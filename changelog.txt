@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.19.0
+Date: 26.06.2025
+  Bugfixes:
+    - Added localised tile names for the refined concrete variants
+  Changes:
+    - Added support for Electric Tiles
+---------------------------------------------------------------------------------------------------
 Version: 2.18.0
 Date: 26.06.2025
   Bugfixes:
