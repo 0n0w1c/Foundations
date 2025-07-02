@@ -83,42 +83,90 @@ EXCLUDED_TYPE_LIST = {
     ["wall"] = true
 }
 
-TILES_TO_EXCLUDE = {
-    ["ammoniacal-ocean"] = true,
-    ["ammoniacal-ocean-2"] = true,
-    ["brash-ice"] = true,
-    ["deepwater"] = true,
-    ["deepwater-green"] = true,
-    ["gleba-deep-lake"] = true,
-    ["lava"] = true,
-    ["lava-hot"] = true,
-    ["oil-ocean-deep"] = true,
-    ["oil-ocean-shallow"] = true,
-    ["water"] = true,
-    ["water-green"] = true,
-    ["water-mud"] = true,
-    ["water-shallow"] = true,
-    ["water-wube"] = true,
-    ["wetland-blue-slime"] = true,
-    ["wetland-dead-skin"] = true,
-    ["wetland-green-slime"] = true,
-    ["wetland-jellynut"] = true,
-    ["wetland-light-dead-skin"] = true,
-    ["wetland-light-green-slime"] = true,
-    ["wetland-pink-tentacle"] = true,
-    ["wetland-red-tentacle"] = true,
-    ["wetland-yumako"] = true
-}
+FOUNDATION_TILE_CONDITIONS =
+{
+    ["foundation"] = {
+        ["water"] = true,
+        ["deepwater"] = true,
+        ["water-green"] = true,
+        ["deepwater-green"] = true,
+        ["water-mud"] = true,
+        ["water-shallow"] = true,
+        ["wetland-light-green-slime"] = true,
+        ["wetland-green-slime"] = true,
+        ["wetland-light-dead-skin"] = true,
+        ["wetland-dead-skin"] = true,
+        ["wetland-pink-tentacle"] = true,
+        ["wetland-red-tentacle"] = true,
+        ["wetland-yumako"] = true,
+        ["wetland-jellynut"] = true,
+        ["oil-ocean-shallow"] = true,
+        ["oil-ocean-deep"] = true,
+        ["lava"] = true,
+        ["lava-hot"] = true
+    },
 
---[[
-FOUNDATION_TILES = {
-    ["landfill"] = true,
-    ["space-platform-foundation"] = true,
-    ["foundation"] = true,
-    ["artificial-yumako-soil"] = true,
-    ["overgrowth-yumako-soil"] = true,
-    ["artificial-jellynut-soil"] = true,
-    ["overgrowth-jellynut-soil"] = true,
-    ["ice-platform"] = true
+    ["landfill"] = {
+        ["water"] = true,
+        ["deepwater"] = true,
+        ["water-green"] = true,
+        ["deepwater-green"] = true,
+        ["water-shallow"] = true,
+        ["water-mud"] = true,
+        ["wetland-light-green-slime"] = true,
+        ["wetland-green-slime"] = true,
+        ["wetland-light-dead-skin"] = true,
+        ["wetland-dead-skin"] = true,
+        ["wetland-pink-tentacle"] = true,
+        ["wetland-red-tentacle"] = true,
+        ["wetland-yumako"] = true,
+        ["wetland-jellynut"] = true,
+        ["wetland-blue-slime"] = true,
+        ["gleba-deep-lake"] = true
+    },
+
+    ["ice-platform"] =
+    {
+        ["ammoniacal-ocean"] = true,
+        ["ammoniacal-ocean-2"] = true,
+        ["brash-ice"] = true
+    },
+
+    ["artificial-yumako-soil"] =
+    {
+        ["wetland-yumako"] = true
+    },
+
+    ["overgrowth-yumako-soil"] =
+    {
+        ["wetland-light-green-slime"] = true,
+        ["wetland-green-slime"] = true,
+        ["wetland-yumako"] = true,
+        ["lowland-olive-blubber"] = true,
+        ["lowland-olive-blubber-2"] = true,
+        ["lowland-olive-blubber-3"] = true,
+        ["lowland-brown-blubber"] = true,
+        ["lowland-pale-green"] = true
+    },
+
+    ["artificial-jellynut-soil"] =
+    {
+        ["wetland-jellynut"] = true
+    },
+
+    ["overgrowth-jellynut-soil"] =
+    {
+        ["wetland-pink-tentacle"] = true,
+        ["wetland-red-tentacle"] = true,
+        ["wetland-jellynut"] = true,
+        ["lowland-red-vein"] = true,
+        ["lowland-red-vein-2"] = true,
+        ["lowland-red-vein-3"] = true,
+        ["lowland-red-vein-4"] = true,
+        ["lowland-red-vein-dead"] = true,
+        ["lowland-red-infection"] = true,
+        ["lowland-cream-red"] = true
+    },
+
+    ["space-platform-foundation"] = {}
 }
-]]

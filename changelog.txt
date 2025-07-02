@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.20.0
+Date: 02.07.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Landfill tiles are now supported with the Fill and Unfill selection tools
+      Automated tile placement can not be used with landfill tiles due to game mechanics
+    - Removed the reach restriction when using the selection tools
+---------------------------------------------------------------------------------------------------
 Version: 2.19.0
 Date: 26.06.2025
   Bugfixes:
