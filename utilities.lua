@@ -313,8 +313,6 @@ function get_placeable_items()
                         items[prototype.name] = item.name
                     end
                 end
-            else
-                items[prototype.name] = prototype.items_to_place_this
             end
         end
     end
