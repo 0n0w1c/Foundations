@@ -314,7 +314,7 @@ function get_placeable_items()
                     end
                 end
             else
-                items[prototype.name] = prototype.placeable_by
+                items[prototype.name] = prototype.items_to_place_this
             end
         end
     end
