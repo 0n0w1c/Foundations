@@ -68,7 +68,6 @@ EXCLUDED_TYPE_LIST = {
     ["legacy-curved-rail"] = true,
     ["legacy-straight-rail"] = true,
     ["locomotive"] = true,
-    ["mining-drill"] = true,
     ["offshore-pump"] = true,
     ["rail-chain-signal"] = true,
     ["rail-planner"] = true,

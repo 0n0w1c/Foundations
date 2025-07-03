@@ -150,7 +150,7 @@ function return_entity_to_player(player, entity, robot_built)
         end
     end
 
-    entity.destroy()
+    entity.destroy { raise_destroy = true }
 end
 
 function within_area(position, area)

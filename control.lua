@@ -37,6 +37,47 @@ local function is_compatible_surface(event)
     return is_compatible
 end
 
+local function get_responsible_player(event, entity)
+    if event.player_index then
+        local player = game.get_player(event.player_index)
+        if player and player.valid then return player end
+    end
+
+    if entity.last_user and entity.last_user.valid and entity.last_user.is_player() then
+        return entity.last_user
+    end
+
+    local candidates = entity.surface.find_entities_filtered
+        {
+            type = "character",
+            position = entity.position,
+            radius = 64
+        }
+
+    local closest_character = nil
+    local closest_distance = math.huge
+    for _, candidate in ipairs(candidates) do
+        if candidate.valid then
+            local dist = ((candidate.position.x - entity.position.x) ^ 2 + (candidate.position.y - entity.position.y) ^ 2) ^
+                0.5
+            if dist < closest_distance then
+                closest_character = candidate
+                closest_distance = dist
+            end
+        end
+    end
+
+    if closest_character then
+        for _, player in pairs(game.connected_players) do
+            if player.valid and player.character == closest_character then
+                return player
+            end
+        end
+    end
+
+    return nil
+end
+
 local function place_foundation_under_entity(event)
     if not event then return end
     if not is_compatible_surface(event) then return end
@@ -44,13 +85,21 @@ local function place_foundation_under_entity(event)
     local entity = event.created_entity or event.moved_entity or event.entity
     if not entity or not entity.valid then return end
 
+    if entity.type == "electric-pole" and string.sub(entity.name, 1, 7) == "F077ET-" then
+        return
+    end
+
     local player = nil
     if event.player_index then
         player = game.get_player(event.player_index)
     elseif entity.last_user and entity.last_user.is_player() then
         player = entity.last_user
     end
-    if not player then return end
+
+    if not player then
+        player = get_responsible_player(event, entity)
+    end
+    if not (player and player.index) then return end
 
     local player_data = get_player_data(player.index)
     if player_data.foundation == DISABLED or entity_excluded(entity, player_data) then
@@ -387,10 +436,14 @@ local function player_selected_area(event)
 
             for _, position in pairs(event.tiles) do
                 local tile = surface.get_tile(position.position.x, position.position.y)
-                local search_area = { { position.position.x, position.position.y }, { position.position.x + 1, position.position.y + 1 } }
+                local search_area = { { position.position.x - 0.5, position.position.y - 0.5 }, { position.position.x + 0.5, position.position.y + 0.5 } }
                 local entities = surface.find_entities_filtered({ area = search_area })
 
                 local place_tile = true
+
+                if string.sub(tile.name, 1, 7) == "F077ET-" then
+                    place_tile = false
+                end
 
                 for _, entity in pairs(entities) do
                     if entity.valid then

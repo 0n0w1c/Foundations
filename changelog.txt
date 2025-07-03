@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.20.1
+Date: 02.07.2025
+  Bugfixes:
+    - Electric Tiles: Ignore proxies for automated tile placement
+    - Removed mining-drill from excluded types
+    - Added raise_destroy = true when halting a build due to insufficent tiles
+    - Added a search for the character placing script created entites
+  Changes:
+    - Automated tile placement now works for mining drills
+    - Fill and Unfill selection tools will now place tiles on resources
+---------------------------------------------------------------------------------------------------
 Version: 2.20.0
 Date: 02.07.2025
   Bugfixes:
