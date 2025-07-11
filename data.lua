@@ -1,5 +1,14 @@
 require("constants")
 
+data:extend({
+    {
+        type = "item-subgroup",
+        name = "electric-tiles",
+        group = "logistics",
+        order = "z[electric-tiles]"
+    }
+})
+
 data.extend({
     {
         type = "sprite",

@@ -51,6 +51,8 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Modify refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
   (higher numbers appear above lower numbers, same numbers merge)  
 
+* Electric Space Platform Foundation *Experimental*
+  (Only available if both Electric Tiles and Space Platform for ground are active)
 ---
 
 #### Limitations:  

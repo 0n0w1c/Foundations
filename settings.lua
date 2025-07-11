@@ -16,6 +16,8 @@ local function get_default_layer(tile_color)
     return 1
 end
 
+local hidden = not (mods["electric-tiles"] and mods["space-platform-for-ground"])
+
 data.extend({
     {
         type = "bool-setting",
@@ -46,6 +48,14 @@ data.extend({
         setting_type = "startup",
         default_value = false,
         order = get_next_order()
+    },
+    {
+        type = "bool-setting",
+        name = "Foundations-space-platform-foundation",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order(),
+        hidden = hidden
     },
     {
         type = "bool-setting",

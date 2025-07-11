@@ -78,6 +78,26 @@ local function get_responsible_player(event, entity)
     return nil
 end
 
+local function remove_tile(tile, player)
+    local proto = prototypes.tile[tile.name]
+    if proto.is_foundation then
+        local item_name = storage.tile_to_item[tile.name]
+        if item_name then
+            player.insert { name = item_name, count = 1 }
+
+            local inventory_count = player.get_item_count(item_name)
+            player.create_local_flying_text
+            {
+                position = tile.position,
+                text = "(+1) [item=" .. item_name .. "] " .. tile.name .. "(" .. inventory_count .. ")",
+                color = { r = 1, g = 1, b = 1 }
+            }
+        end
+    else
+        player.mine_tile(tile)
+    end
+end
+
 local function place_foundation_under_entity(event)
     if not event then return end
     if not is_compatible_surface(event) then return end
@@ -118,18 +138,19 @@ local function place_foundation_under_entity(event)
 
     if tiles_to_place then
         local count = table_size(tiles_to_place)
-        if not player_has_sufficient_tiles(player, player_data.foundation, count) or prototypes.tile[player_data.foundation].is_foundation then
+        if not player_has_sufficient_tiles(player, player_data.foundation, count) then
             if halt_construction then
                 return_entity_to_player(player, entity, robot_built)
             end
             return
         end
 
+
         if tiles_to_return then
             for _, tile in pairs(tiles_to_return) do
                 local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
                 if tile_to_mine then
-                    player.mine_tile(tile_to_mine)
+                    remove_tile(tile_to_mine, player)
                 end
             end
         end
@@ -415,6 +436,18 @@ local function can_place_foundation_tile_on(foundation_tile, target_tile)
     return condition and condition[target_tile] == true
 end
 
+local function is_water_tile(tile)
+    local proto = prototypes.tile[tile.name]
+    if not proto or not proto.collision_mask then return false end
+
+    for layer_name, _ in pairs(proto.collision_mask.layers) do
+        if layer_name == "water_tile" then
+            return true
+        end
+    end
+    return false
+end
+
 local function player_selected_area(event)
     if not event or not event.item then return end
     if not is_compatible_surface(event) then return end
@@ -441,10 +474,6 @@ local function player_selected_area(event)
 
                 local place_tile = true
 
-                if string.sub(tile.name, 1, 7) == "F077ET-" then
-                    place_tile = false
-                end
-
                 for _, entity in pairs(entities) do
                     if entity.valid then
                         if entity_excluded(entity, player_data) or entity.name == "character" then
@@ -457,15 +486,13 @@ local function player_selected_area(event)
                     end
                 end
 
-                if prototypes.tile[player_data.foundation].is_foundation and not prototypes.tile[tile.name].default_cover_tile then
+                if is_water_tile(tile) and not prototypes.tile[player_data.foundation].is_foundation then
                     place_tile = false
                 end
 
-                if not prototypes.tile[player_data.foundation].is_foundation and prototypes.tile[tile.name].default_cover_tile then
+                if tile.name == player_data.foundation then
                     place_tile = false
-                end
-
-                if prototypes.tile[player_data.foundation].is_foundation and prototypes.tile[tile.name].default_cover_tile then
+                elseif prototypes.tile[player_data.foundation].is_foundation then
                     if not can_place_foundation_tile_on(player_data.foundation, tile.name) then
                         place_tile = false
                     end
@@ -484,7 +511,7 @@ local function player_selected_area(event)
 
             local count = table_size(tiles_to_place)
             if count > 0 and player_has_sufficient_tiles(player, player_data.foundation, count) then
-                if surface.name == "nauvis" and prototypes.tile[player_data.foundation].is_foundation then
+                if surface.name == "nauvis" and player_data.foundation == "landfill" then
                     for _, tile in ipairs(tiles_to_place) do
                         local fishes = surface.find_entities_filtered {
                             position = tile.position,
@@ -660,7 +687,9 @@ local function entity_moved(event)
                 local tile = surface.get_tile(position.x, position.y)
 
                 if tile and not within_area(position, previous_area) then
-                    if tile.name and placeable_tiles[tile.name] then
+                    if prototypes.tile[tile.name].is_foundation then
+
+                    elseif tile.name and placeable_tiles[tile.name] then
                         tile_name = tile.name
                         table.insert(tile_names, tile_name)
                     end
@@ -673,9 +702,11 @@ local function entity_moved(event)
                 local position = { x = x, y = y }
                 local tile = surface.get_tile(position.x, position.y)
 
-                if not within_area(position, current_area) then
-                    player.mine_tile(surface.get_tile(tile.position.x, tile.position.y))
-                    table.insert(tiles_to_place, { name = tile_name, position = position })
+                if not prototypes.tile[tile.name].is_foundation then
+                    if not within_area(position, current_area) then
+                        player.mine_tile(surface.get_tile(tile.position.x, tile.position.y))
+                        table.insert(tiles_to_place, { name = tile_name, position = position })
+                    end
                 end
             end
         end
@@ -844,6 +875,11 @@ local function register_event_handlers()
 
     if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
         script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), on_entity_moved)
+    end
+
+    if remote.interfaces["ElectricTilesControlInterface"]
+        and remote.interfaces["ElectricTilesControlInterface"]["registerTilePrototype"] then
+        remote.call("ElectricTilesControlInterface", "registerTilePrototype", { "space-platform-for-ground" })
     end
 end
 

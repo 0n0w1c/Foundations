@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.21.0
+Date: 11.07.2025
+  Bugfixes:
+    - Refactored entity/tile movement
+    - Refactored tile placement
+    - Refactored fill tool tile placement
+  Changes:
+    - Added startup setting: Electric Space Platform Foundation *Experiemntal*
+      Electric tiles that are like landfill but can be placed on both water and land
+      Can be placed/mined with the Fill/Unfill tools
+      Only available if Electric Tiles and Space Platform for ground are active
+---------------------------------------------------------------------------------------------------
 Version: 2.20.1
 Date: 02.07.2025
   Bugfixes:

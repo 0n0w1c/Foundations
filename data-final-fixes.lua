@@ -1,7 +1,22 @@
 require("constants")
 
+local function set_to_list(set)
+    local list = {}
+    for key, value in pairs(set) do
+        if value then
+            table.insert(list, key)
+        end
+    end
+    return list
+end
+
 if mods["quality"] then
     recycling = require("__quality__/prototypes/recycling")
+end
+
+local is_foundation = false
+if settings.startup["Foundations-space-platform-foundation"] then
+    is_foundation = settings.startup["Foundations-space-platform-foundation"].value == true
 end
 
 if settings.startup["Foundations-added-inventory-rows"].value > 0 then
@@ -24,6 +39,7 @@ for _, color in pairs(COLORS) do
     if tiles[tile_name] and items[tile_name] then
         tiles[tile_name].transition_overlay_layer_offset = 0
         tiles[tile_name].transition_merges_with_tile = nil
+        tiles[tile_name].minable = { mining_time = 0.5, results = { { type = "item", name = tile_name, amount = 1 } } }
         tiles[tile_name].layer = tonumber(settings.startup["Foundations-" .. tile_name .. "-layer"].value) + offset
 
         if mods["Dectorio"] then
@@ -92,13 +108,6 @@ if mods["Dectorio"] and tiles["dect-concrete-grid"] then
     template.variants.material_background.picture = "__Dectorio__/graphics/terrain/concrete/grid/hr-concrete.png"
 
     data.extend({ template })
-end
-
-if mods["space-platform-for-ground"] then
-    highest_layer = highest_layer + 1
-    tiles["space-platform-for-ground"].layer = highest_layer
-    items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
-    items["space-platform-for-ground"].order = "00[a-x]"
 end
 
 if mods["Dectorio"] and tiles["dect-wood-floor"] then
@@ -222,6 +231,63 @@ for _, tile in pairs(tiles) do
 
         if settings.startup["Foundations-clean-sweep"].value then
             tile.decorative_removal_probability = 1
+        end
+    end
+end
+
+if mods["space-platform-for-ground"] then
+    items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
+    items["space-platform-for-ground"].order = "00[a-x]"
+
+    table.insert(data.raw["technology"]["concrete"].effects,
+        { type = "unlock-recipe", recipe = "space-platform-for-ground" })
+end
+
+if mods["electric-tiles"] and mods["space-platform-for-ground"] then
+    ElectricTilesDataInterface.adaptTilePrototype({
+        {
+            item = data.raw.item["space-platform-for-ground"],
+            tile = data.raw.tile["space-platform-for-ground"],
+            recipe = data.raw.recipe["space-platform-for-ground"],
+            others = { add_copper_wire_icon = true },
+            technology = { "electric-tiles-tech" }
+        }
+    })
+
+    if is_foundation then
+        lowest_layer = lowest_layer - 1
+        tiles["F077ET-space-platform-for-ground"].layer = lowest_layer
+        tiles["F077ET-space-platform-for-ground"].is_foundation = true
+        tiles["F077ET-space-platform-for-ground"].can_be_part_of_blueprint = true
+        tiles["F077ET-space-platform-for-ground"].allows_being_covered = true
+        tiles["F077ET-space-platform-for-ground"].decorative_removal_probability = 1
+        tiles["F077ET-space-platform-for-ground"].bound_decoratives = nil
+    end
+
+    items["F077ET-space-platform-for-ground"].subgroup = "terrain"
+    --items["F077ET-space-platform-for-ground"].order = "c[concrete]-a[space-platform]-z[electric-variant]"
+    items["F077ET-space-platform-for-ground"].order = "c[concrete]-a[space-platform]-z[electric-variant]"
+    items["F077ET-space-platform-for-ground"].place_as_tile =
+    {
+        result = "F077ET-space-platform-for-ground",
+        condition_size = 1,
+        condition = { layers = {} },
+        tile_condition = set_to_list(FOUNDATION_TILE_CONDITIONS["F077ET-space-platform-for-ground"])
+    }
+
+    local recipe = recipes["F077ET-space-platform-for-ground"]
+    table.insert(recipe.ingredients, { type = "item", name = "landfill", amount = 10 })
+    recipe.results = { { type = "item", name = "F077ET-space-platform-for-ground", amount = 10 } }
+
+    if mods["quality"] then
+        recycling.generate_recycling_recipe(recipe)
+    end
+
+    table.insert(data.raw["technology"]["electric-tiles-tech"].prerequisites, "landfill")
+
+    for _, tile in pairs(tiles) do
+        if string.sub(tile.name, 1, 7) == "F077ET-" then
+            tile.subgroup = "electric-tiles"
         end
     end
 end
