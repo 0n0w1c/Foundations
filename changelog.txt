@@ -6,7 +6,7 @@ Date: 11.07.2025
     - Refactored tile placement
     - Refactored fill tool tile placement
   Changes:
-    - Added startup setting: Electric Space Platform Foundation *Experiemntal*
+    - Added startup setting: Electric Space Platform Foundation *Experimental*
       Electric tiles that are like landfill but can be placed on both water and land
       Can be placed/mined with the Fill/Unfill tools
       Only available if Electric Tiles and Space Platform for ground are active
