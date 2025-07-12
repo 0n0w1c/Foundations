@@ -1,5 +1,12 @@
 require("constants")
 
+FOUNDATION = false
+if mods["electric-tiles"] and mods["space-platform-for-ground"] then
+    if settings.startup["Foundations-space-platform-foundation"] then
+        FOUNDATION = settings.startup["Foundations-space-platform-foundation"].value == true
+    end
+end
+
 data:extend({
     {
         type = "item-subgroup",
@@ -135,3 +142,5 @@ data.extend({
         order = "f[toggle-button]"
     }
 })
+
+require("prototypes/electric-space-platform-foundation")

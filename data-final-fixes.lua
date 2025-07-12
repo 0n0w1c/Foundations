@@ -1,22 +1,7 @@
 require("constants")
 
-local function set_to_list(set)
-    local list = {}
-    for key, value in pairs(set) do
-        if value then
-            table.insert(list, key)
-        end
-    end
-    return list
-end
-
 if mods["quality"] then
     recycling = require("__quality__/prototypes/recycling")
-end
-
-local is_foundation = false
-if settings.startup["Foundations-space-platform-foundation"] then
-    is_foundation = settings.startup["Foundations-space-platform-foundation"].value == true
 end
 
 if settings.startup["Foundations-added-inventory-rows"].value > 0 then
@@ -238,56 +223,45 @@ end
 if mods["space-platform-for-ground"] then
     items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
     items["space-platform-for-ground"].order = "00[a-x]"
-
-    table.insert(data.raw["technology"]["concrete"].effects,
-        { type = "unlock-recipe", recipe = "space-platform-for-ground" })
 end
 
+FOUNDATION = false
 if mods["electric-tiles"] and mods["space-platform-for-ground"] then
+    if settings.startup["Foundations-space-platform-foundation"] then
+        FOUNDATION = settings.startup["Foundations-space-platform-foundation"].value == true
+    end
+end
+
+if FOUNDATION then
     ElectricTilesDataInterface.adaptTilePrototype({
         {
-            item = data.raw.item["space-platform-for-ground"],
-            tile = data.raw.tile["space-platform-for-ground"],
-            recipe = data.raw.recipe["space-platform-for-ground"],
+            tile = data.raw.tile["esp-foundation"],
+            item = data.raw.item["esp-foundation"],
+            recipe = data.raw.recipe["esp-foundation"],
             others = { add_copper_wire_icon = true },
             technology = { "electric-tiles-tech" }
         }
     })
 
-    if is_foundation then
-        lowest_layer = lowest_layer - 1
-        tiles["F077ET-space-platform-for-ground"].layer = lowest_layer
-        tiles["F077ET-space-platform-for-ground"].is_foundation = true
-        tiles["F077ET-space-platform-for-ground"].can_be_part_of_blueprint = true
-        tiles["F077ET-space-platform-for-ground"].allows_being_covered = true
-        tiles["F077ET-space-platform-for-ground"].decorative_removal_probability = 1
-        tiles["F077ET-space-platform-for-ground"].bound_decoratives = nil
-    end
+    local electric_foundation = "F077ET-esp-foundation"
 
-    items["F077ET-space-platform-for-ground"].subgroup = "terrain"
-    --items["F077ET-space-platform-for-ground"].order = "c[concrete]-a[space-platform]-z[electric-variant]"
-    items["F077ET-space-platform-for-ground"].order = "c[concrete]-a[space-platform]-z[electric-variant]"
-    items["F077ET-space-platform-for-ground"].place_as_tile =
-    {
-        result = "F077ET-space-platform-for-ground",
-        condition_size = 1,
-        condition = { layers = {} },
-        tile_condition = set_to_list(FOUNDATION_TILE_CONDITIONS["F077ET-space-platform-for-ground"])
-    }
-
-    local recipe = recipes["F077ET-space-platform-for-ground"]
-    table.insert(recipe.ingredients, { type = "item", name = "landfill", amount = 10 })
-    recipe.results = { { type = "item", name = "F077ET-space-platform-for-ground", amount = 10 } }
-
-    if mods["quality"] then
-        recycling.generate_recycling_recipe(recipe)
-    end
-
+    --lowest_layer = lowest_layer - 1
+    --tiles[electric_foundation].layer = lowest_layer
     table.insert(data.raw["technology"]["electric-tiles-tech"].prerequisites, "landfill")
 
     for _, tile in pairs(tiles) do
-        if string.sub(tile.name, 1, 7) == "F077ET-" then
-            tile.subgroup = "electric-tiles"
+        if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then
+            if tile.minable then
+                tile.minable.results = { { type = "item", name = electric_foundation, amount = 1 } }
+            end
+        end
+    end
+
+    for _, recipe in pairs(recipes) do
+        if string.sub(recipe.name, 1, 7) == "F077ET-" and recipe.name ~= electric_foundation then
+            if recipe then
+                recipe.hidden = true
+            end
         end
     end
 end

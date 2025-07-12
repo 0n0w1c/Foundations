@@ -879,7 +879,7 @@ local function register_event_handlers()
 
     if remote.interfaces["ElectricTilesControlInterface"]
         and remote.interfaces["ElectricTilesControlInterface"]["registerTilePrototype"] then
-        remote.call("ElectricTilesControlInterface", "registerTilePrototype", { "space-platform-for-ground" })
+        remote.call("ElectricTilesControlInterface", "registerTilePrototype", { "esp-foundation" })
     end
 end
 

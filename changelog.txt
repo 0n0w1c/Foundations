@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.21.1
+Date: 12.07.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Electric Space Platform Foundation *Experimental*
+      Now hides the Electric Tile recipes
+      Mining pre-existing Electric Tiles converts them to Electric Space Platform Foundation tiles
+---------------------------------------------------------------------------------------------------
 Version: 2.21.0
 Date: 11.07.2025
   Bugfixes:

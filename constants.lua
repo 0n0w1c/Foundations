@@ -167,7 +167,7 @@ FOUNDATION_TILE_CONDITIONS =
         ["lowland-cream-red"] = true
     },
 
-    ["F077ET-space-platform-for-ground"] =
+    ["F077ET-esp-foundation"] =
     {
         ["grass-1"] = true,
         ["grass-2"] = true,
