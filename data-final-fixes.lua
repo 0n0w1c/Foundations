@@ -221,6 +221,9 @@ for _, tile in pairs(tiles) do
 end
 
 if mods["space-platform-for-ground"] then
+    highest_layer = highest_layer + 1
+    tiles["space-platform-for-ground"].layer = highest_layer
+
     items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
     items["space-platform-for-ground"].order = "00[a-x]"
 end
