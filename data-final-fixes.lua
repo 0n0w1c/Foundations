@@ -247,6 +247,10 @@ if FOUNDATION then
     })
 
     local electric_foundation = "F077ET-esp-foundation"
+    local recipe = recipes[electric_foundation]
+    if recipe then
+        recipe.results = { { type = "item", name = electric_foundation, amount = 10 } }
+    end
 
     --lowest_layer = lowest_layer - 1
     --tiles[electric_foundation].layer = lowest_layer

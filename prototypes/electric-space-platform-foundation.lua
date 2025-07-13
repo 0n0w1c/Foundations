@@ -52,6 +52,7 @@ local espf_recipe = table.deepcopy(original_recipe)
 
 espf_recipe.name = NAME
 espf_recipe.results = { { type = "item", name = NAME, amount = 10 } }
+espf_recipe.show_amount_in_title = true
 
 table.insert(espf_recipe.ingredients, { type = "item", name = "landfill", amount = 10 })
 
