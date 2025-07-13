@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.21.4
+Date: 13.07.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Electric Space Platform Foundation item/recipe now grouped with electric poles
+---------------------------------------------------------------------------------------------------
 Version: 2.21.3
 Date: 13.07.2025
   Bugfixes:

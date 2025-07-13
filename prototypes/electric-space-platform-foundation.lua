@@ -13,10 +13,6 @@ end
 local TO_COPY                            = "space-platform-for-ground"
 local NAME                               = "esp-foundation"
 
-local PATH                               = "__" .. TO_COPY .. "__"
-local ICON                               = PATH .. "/icons/" .. TO_COPY .. ".png"
-local GRAPHICS                           = PATH .. "/graphics/terrain/" .. TO_COPY
-
 local tiles                              = data.raw["tile"]
 local items                              = data.raw["item"]
 local recipes                            = data.raw["recipe"]
@@ -40,8 +36,8 @@ data:extend({ espf_tile })
 local espf_item = table.deepcopy(original_item)
 
 espf_item.name = NAME
-espf_item.subgroup = "terrain"
-espf_item.order = "a[landfill]-a[" .. NAME .. "]"
+espf_item.subgroup = "eg-electric-distribution"
+espf_item.order = "a[energy]-a[" .. NAME .. "]"
 espf_item.place_as_tile =
 {
     result = NAME,
