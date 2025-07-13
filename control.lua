@@ -78,26 +78,6 @@ local function get_responsible_player(event, entity)
     return nil
 end
 
-local function remove_tile(tile, player)
-    local proto = prototypes.tile[tile.name]
-    if proto.is_foundation then
-        local item_name = storage.tile_to_item[tile.name]
-        if item_name then
-            player.insert { name = item_name, count = 1 }
-
-            local inventory_count = player.get_item_count(item_name)
-            player.create_local_flying_text
-            {
-                position = tile.position,
-                text = "(+1) [item=" .. item_name .. "] " .. tile.name .. "(" .. inventory_count .. ")",
-                color = { r = 1, g = 1, b = 1 }
-            }
-        end
-    else
-        player.mine_tile(tile)
-    end
-end
-
 local function place_foundation_under_entity(event)
     if not event then return end
     if not is_compatible_surface(event) then return end
@@ -150,13 +130,13 @@ local function place_foundation_under_entity(event)
             for _, tile in pairs(tiles_to_return) do
                 local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
                 if tile_to_mine then
-                    remove_tile(tile_to_mine, player)
+                    player.mine_tile(tile_to_mine)
                 end
             end
         end
 
         if count > 0 then
-            surface.set_tiles(tiles_to_place, true, false, true, true)
+            surface.set_tiles(tiles_to_place, true, false, true, true, player)
 
             local item_name = storage.tile_to_item[player_data.foundation]
             if item_name then
@@ -425,6 +405,7 @@ local function entity_mined(event)
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local tile = surface.get_tile(x, y)
             if tile and (tile.name == player_data.foundation or tile.name == "frozen-" .. player_data.foundation) then
+                -- will not mine tile if over water
                 player.mine_tile(tile)
             end
         end
@@ -511,7 +492,7 @@ local function player_selected_area(event)
 
             local count = table_size(tiles_to_place)
             if count > 0 and player_has_sufficient_tiles(player, player_data.foundation, count) then
-                if surface.name == "nauvis" and player_data.foundation == "landfill" then
+                if surface.name == "nauvis" and prototypes.tile[player_data.foundation].is_foundation then
                     for _, tile in ipairs(tiles_to_place) do
                         local fishes = surface.find_entities_filtered {
                             position = tile.position,
@@ -523,7 +504,7 @@ local function player_selected_area(event)
                     end
                 end
 
-                surface.set_tiles(tiles_to_place, true, false, true, true)
+                surface.set_tiles(tiles_to_place, true, false, true, true, player)
                 local item_name = placeable_tiles[player_data.foundation]
                 if item_name then
                     player.remove_item { name = item_name, count = count }
@@ -611,7 +592,7 @@ local function player_selected_area(event)
 
             local count = table_size(tiles_to_place)
             if count > 0 and player_has_sufficient_tiles(player, player_data.foundation, count) then
-                surface.set_tiles(tiles_to_place, true, false, true, true)
+                surface.set_tiles(tiles_to_place, true, false, true, true, player)
                 local item_name = placeable_tiles[player_data.foundation]
                 player.remove_item { name = item_name, count = count }
             end
@@ -687,12 +668,8 @@ local function entity_moved(event)
                 local tile = surface.get_tile(position.x, position.y)
 
                 if tile and not within_area(position, previous_area) then
-                    if prototypes.tile[tile.name].is_foundation then
-
-                    elseif tile.name and placeable_tiles[tile.name] then
-                        tile_name = tile.name
-                        table.insert(tile_names, tile_name)
-                    end
+                    tile_name = tile.name
+                    table.insert(tile_names, tile_name)
                 end
             end
         end
@@ -702,11 +679,9 @@ local function entity_moved(event)
                 local position = { x = x, y = y }
                 local tile = surface.get_tile(position.x, position.y)
 
-                if not prototypes.tile[tile.name].is_foundation then
-                    if not within_area(position, current_area) then
-                        player.mine_tile(surface.get_tile(tile.position.x, tile.position.y))
-                        table.insert(tiles_to_place, { name = tile_name, position = position })
-                    end
+                if not within_area(position, current_area) then
+                    player.mine_tile(tile)
+                    table.insert(tiles_to_place, { name = tile_name, position = position })
                 end
             end
         end
@@ -719,7 +694,7 @@ local function entity_moved(event)
                 local tile_position = tiles_to_place[i] and tiles_to_place[i].position
 
                 if item_name and tile_position then
-                    surface.set_tiles({ { name = tile, position = tile_position } }, true, false, true, false)
+                    surface.set_tiles({ { name = tile, position = tile_position } }, true, false, true, false, player)
                     player.remove_item { name = item_name, count = 1 }
                 end
             end
