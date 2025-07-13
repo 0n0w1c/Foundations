@@ -125,12 +125,13 @@ local function place_foundation_under_entity(event)
             return
         end
 
-
         if tiles_to_return then
             for _, tile in pairs(tiles_to_return) do
                 local tile_to_mine = surface.get_tile(tile.position.x, tile.position.y)
-                if tile_to_mine then
-                    player.mine_tile(tile_to_mine)
+                if not prototypes.tile[tile_to_mine.name].is_foundation then
+                    if tile_to_mine then
+                        player.mine_tile(tile_to_mine)
+                    end
                 end
             end
         end
@@ -678,10 +679,11 @@ local function entity_moved(event)
             for y = previous_area.left_top.y, previous_area.right_bottom.y - 1 do
                 local position = { x = x, y = y }
                 local tile = surface.get_tile(position.x, position.y)
-
-                if not within_area(position, current_area) then
-                    player.mine_tile(tile)
-                    table.insert(tiles_to_place, { name = tile_name, position = position })
+                if not prototypes.tile[tile.name].is_foundation then
+                    if not within_area(position, current_area) then
+                        player.mine_tile(tile)
+                        table.insert(tiles_to_place, { name = tile_name, position = position })
+                    end
                 end
             end
         end
@@ -693,9 +695,11 @@ local function entity_moved(event)
                 local item_name = storage.tile_to_item[tile]
                 local tile_position = tiles_to_place[i] and tiles_to_place[i].position
 
-                if item_name and tile_position then
-                    surface.set_tiles({ { name = tile, position = tile_position } }, true, false, true, false, player)
-                    player.remove_item { name = item_name, count = 1 }
+                if not prototypes.tile[tile_name].is_foundation then
+                    if item_name and tile_position then
+                        surface.set_tiles({ { name = tile, position = tile_position } }, true, false, true, false, player)
+                        player.remove_item { name = item_name, count = 1 }
+                    end
                 end
             end
         end
@@ -715,6 +719,7 @@ local function on_entity_moved(event)
 
     local player_data = get_player_data(player.index)
     if player_data.foundation == DISABLED then return end
+    if prototypes.tile[player_data.foundation].is_foundation then return end
 
     if entity_excluded(event.moved_entity, player_data) then return end
 
