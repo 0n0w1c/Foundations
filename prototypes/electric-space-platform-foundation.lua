@@ -36,7 +36,7 @@ data:extend({ espf_tile })
 local espf_item = table.deepcopy(original_item)
 
 espf_item.name = NAME
-espf_item.subgroup = "eg-electric-distribution"
+espf_item.subgroup = items["small-electric-pole"].subgroup
 espf_item.order = "a[energy]-a[" .. NAME .. "]"
 espf_item.place_as_tile =
 {
