@@ -2,9 +2,7 @@ require("constants")
 
 FOUNDATION = false
 if mods["electric-tiles"] and mods["space-platform-for-ground"] then
-    if settings.startup["Foundations-space-platform-foundation"] then
-        FOUNDATION = settings.startup["Foundations-space-platform-foundation"].value == true
-    end
+    FOUNDATION = true
 end
 
 if mods["quality"] then
@@ -265,18 +263,6 @@ end
 
 if FOUNDATION then
     local electric_foundation = "F077ET-esp-foundation"
-
-    local espf_item = items[electric_foundation]
-    espf_item.weight = 10000
-
-    local espf_recipe = recipes[electric_foundation]
-    if espf_recipe then
-        espf_recipe.results = { { type = "item", name = electric_foundation, amount = 10 } }
-
-        if mods["quality"] then
-            recycling.generate_recycling_recipe(espf_recipe)
-        end
-    end
 
     for _, tile in pairs(tiles) do
         if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then

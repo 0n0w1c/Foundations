@@ -2,9 +2,7 @@ require("constants")
 
 FOUNDATION = false
 if mods["electric-tiles"] and mods["space-platform-for-ground"] then
-    if settings.startup["Foundations-space-platform-foundation"] then
-        FOUNDATION = settings.startup["Foundations-space-platform-foundation"].value == true
-    end
+    FOUNDATION = true
 end
 
 data.extend({

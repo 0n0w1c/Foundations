@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.23.0
+Date: 15.07.2025
+  Bugfixes:
+    - Electric Tiles: refactored for 1.2.8
+  Changes:
+    - Space Platform Foundation (Electric) is no longer experimental
+      Enabled when both Electric Tiles and Space Platform for ground are active
+---------------------------------------------------------------------------------------------------
 Version: 2.22.0
 Date: 14.07.2025
   Bugfixes:

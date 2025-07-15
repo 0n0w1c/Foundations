@@ -856,11 +856,6 @@ local function register_event_handlers()
     if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
         script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), on_entity_moved)
     end
-
-    if remote.interfaces["ElectricTilesControlInterface"]
-        and remote.interfaces["ElectricTilesControlInterface"]["registerTilePrototype"] then
-        remote.call("ElectricTilesControlInterface", "registerTilePrototype", { "esp-foundation" })
-    end
 end
 
 local function on_init()

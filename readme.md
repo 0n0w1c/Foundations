@@ -39,6 +39,8 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Shortcut to toggle display of the Foundations button  
 * In-game settings for automated tile placement for 1x1 electric poles, inserters, belts, splitters, and loaders  
 * Multi-player compatible
+* Space Platform Foundation (Electric)
+  (Only available if both Electric Tiles and Space Platform for ground are active)
 
 ---
 
@@ -50,9 +52,6 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Enable the refined concrete variants 
 * Modify refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
   (higher numbers appear above lower numbers, same numbers merge)  
-
-* Electric Space Platform Foundation *Experimental*
-  (Only available if both Electric Tiles and Space Platform for ground are active)
 ---
 
 #### Limitations:  

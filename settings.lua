@@ -21,8 +21,6 @@ if mods["Dectorio"] or mods["Concrete-Tints"] then
     layers_hidden = false
 end
 
-local foundation_hidden = not (mods["electric-tiles"] and mods["space-platform-for-ground"])
-
 data.extend({
     {
         type = "bool-setting",
@@ -53,14 +51,6 @@ data.extend({
         setting_type = "startup",
         default_value = false,
         order = get_next_order()
-    },
-    {
-        type = "bool-setting",
-        name = "Foundations-space-platform-foundation",
-        setting_type = "startup",
-        default_value = false,
-        order = get_next_order(),
-        hidden = foundation_hidden
     },
     {
         type = "int-setting",

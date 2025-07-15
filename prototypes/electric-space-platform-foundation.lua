@@ -66,7 +66,7 @@ ElectricTilesDataInterface.adaptTilePrototype({
         tile = data.raw.tile["esp-foundation"],
         item = data.raw.item["esp-foundation"],
         recipe = data.raw.recipe["esp-foundation"],
-        others = { add_copper_wire_icon = true },
+        others = { add_copper_wire_icon = true, result_amount = 10 },
         technology = { "electric-tiles-tech" }
     }
 })
