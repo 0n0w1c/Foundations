@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.22.0
+Date: 14.07.2025
+  Bugfixes:
+    - Electric Space Platform Foundation: Refactored electric tile registration
+  Changes:
+    - Concrete Tints has been changed from a required to an optional dependency
+    - Support added for Dectorio's refined concrete variants
+---------------------------------------------------------------------------------------------------
 Version: 2.21.6
 Date: 13.07.2025
   Bugfixes:

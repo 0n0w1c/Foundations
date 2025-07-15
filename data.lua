@@ -7,15 +7,6 @@ if mods["electric-tiles"] and mods["space-platform-for-ground"] then
     end
 end
 
-data:extend({
-    {
-        type = "item-subgroup",
-        name = "electric-tiles",
-        group = "logistics",
-        order = "z[electric-tiles]"
-    }
-})
-
 data.extend({
     {
         type = "sprite",

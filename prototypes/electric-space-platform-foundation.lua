@@ -30,14 +30,17 @@ espf_tile.can_be_part_of_blueprint       = true
 espf_tile.allows_being_covered           = true
 espf_tile.decorative_removal_probability = 1
 espf_tile.bound_decoratives              = nil
+espf_tile.placeable_by                   = { item = NAME, count = 1 }
 
 data:extend({ espf_tile })
 
-local espf_item = table.deepcopy(original_item)
+local espf_item         = table.deepcopy(original_item)
 
-espf_item.name = NAME
-espf_item.subgroup = items["small-electric-pole"].subgroup
-espf_item.order = "a[energy]-a[" .. NAME .. "]"
+espf_item.name          = NAME
+espf_item.subgroup      = items["small-electric-pole"].subgroup
+espf_item.order         = "a[energy]-a[" .. NAME .. "]"
+espf_item.stack_size    = 100
+espf_item.weight        = 10000
 espf_item.place_as_tile =
 {
     result = NAME,
@@ -57,3 +60,13 @@ espf_recipe.show_amount_in_title = true
 table.insert(espf_recipe.ingredients, { type = "item", name = "landfill", amount = 10 })
 
 data:extend({ espf_recipe })
+
+ElectricTilesDataInterface.adaptTilePrototype({
+    {
+        tile = data.raw.tile["esp-foundation"],
+        item = data.raw.item["esp-foundation"],
+        recipe = data.raw.recipe["esp-foundation"],
+        others = { add_copper_wire_icon = true },
+        technology = { "electric-tiles-tech" }
+    }
+})

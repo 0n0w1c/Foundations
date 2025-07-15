@@ -16,7 +16,12 @@ local function get_default_layer(tile_color)
     return 1
 end
 
-local hidden = not (mods["electric-tiles"] and mods["space-platform-for-ground"])
+local layers_hidden = true
+if mods["Dectorio"] or mods["Concrete-Tints"] then
+    layers_hidden = false
+end
+
+local foundation_hidden = not (mods["electric-tiles"] and mods["space-platform-for-ground"])
 
 data.extend({
     {
@@ -55,14 +60,7 @@ data.extend({
         setting_type = "startup",
         default_value = false,
         order = get_next_order(),
-        hidden = hidden
-    },
-    {
-        type = "bool-setting",
-        name = "Foundations-concrete-variants",
-        setting_type = "startup",
-        default_value = true,
-        order = get_next_order(),
+        hidden = foundation_hidden
     },
     {
         type = "int-setting",
@@ -70,7 +68,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("acid"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -78,7 +77,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("black"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -86,7 +86,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("blue"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -94,7 +95,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("brown"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -102,7 +104,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("cyan"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -110,7 +113,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("green"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -118,7 +122,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("orange"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -126,7 +131,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("pink"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -134,7 +140,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("purple"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -142,7 +149,8 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("red"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     },
     {
         type = "int-setting",
@@ -150,6 +158,7 @@ data.extend({
         setting_type = "startup",
         default_value = get_default_layer("yellow"),
         allowed_values = LAYER_SLOTS,
-        order = get_next_order()
+        order = get_next_order(),
+        hidden = layers_hidden
     }
 })

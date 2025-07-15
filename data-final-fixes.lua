@@ -1,5 +1,12 @@
 require("constants")
 
+FOUNDATION = false
+if mods["electric-tiles"] and mods["space-platform-for-ground"] then
+    if settings.startup["Foundations-space-platform-foundation"] then
+        FOUNDATION = settings.startup["Foundations-space-platform-foundation"].value == true
+    end
+end
+
 if mods["quality"] then
     recycling = require("__quality__/prototypes/recycling")
 end
@@ -18,27 +25,69 @@ local concrete_layer = tiles["concrete"].layer
 local offset = 31
 if mods["Dectorio"] then offset = 71 end
 
-for _, color in pairs(COLORS) do
-    local tile_name = color.name .. "-refined-concrete"
+if mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
+    local technology = data.raw["technology"]["dect-concrete-paint"]
 
-    if tiles[tile_name] and items[tile_name] then
-        tiles[tile_name].transition_overlay_layer_offset = 0
-        tiles[tile_name].transition_merges_with_tile = nil
-        tiles[tile_name].minable = { mining_time = 0.5, results = { { type = "item", name = tile_name, amount = 1 } } }
-        tiles[tile_name].layer = tonumber(settings.startup["Foundations-" .. tile_name .. "-layer"].value) + offset
+    for _, color in pairs(COLORS) do
+        local new_tile_name = color.name .. "-refined-concrete"
+        local tile_name = "dect-" .. new_tile_name
 
-        if mods["Dectorio"] then
-            items[tile_name].subgroup = items["dect-" .. tile_name].subgroup
-            items[tile_name].order = items["dect-" .. tile_name].order
-        else
-            items[tile_name].subgroup = items["refined-hazard-concrete"].subgroup
-            items[tile_name].order = items["refined-hazard-concrete"].order .. "z"
+        if items[tile_name] then
+            local new_item = table.deepcopy(data.raw["item"][tile_name])
+            new_item.name = new_tile_name
+            items[tile_name].hidden = true
+
+            local new_recipe = table.deepcopy(data.raw["recipe"][tile_name])
+            new_recipe.name = new_tile_name
+            new_recipe.results = { { type = "item", name = new_tile_name, amount = 10 } }
+            recipes[tile_name].hidden = true
+
+            table.insert(technology.effects, { type = "unlock-recipe", recipe = new_tile_name })
+
+            data:extend({ new_item, new_recipe })
+
+            if mods["quality"] then
+                if recipes[tile_name .. "-recycling"] then
+                    recipes[tile_name .. "-recycling"].hidden = true
+                end
+
+                recycling.generate_recycling_recipe(new_recipe)
+            end
         end
+    end
+end
 
-        local hidden = settings.startup["Foundations-concrete-variants"].value == false
-        tiles[tile_name].hidden = hidden
-        items[tile_name].hidden = hidden
-        recipes[tile_name].hidden = hidden
+if mods["Dectorio"] or mods["Concrete-Tints"] then
+    if data.raw["item-group"]["dectorio"] and not data.raw["item-subgroup"]["flooring-painted-refined-base"] then
+        data:extend(
+            {
+                {
+                    type = "item-subgroup",
+                    name = "flooring-painted-refined",
+                    group = "dectorio",
+                    order = "i-d"
+                }
+            }
+        )
+    end
+
+    for _, color in pairs(COLORS) do
+        local tile_name = color.name .. "-refined-concrete"
+
+        if tiles[tile_name] and items[tile_name] then
+            tiles[tile_name].transition_overlay_layer_offset = 0
+            tiles[tile_name].transition_merges_with_tile = nil
+            tiles[tile_name].placeable_by = { item = tile_name, count = 1 }
+            tiles[tile_name].minable = { mining_time = 0.5, results = { { type = "item", name = tile_name, amount = 1 } } }
+            tiles[tile_name].layer = tonumber(settings.startup["Foundations-" .. tile_name .. "-layer"].value) + offset
+
+            if data.raw["item-subgroup"]["flooring-painted-refined-base"] then
+                items[tile_name].subgroup = "flooring-painted-refined-base"
+            else
+                items[tile_name].subgroup = items["refined-hazard-concrete"].subgroup
+                items[tile_name].order = items["refined-hazard-concrete"].order .. "z"
+            end
+        end
     end
 end
 
@@ -172,20 +221,6 @@ if mods["Dectorio"] then
         end
     end
 
-    for _, color in pairs(COLORS) do
-        local tile_name = "dect-" .. color.name .. "-refined-concrete"
-
-        if items[tile_name] then
-            items[tile_name].hidden = true
-        end
-        if recipes[tile_name] then
-            recipes[tile_name].hidden = true
-        end
-        if recipes[tile_name .. "-recycling"] then
-            recipes[tile_name .. "-recycling"].hidden = true
-        end
-    end
-
     if mods["space-age"] then
         tiles["frozen-concrete"].layer = concrete_layer + 1
         tiles["frozen-hazard-concrete-left"].layer = concrete_layer + 3
@@ -228,33 +263,20 @@ if mods["space-platform-for-ground"] then
     items["space-platform-for-ground"].order = "00[a-x]"
 end
 
-FOUNDATION = false
-if mods["electric-tiles"] and mods["space-platform-for-ground"] then
-    if settings.startup["Foundations-space-platform-foundation"] then
-        FOUNDATION = settings.startup["Foundations-space-platform-foundation"].value == true
-    end
-end
-
 if FOUNDATION then
-    ElectricTilesDataInterface.adaptTilePrototype({
-        {
-            tile = data.raw.tile["esp-foundation"],
-            item = data.raw.item["esp-foundation"],
-            recipe = data.raw.recipe["esp-foundation"],
-            others = { add_copper_wire_icon = true },
-            technology = { "electric-tiles-tech" }
-        }
-    })
-
     local electric_foundation = "F077ET-esp-foundation"
-    local recipe = recipes[electric_foundation]
-    if recipe then
-        recipe.results = { { type = "item", name = electric_foundation, amount = 10 } }
-    end
 
-    --lowest_layer = lowest_layer - 1
-    --tiles[electric_foundation].layer = lowest_layer
-    table.insert(data.raw["technology"]["electric-tiles-tech"].prerequisites, "landfill")
+    local espf_item = items[electric_foundation]
+    espf_item.weight = 10000
+
+    local espf_recipe = recipes[electric_foundation]
+    if espf_recipe then
+        espf_recipe.results = { { type = "item", name = electric_foundation, amount = 10 } }
+
+        if mods["quality"] then
+            recycling.generate_recycling_recipe(espf_recipe)
+        end
+    end
 
     for _, tile in pairs(tiles) do
         if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then
