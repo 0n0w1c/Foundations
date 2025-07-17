@@ -1,5 +1,13 @@
 ---------------------------------------------------------------------------------------------------
-Version: 2.23.0
+Version: 2.22.2
+Date: 17.07.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Electric Tiles recipes are no longer hidden
+      Mining Electric Tiles now returns the Electric Tiles items
+---------------------------------------------------------------------------------------------------
+Version: 2.22.1
 Date: 15.07.2025
   Bugfixes:
     - Electric Tiles: refactored for 1.2.8

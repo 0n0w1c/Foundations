@@ -163,6 +163,14 @@ if mods["electric-tiles"] then
         highest_layer = highest_layer + 3
         tiles["F077ET-refined-concrete"].layer = highest_layer
     end
+
+    if mods["Dectorio"] then
+        for _, recipe in pairs(recipes) do
+            if string.sub(recipe.name, 1, 7) == "F077ET-" and string.find(recipe.name, "to%-F077ET") then
+                recipe.subgroup = recipes["concrete"].subgroup
+            end
+        end
+    end
 end
 
 if mods["Dectorio"] then
@@ -259,24 +267,4 @@ if mods["space-platform-for-ground"] then
 
     items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
     items["space-platform-for-ground"].order = "00[a-x]"
-end
-
-if FOUNDATION then
-    local electric_foundation = "F077ET-esp-foundation"
-
-    for _, tile in pairs(tiles) do
-        if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then
-            if tile.minable then
-                tile.minable.results = { { type = "item", name = electric_foundation, amount = 1 } }
-            end
-        end
-    end
-
-    for _, recipe in pairs(recipes) do
-        if string.sub(recipe.name, 1, 7) == "F077ET-" and recipe.name ~= electric_foundation then
-            if recipe then
-                recipe.hidden = true
-            end
-        end
-    end
 end

@@ -37,8 +37,8 @@ data:extend({ espf_tile })
 local espf_item         = table.deepcopy(original_item)
 
 espf_item.name          = NAME
-espf_item.subgroup      = items["small-electric-pole"].subgroup
-espf_item.order         = "a[energy]-a[" .. NAME .. "]"
+espf_item.subgroup      = items["stone-brick"].subgroup
+espf_item.order         = "00[a-y]"
 espf_item.stack_size    = 100
 espf_item.weight        = 10000
 espf_item.place_as_tile =
