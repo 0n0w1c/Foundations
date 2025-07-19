@@ -5,11 +5,16 @@ if mods["electric-tiles"] and mods["space-platform-for-ground"] then
     FOUNDATION = true
 end
 
+HIDE_RECIPES = false
+if FOUNDATION and settings.startup["Foundations-hide-et-recipes"] then
+    HIDE_RECIPES = settings.startup["Foundations-hide-et-recipes"].value == true
+end
+
 if mods["quality"] then
     recycling = require("__quality__/prototypes/recycling")
 end
 
-if settings.startup["Foundations-added-inventory-rows"].value > 0 then
+if settings.startup["Foundations-added-inventory-rows"] and settings.startup["Foundations-added-inventory-rows"].value > 0 then
     data.raw["character"].character.inventory_size =
         data.raw["character"].character.inventory_size +
         settings.startup["Foundations-added-inventory-rows"].value * 10
@@ -168,6 +173,26 @@ if mods["electric-tiles"] then
         for _, recipe in pairs(recipes) do
             if string.sub(recipe.name, 1, 7) == "F077ET-" and string.find(recipe.name, "to%-F077ET") then
                 recipe.subgroup = recipes["concrete"].subgroup
+            end
+        end
+    end
+end
+
+if HIDE_RECIPES then
+    local electric_foundation = "F077ET-esp-foundation"
+
+    for _, tile in pairs(tiles) do
+        if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then
+            if tile.minable then
+                tile.minable.results = { { type = "item", name = electric_foundation, amount = 1 } }
+            end
+        end
+    end
+
+    for _, recipe in pairs(recipes) do
+        if string.sub(recipe.name, 1, 7) == "F077ET-" and recipe.name ~= electric_foundation then
+            if recipe then
+                recipe.hidden = true
             end
         end
     end

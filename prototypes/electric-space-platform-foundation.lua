@@ -29,6 +29,8 @@ espf_tile.is_foundation                  = true
 espf_tile.can_be_part_of_blueprint       = true
 espf_tile.allows_being_covered           = true
 espf_tile.decorative_removal_probability = 1
+espf_tile.walking_speed_modifier         = 1.0
+espf_tile.vehicle_friction_modifier      = 1.2
 espf_tile.bound_decoratives              = nil
 espf_tile.placeable_by                   = { item = NAME, count = 1 }
 
@@ -54,10 +56,14 @@ data:extend({ espf_item })
 local espf_recipe = table.deepcopy(original_recipe)
 
 espf_recipe.name = NAME
-espf_recipe.results = { { type = "item", name = NAME, amount = 10 } }
 espf_recipe.show_amount_in_title = true
-
-table.insert(espf_recipe.ingredients, { type = "item", name = "landfill", amount = 10 })
+espf_recipe.results = { { type = "item", name = NAME, amount = 10 } }
+espf_recipe.ingredients =
+{
+    { type = "item", name = "copper-cable", amount = 20 },
+    { type = "item", name = "steel-plate",  amount = 10 },
+    { type = "item", name = "landfill",     amount = 10 },
+}
 
 data:extend({ espf_recipe })
 

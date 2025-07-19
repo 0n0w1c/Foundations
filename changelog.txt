@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.22.3
+Date: 19.07.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Added a startup setting to hide Electric Tiles recipes (default: disabled)
+      Existing Electric Tiles will be converted to Space Platform Foundation tiles when mined
+    - Space Platform Foundation recipe ingredient of steel-plate amount has been reduced to 10
+    - Applied 1.2 vehicle friction modifier to Space Platform Foundation
+      Walking speed remains 1.0, place decorative tiles for speed increases as usual
+---------------------------------------------------------------------------------------------------
 Version: 2.22.2
 Date: 17.07.2025
   Bugfixes:

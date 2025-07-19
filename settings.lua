@@ -16,10 +16,8 @@ local function get_default_layer(tile_color)
     return 1
 end
 
-local layers_hidden = true
-if mods["Dectorio"] or mods["Concrete-Tints"] then
-    layers_hidden = false
-end
+local layers_hidden = not (mods["Dectorio"] or mods["Concrete-Tints"])
+local et_recipes_hidden = not (mods["electric-tiles"] and mods["space-platform-for-ground"])
 
 data.extend({
     {
@@ -51,6 +49,14 @@ data.extend({
         setting_type = "startup",
         default_value = false,
         order = get_next_order()
+    },
+    {
+        type = "bool-setting",
+        name = "Foundations-hide-et-recipes",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order(),
+        hidden = et_recipes_hidden
     },
     {
         type = "int-setting",
