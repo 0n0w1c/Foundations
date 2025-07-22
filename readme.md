@@ -48,8 +48,9 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Halt construction if insufficient tiles in player inventory  
 * Number of rows to add to the player inventory size  
 * Select the tile mining time (default = 0.1)  
-* Clean sweep (remove ground decorations), when tiles are placed  
-* Enable the refined concrete variants 
+* Select the probability for Clean Sweep for decorative tiles  
+* Enable ground decorations with Space Platform Foundation  
+* Revert landfill recipe to Factorio v1.1 (from 50 to 20 stone)  
 * Modify refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
   (higher numbers appear above lower numbers, same numbers merge)  
 ---
@@ -61,7 +62,6 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 
 #### Required mods:
 [Even Pickier Dollies](https://mods.factorio.com/mod/even-pickier-dollies)  
-[Concrete Tints](https://mods.factorio.com/mod/Concrete-Tints)
 
 ---
 
@@ -69,6 +69,7 @@ Tiles placed or removed with the selection tools are not "Undo"-able, use them w
 [AAI Industry](https://mods.factorio.com/mod/aai-industry)  
 [Asphalt Roads Patched](https://mods.factorio.com/mod/AsphaltRoadsPatched)  
 [Conrete Retexture NX](https://mods.factorio.com/mod/conrete-retexture-nx)  
+[Concrete Tints](https://mods.factorio.com/mod/Concrete-Tints)
 [Dectorio](https://mods.factorio.com/mod/Dectorio) - Enable the startup setting *Use default Factorio Hazard concrete style*  
 [Electric Tiles](https://mods.factorio.com/mod/electric-tiles)  
 [Space platform, for ground](https://mods.factorio.com/mod/space-platform-for-ground)  
