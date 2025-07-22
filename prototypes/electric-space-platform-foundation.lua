@@ -10,29 +10,33 @@ local function set_to_list(set)
     return list
 end
 
-local TO_COPY                            = "space-platform-for-ground"
-local NAME                               = "esp-foundation"
+local TO_COPY                             = "space-platform-for-ground"
+local NAME                                = "esp-foundation"
 
-local tiles                              = data.raw["tile"]
-local items                              = data.raw["item"]
-local recipes                            = data.raw["recipe"]
+local tiles                               = data.raw["tile"]
+local items                               = data.raw["item"]
+local recipes                             = data.raw["recipe"]
 
-local original_tile                      = tiles[TO_COPY]
-local original_item                      = items[TO_COPY]
-local original_recipe                    = recipes[TO_COPY]
+local original_tile                       = tiles[TO_COPY]
+local original_item                       = items[TO_COPY]
+local original_recipe                     = recipes[TO_COPY]
 
-local espf_tile                          = table.deepcopy(original_tile)
+local espf_tile                           = table.deepcopy(original_tile)
 
-espf_tile.name                           = NAME
-espf_tile.layer                          = tiles["stone-path"].layer - 1
-espf_tile.is_foundation                  = true
-espf_tile.can_be_part_of_blueprint       = true
-espf_tile.allows_being_covered           = true
-espf_tile.decorative_removal_probability = 1
-espf_tile.walking_speed_modifier         = 1.0
-espf_tile.vehicle_friction_modifier      = 1.2
-espf_tile.bound_decoratives              = nil
-espf_tile.placeable_by                   = { item = NAME, count = 1 }
+espf_tile.name                            = NAME
+espf_tile.layer                           = 8
+espf_tile.is_foundation                   = true
+espf_tile.transition_overlay_layer_offset = 0
+espf_tile.can_be_part_of_blueprint        = true
+espf_tile.allows_being_covered            = true
+espf_tile.decorative_removal_probability  = 1.0
+espf_tile.walking_speed_modifier          = 1.0
+espf_tile.vehicle_friction_modifier       = 1.2
+espf_tile.placeable_by                    = { item = NAME, count = 1 }
+
+if not settings.startup["Foundations-espf-include-decorations"] or settings.startup["Foundations-espf-include-decorations"].value == false then
+    espf_tile.bound_decoratives = nil
+end
 
 data:extend({ espf_tile })
 

@@ -44,15 +44,32 @@ data.extend({
         order = get_next_order(),
     },
     {
-        type = "bool-setting",
-        name = "Foundations-clean-sweep",
+        type = "double-setting",
+        name = "Foundations-clean-sweep-probability",
         setting_type = "startup",
-        default_value = false,
+        default_value = 1.0,
+        allowed_values = CLEAN_SWEEP,
         order = get_next_order()
     },
     {
         type = "bool-setting",
+        name = "Foundations-espf-include-decorations",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order(),
+        hidden = et_recipes_hidden
+    },
+    {
+        type = "bool-setting",
         name = "Foundations-hide-et-recipes",
+        setting_type = "startup",
+        default_value = false,
+        order = get_next_order(),
+        hidden = et_recipes_hidden
+    },
+    {
+        type = "bool-setting",
+        name = "Foundations-revert-landfill-recipe",
         setting_type = "startup",
         default_value = false,
         order = get_next_order(),

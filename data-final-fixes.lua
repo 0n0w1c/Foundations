@@ -23,10 +23,22 @@ end
 local tiles = data.raw["tile"]
 local items = data.raw["item"]
 local recipes = data.raw["recipe"]
+
+for _, tile in ipairs(BASE_TILES) do
+    if tiles[tile.name] then
+        tiles[tile.name].layer = tile.default
+    end
+end
+
 local concrete_layer = tiles["concrete"].layer
 
+if FOUNDATION and settings.startup["Foundations-revert-landfill-recipe"] then
+    if settings.startup["Foundations-revert-landfill-recipe"].value == true then
+        recipes["landfill"].ingredients = { { type = "item", name = "stone", amount = 20 } }
+    end
+end
+
 local offset = 31
-if mods["Dectorio"] then offset = 71 end
 
 if mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
     local technology = data.raw["technology"]["dect-concrete-paint"]
@@ -95,11 +107,21 @@ if mods["Dectorio"] or mods["Concrete-Tints"] then
 end
 
 local highest_layer = offset + 11
-local lowest_layer = concrete_layer - 2
+local lowest_layer = concrete_layer - 3
 
 if mods["aai-industry"] and tiles["rough-stone-path"] then
     lowest_layer = lowest_layer - 1
     data.raw["tile"]["rough-stone-path"].layer = lowest_layer
+end
+
+if mods["AsphaltRoadsPatched"] then
+    lowest_layer = lowest_layer - 1
+
+    for _, tile in pairs(tiles) do
+        if string.match(tile.name, "^Arci") then
+            tile.layer = lowest_layer
+        end
+    end
 end
 
 if mods["Dectorio"] and tiles["dect-stone-gravel"] then
@@ -118,16 +140,6 @@ if mods["Dectorio"] and tiles["dect-stone-gravel"] then
     lowest_layer = lowest_layer - 1
     tiles["dect-iron-ore-gravel"].layer = lowest_layer
     tiles["dect-iron-ore-gravel"].layer_group = "ground-artificial"
-end
-
-if mods["AsphaltRoadsPatched"] then
-    lowest_layer = lowest_layer - 1
-
-    for _, tile in pairs(tiles) do
-        if string.match(tile.name, "^Arci") then
-            tile.layer = lowest_layer
-        end
-    end
 end
 
 if mods["Dectorio"] and tiles["dect-concrete-grid"] then
@@ -276,12 +288,15 @@ end
 
 for _, tile in pairs(tiles) do
     if tile.minable then
-        if settings.startup["Foundations-mining-time"].value > 0 then
+        if settings.startup["Foundations-mining-time"] and settings.startup["Foundations-mining-time"].value then
             tile.minable.mining_time = tonumber(settings.startup["Foundations-mining-time"].value) or 0.1
         end
 
-        if settings.startup["Foundations-clean-sweep"].value then
-            tile.decorative_removal_probability = 1
+        if settings.startup["Foundations-clean-sweep-probability"] and settings.startup["Foundations-clean-sweep-probability"].value then
+            if not tile.is_foundation then
+                tile.decorative_removal_probability =
+                    tonumber(settings.startup["Foundations-clean-sweep-probability"].value) or 0
+            end
         end
     end
 end

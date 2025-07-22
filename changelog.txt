@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.22.4
+Date: 21.07.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Startup setting: Enable Clean Sweep changed to Enable Decorative Tile Clean Sweep
+      0 disables clean sweep for decorative tiles, 1 configures 100% ground decoration removal
+    - Added startup setting to revert the landfill recipe to Factorio v1.1 (default: disabled)
+      Only available if Electric Tiles and Space Platform for ground are active
+    - Tile layer for the vanilla tiles (concrete, etc) reset to their default values
+---------------------------------------------------------------------------------------------------
 Version: 2.22.3
 Date: 19.07.2025
   Bugfixes:
