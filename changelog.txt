@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.22.5
+Date: 24.11.2025
+  Bugfixes:
+    - None
+  Changes:
+    - Set compatible version for Electric Tiles (prepare for Electric Tiles update)
+    - Added tile images to the startup settings for the refined concrete layers
+    - Updated all locale files
+---------------------------------------------------------------------------------------------------
 Version: 2.22.4
 Date: 21.07.2025
   Bugfixes:
