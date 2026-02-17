@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.23.0
+Date: 17.02.2026
+  Bugfixes:
+    - None
+  Changes:
+    - Removed surface restriction
+    - Space Platform Foundation tiles can be placed on VoidBlock ocean tiles
+---------------------------------------------------------------------------------------------------
 Version: 2.22.5
 Date: 24.11.2025
   Bugfixes:

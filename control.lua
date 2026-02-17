@@ -1,4 +1,8 @@
 require("constants")
+if script.active_mods and script.active_mods["VoidBlock"] then
+    FOUNDATION_TILE_CONDITIONS["F077ET-esp-foundation"]["s6x-voidocean"] = true
+end
+
 require("utilities")
 
 local mod_gui = require("mod-gui")
@@ -13,6 +17,11 @@ if settings.startup["dectorio-vanilla-hazard-concrete-style"] then
     dectorio_hazard = settings.startup["dectorio-vanilla-hazard-concrete-style"].value == true
 end
 
+local function is_compatible_surface(event)
+    return true
+end
+
+--[[
 local function is_player_in_remote_view(player)
     return player.controller_type == defines.controllers.remote
 end
@@ -36,6 +45,7 @@ local function is_compatible_surface(event)
     local is_compatible = surface_name and COMPATIBLE_SURFACES[surface_name] == true
     return is_compatible
 end
+]]
 
 local function get_responsible_player(event, entity)
     if event.player_index then

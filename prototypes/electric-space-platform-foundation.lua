@@ -1,5 +1,9 @@
 if not FOUNDATION then return end
 
+if mods["VoidBlock"] then
+   FOUNDATION_TILE_CONDITIONS["F077ET-esp-foundation"]["s6x-voidocean"] = true
+end
+
 local function set_to_list(set)
     local list = {}
     for key, value in pairs(set) do
