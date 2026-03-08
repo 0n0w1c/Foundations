@@ -1,7 +1,7 @@
 if not FOUNDATION then return end
 
 if mods["VoidBlock"] then
-   FOUNDATION_TILE_CONDITIONS["F077ET-esp-foundation"]["s6x-voidocean"] = true
+    FOUNDATION_TILE_CONDITIONS["F077ET-esp-foundation"]["s6x-voidocean"] = true
 end
 
 local function set_to_list(set)
@@ -75,12 +75,11 @@ espf_recipe.ingredients =
 
 data:extend({ espf_recipe })
 
-ElectricTilesDataInterface.adaptTilePrototype({
+ElectricTilesDataInterface.modTilePrototypes({
     {
         tile = data.raw.tile["esp-foundation"],
         item = data.raw.item["esp-foundation"],
         recipe = data.raw.recipe["esp-foundation"],
-        others = { add_copper_wire_icon = true, result_amount = 10 },
-        technology = { "electric-tiles-tech" }
+        others = { add_copper_wire_icon = true, result_amount = 10, technologies = { "F077ET-technology" } }
     }
 })
