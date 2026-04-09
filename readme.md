@@ -34,6 +34,7 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 
 ---
 
+* Now works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
 * Compatible with personal logistics for construction and deconstruction  
 * Foundations button is disabled while in remote view  
 * Shortcut to toggle display of the Foundations button  
