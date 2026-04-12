@@ -1,27 +1,4 @@
-|Demo of automated tile placement and movement (via Even Pickier Dollies)|
-|:----|
-|[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/place-thumbnail.png?raw=true)](https://www.youtube.com/embed/n1DdTgi3gu4)|
-
-&NewLine;
-&NewLine;
-
-|Demo of selection tools|
-|:----|
-|[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/tools-thumbnail.png?raw=true)](https://www.youtube.com/embed/-miukT1D6n0)|
-
-&NewLine;
-&NewLine;
-
-Note: Videos hosted on YouTube, flagged as "made for kids", unlisted, not monetized, and no ads. 
-
----
-
-&NewLine;
-
-With the Foundations selector, you can disable the automated placement of tiles or select the tile of your choice.  
-
----
-
+#### Features:
 * New: Now works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
 * Compatible with personal logistics for construction and deconstruction  
 * Shortcut to open the Foundations selector  
