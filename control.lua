@@ -354,7 +354,7 @@ local function build_tile_grid(parent, state, layout)
         horizontal_scroll_policy = "never",
         vertical_scroll_policy = "auto",
     }
-    scroll_pane.style.maximal_height = 220
+    scroll_pane.style.maximal_height = 150
     scroll_pane.style.horizontally_stretchable = true
     scroll_pane.style.padding = 4
 
