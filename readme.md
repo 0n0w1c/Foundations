@@ -5,41 +5,27 @@
 &NewLine;
 &NewLine;
 
-|Demo of some of the selection tools in action|
+|Demo of selection tools|
 |:----|
 |[![](https://github.com/0n0w1c/Foundations/blob/main/graphics/thumbnails/tools-thumbnail.png?raw=true)](https://www.youtube.com/embed/-miukT1D6n0)|
 
 &NewLine;
 &NewLine;
 
-Note: Videos hosted on YouTube, flagged as "made for kids", unlisted, not monetized, and no ads.  
+Note: Videos hosted on YouTube, flagged as "made for kids", unlisted, not monetized, and no ads. 
 
 ---
 
 &NewLine;
 
-#### Foundations button: ![](https://github.com/0n0w1c/Foundations/blob/main/graphics/icons/disabled_32x32.png?raw=true)
-
-With the Foundations button, you can disable the automated placement of tiles or select the tile of your choice.  
-You can also enable the available selection based tools by:  
-
-| Key + Mouse-click       | Tool    | Effect                            |
-| :---------------------- | :------ | :-------------------------------- |
-| *[Ctrl]+[Left-click]*   | Fill    | Places tiles on open positions    |
-| *[Shift]+[Left-click]*  | Unfill  | Removes tiles from open positions |
-| *[Ctrl]+[Right-click]*  | Place   | Places tiles under entities       |
-| *[Shift]+[Right-click]* | Unplace | Removes tiles from under entities |
-
-To use: Release the *[Key]* and then *[Left-click]* hold and drag.  
+With the Foundations selector, you can disable the automated placement of tiles or select the tile of your choice.  
 
 ---
 
-* Now works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
+* New: Now works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
 * Compatible with personal logistics for construction and deconstruction  
-* Foundations button is disabled while in remote view  
-* Shortcut to toggle display of the Foundations button  
+* Shortcut to open the Foundations selector  
 * In-game settings for automated tile placement for 1x1 electric poles, inserters, belts, splitters, and loaders  
-* Multi-player compatible
 * Space Platform Foundation (Electric)
   (Only available if both Electric Tiles and Space Platform for ground are active)
 
@@ -54,6 +40,7 @@ To use: Release the *[Key]* and then *[Left-click]* hold and drag.
 * Revert landfill recipe to Factorio v1.1 (from 50 to 20 stone)  
 * Modify refined concrete variants' [layer](https://mods.factorio.com/mod/Foundations/faq)  
   (higher numbers appear above lower numbers, same numbers merge)  
+
 ---
 
 #### Limitations:  
