@@ -228,7 +228,7 @@ local function get_tile_selector_layout(state)
         end
     end
 
-    local expanded = tile_count > 14
+    local expanded = tile_count > 21
 
     return {
         frame_width = expanded and 396 or 378,
