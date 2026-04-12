@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.24.4
+Date: 12.04.2026
+  Bugfixes:
+    - Added nil check for item_name in the sufficent tiles check
+    - Close the gui first then give the selection tool
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.24.3
 Date: 12.04.2026
   Bugfixes:

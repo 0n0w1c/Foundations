@@ -85,7 +85,7 @@ local function place_foundation_under_entity(event)
     if not (player and player.index) then return end
 
     local player_data = get_player_data(player.index)
-    if player_data.foundation == DISABLED or entity_excluded(entity, player_data) then
+    if not player_data or player_data.foundation == DISABLED or entity_excluded(entity, player_data) then
         return
     end
 
@@ -105,15 +105,16 @@ local function place_foundation_under_entity(event)
         if not player_has_sufficient_tiles(player, player_data.foundation, count) then
             if halt_construction then
                 local item_name = storage.tile_to_item[player_data.foundation]
-
-                player.create_local_flying_text {
-                    position = entity.position,
-                    text = {
-                        "gui.Foundations-missing-tiles",
-                        count,
-                        { "item-name." .. item_name }
+                if item_name then
+                    player.create_local_flying_text {
+                        position = entity.position,
+                        text = {
+                            "gui.Foundations-missing-tiles",
+                            count,
+                            { "item-name." .. item_name }
+                        }
                     }
-                }
+                end
 
                 return_entity_to_player(player, entity, robot_built)
             end
@@ -589,8 +590,8 @@ local function disable_foundations_from_gui(player, player_data)
 end
 
 local function give_player_tool_from_gui(player, tool_name)
-    give_player_tool(player, tool_name)
     close_tile_selector_from_gui(player)
+    give_player_tool(player, tool_name)
 end
 
 local function on_gui_click(event)
