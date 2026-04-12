@@ -151,8 +151,6 @@ local function refresh_player_ui(player)
     if player_data.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
         player_data.foundation = DISABLED
     end
-
-    --player.set_shortcut_toggled("Foundations-toggle-button", player.gui.screen.tile_selector_frame ~= nil)
 end
 
 local function give_player_tool(player, tool_name)
@@ -210,7 +208,7 @@ local function get_tile_selector_state(player)
     local disabled = selected == DISABLED
 
     if disabled or not helpers.is_valid_sprite_path(selected_sprite) then
-        selected_sprite = "Foundations-disabled"
+        selected_sprite = "Foundations"
     end
 
     return {
