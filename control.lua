@@ -5,7 +5,6 @@ end
 
 require("utilities")
 
-local mod_gui = require("mod-gui")
 
 local halt_construction = false
 if settings.startup["Foundations-halt-construction"] then
@@ -20,32 +19,6 @@ end
 local function is_compatible_surface(event)
     return true
 end
-
---[[
-local function is_player_in_remote_view(player)
-    return player.controller_type == defines.controllers.remote
-end
-
-local function is_compatible_surface(event)
-    local surface_name = nil
-
-    if event.surface_index then
-        local surface = game.surfaces[event.surface_index]
-        surface_name = surface and surface.name
-    elseif event.player_index then
-        local player = game.get_player(event.player_index)
-        if player and is_player_in_remote_view(player) then
-            return false
-        end
-        surface_name = player and player.surface.name
-    elseif event.entity and event.entity.surface then
-        surface_name = event.entity.surface.name
-    end
-
-    local is_compatible = surface_name and COMPATIBLE_SURFACES[surface_name] == true
-    return is_compatible
-end
-]]
 
 local function get_responsible_player(event, entity)
     if event.player_index then
@@ -128,8 +101,20 @@ local function place_foundation_under_entity(event)
 
     if tiles_to_place then
         local count = table_size(tiles_to_place)
+
         if not player_has_sufficient_tiles(player, player_data.foundation, count) then
             if halt_construction then
+                local item_name = storage.tile_to_item[player_data.foundation]
+
+                player.create_local_flying_text {
+                    position = entity.position,
+                    text = {
+                        "gui.Foundations-missing-tiles",
+                        count,
+                        { "item-name." .. item_name }
+                    }
+                }
+
                 return_entity_to_player(player, entity, robot_built)
             end
             return
@@ -157,83 +142,170 @@ local function place_foundation_under_entity(event)
     end
 end
 
-local function update_button(player)
+local function refresh_player_ui(player)
     if not player then return end
 
     local player_data = get_player_data(player.index)
-    local button_flow = mod_gui.get_button_flow(player)
     local sprite_path = "tile/" .. player_data.foundation
-    local tool_tip = { "", { "tile-name." .. player_data.foundation }, "\n", { "tool-tip.Foundations-tool-tip" } }
 
     if player_data.foundation == DISABLED or not helpers.is_valid_sprite_path(sprite_path) then
-        sprite_path = "Foundations-disabled"
         player_data.foundation = DISABLED
     end
 
-    if player_data.button_on then
-        if not button_flow[THIS_MOD] then
-            button_flow.add {
-                type = "sprite-button",
-                name = THIS_MOD,
-                sprite = sprite_path,
-                tooltip = tool_tip,
-                style = mod_gui.button_style
-            }
-        else
-            button_flow[THIS_MOD].sprite = sprite_path
-            button_flow[THIS_MOD].tooltip = tool_tip
-        end
-    else
-        if button_flow[THIS_MOD] then
-            button_flow[THIS_MOD].destroy()
-        end
-    end
-
-    player.set_shortcut_toggled("Foundations-toggle-button", player_data.button_on)
+    --player.set_shortcut_toggled("Foundations-toggle-button", player.gui.screen.tile_selector_frame ~= nil)
 end
 
-local function add_switch_to_flow(flow, icon_path, switch_name, tooltip, excludes)
-    local sprite = flow.add {
-        type = "sprite",
-        sprite = icon_path,
-        tooltip = tooltip,
-    }
-    sprite.style.width = 24
-    sprite.style.height = 24
-    sprite.style.horizontal_align = "right"
-
-    local switch = flow.add {
-        type = "switch",
-        name = switch_name,
-        switch_state = excludes[switch_name] and "left" or "right",
-        left_label_caption = { "gui.Foundations-toggle-off" },
-        right_label_caption = { "gui.Foundations-toggle-on" },
-    }
-    switch.style.horizontal_align = "right"
-end
-
-local function show_tile_selector_gui(player)
-    if player.gui.screen.tile_selector_frame then
-        player.gui.screen.tile_selector_frame.destroy()
-    end
+local function give_player_tool(player, tool_name)
+    if not player or not tool_name then return end
 
     local player_data = get_player_data(player.index)
-    local items = storage.tile_names
-    local selected = player_data.foundation
+    if player_data.foundation == DISABLED then return end
 
-    local frame = player.gui.screen.add {
-        type = "frame",
-        name = "tile_selector_frame",
-        direction = "vertical",
+    if player.clear_cursor() then
+        player.cursor_stack.set_stack({ name = tool_name })
+    end
+end
+
+
+local tile_selector_frame_name = "tile_selector_frame"
+local tile_selector_button_prefix = "tile_selector_button_"
+
+local function get_tile_selector_frame(player)
+    if not (player and player.valid) then return nil end
+
+    local frame = player.gui.screen[tile_selector_frame_name]
+    if frame and frame.valid then
+        return frame
+    end
+
+    return nil
+end
+
+local function set_tile_selector_open_state(player, is_open)
+    if not (player and player.valid) then return end
+
+    local player_data = get_player_data(player.index)
+    player_data.tile_selector_open = is_open == true
+end
+
+local function destroy_tile_selector_gui(player)
+    local frame = get_tile_selector_frame(player)
+    if not frame then
+        set_tile_selector_open_state(player, false)
+        return
+    end
+
+    if player.opened == frame then
+        player.opened = nil
+    end
+
+    frame.destroy()
+    set_tile_selector_open_state(player, false)
+end
+
+local function get_tile_selector_state(player)
+    local player_data = get_player_data(player.index)
+    local selected = player_data.foundation
+    local selected_sprite = "tile/" .. selected
+    local disabled = selected == DISABLED
+
+    if disabled or not helpers.is_valid_sprite_path(selected_sprite) then
+        selected_sprite = "Foundations-disabled"
+    end
+
+    return {
+        player_data = player_data,
+        tiles = storage.tile_names,
+        selected = selected,
+        selected_sprite = selected_sprite,
+        foundations_disabled = disabled,
+    }
+end
+
+local function get_tile_selector_layout(state)
+    local tile_count = 0
+    for _, item_name in pairs(state.tiles) do
+        if item_name ~= DISABLED then
+            tile_count = tile_count + 1
+        end
+    end
+
+    local expanded = tile_count > 14
+
+    return {
+        frame_width = expanded and 396 or 378,
+        grid_columns = 7,
+        grid_spacing = 8,
+        scroll_right_buffer = expanded and 12 or 8,
+        selection_spacing = expanded and 6 or 4,
+        selection_title_right_margin = expanded and 6 or 4,
+        tool_button_width = expanded and 166 or 160,
+        tool_table_horizontal_spacing = expanded and 18 or 14,
+        tool_table_vertical_spacing = 10,
+        exclusions_horizontal_spacing = expanded and 10 or 8,
+        exclusions_vertical_spacing = 6,
+        bottom_button_width = expanded and 124 or 120,
+        bottom_button_spacing = expanded and 10 or 8,
+    }
+end
+
+local function add_section_header(parent, caption)
+    local header = parent.add {
+        type = "label",
+        caption = caption,
+        style = "caption_label",
+    }
+    header.style.bottom_margin = 4
+    return header
+end
+
+local function add_exclusion_checkbox(parent, checkbox_name, caption, tooltip, excludes)
+    local row = parent.add {
+        type = "flow",
+        name = "Foundations-exclusion-row-" .. checkbox_name,
+        direction = "horizontal",
+    }
+    row.style.vertical_align = "center"
+    row.style.horizontal_spacing = 8
+    row.style.horizontally_stretchable = true
+
+    local checkbox = row.add {
+        type = "checkbox",
+        name = checkbox_name,
+        state = excludes[checkbox_name] == true,
+        tooltip = tooltip,
     }
 
-    frame.auto_center = true
+    local label = row.add {
+        type = "label",
+        caption = caption,
+        tooltip = tooltip,
+    }
+    label.style.single_line = true
+    label.style.horizontally_stretchable = true
 
+    return checkbox
+end
+
+local function create_tile_selector_frame(player, layout)
+    local frame = player.gui.screen.add {
+        type = "frame",
+        name = tile_selector_frame_name,
+        direction = "vertical",
+    }
+    frame.auto_center = true
+    frame.style.minimal_width = layout.frame_width
+    frame.style.maximal_width = layout.frame_width
+    return frame
+end
+
+local function build_tile_selector_titlebar(frame)
     local titlebar_flow = frame.add {
         type = "flow",
         direction = "horizontal",
     }
     titlebar_flow.style.horizontal_spacing = 6
+    titlebar_flow.drag_target = frame
 
     titlebar_flow.add {
         type = "label",
@@ -259,69 +331,268 @@ local function show_tile_selector_gui(player)
         style = "close_button",
         mouse_button_filter = { "left" }
     }
-    close_button.style.height = 24
     close_button.style.width = 24
+    close_button.style.height = 24
+end
 
+local function create_tile_selector_body(frame)
     local inner_frame = frame.add {
         type = "frame",
         name = "inner_frame",
         direction = "vertical",
         style = "inside_shallow_frame",
     }
+    inner_frame.style.left_padding = 8
+    inner_frame.style.right_padding = 8
+    inner_frame.style.top_padding = 8
+    inner_frame.style.bottom_padding = 8
+    return inner_frame
+end
 
-    local scroll_pane = inner_frame.add {
+local function build_tile_grid(parent, state, layout)
+    local scroll_pane = parent.add {
         type = "scroll-pane",
         name = "tile_scroll_pane",
         horizontal_scroll_policy = "never",
         vertical_scroll_policy = "auto",
     }
-    scroll_pane.style.maximal_height = 300
-    scroll_pane.style.minimal_width = 400
+    scroll_pane.style.maximal_height = 220
+    scroll_pane.style.horizontally_stretchable = true
     scroll_pane.style.padding = 4
 
-    local grid = scroll_pane.add {
-        type = "table",
-        name = "tile_selector_grid",
-        column_count = 10,
-        style = "table",
+    local holder = scroll_pane.add {
+        type = "flow",
+        name = "tile_selector_grid_holder",
+        direction = "horizontal",
     }
 
-    for _, item_name in pairs(items) do
+    local grid = holder.add {
+        type = "table",
+        name = "tile_selector_grid",
+        column_count = layout.grid_columns,
+        style = "table",
+    }
+    grid.style.horizontal_spacing = layout.grid_spacing
+    grid.style.vertical_spacing = layout.grid_spacing
+
+    for _, item_name in pairs(state.tiles) do
         if item_name ~= DISABLED then
-            local style = "slot_sized_button"
-            if item_name == selected then
-                style = "slot_sized_button_pressed"
+            local sprite = "tile/" .. item_name
+            if not helpers.is_valid_sprite_path(sprite) then
+                sprite = "utility/questionmark"
             end
 
             local button = grid.add {
-                type = "choose-elem-button",
-                name = "tile_selector_button_" .. item_name,
-                elem_type = "tile",
-                tile = item_name,
-                style = style,
+                type = "sprite-button",
+                name = tile_selector_button_prefix .. item_name,
+                sprite = sprite,
+                style = item_name == state.selected and "slot_sized_button_pressed" or "slot_sized_button",
+                tooltip = { "tile-name." .. item_name },
+                mouse_button_filter = { "left" }
             }
-            button.locked = true
+            button.style.width = 40
+            button.style.height = 40
         end
     end
 
-    local switch_flow = frame.add {
+    local spacer = holder.add {
+        type = "empty-widget",
+        ignored_by_interaction = true,
+    }
+    spacer.style.width = layout.scroll_right_buffer
+end
+
+local function build_selection_row(parent, state, layout)
+    local selected_row = parent.add {
         type = "flow",
-        name = "switch_flow",
+        name = "tile_selector_selected_row",
         direction = "horizontal",
     }
-    switch_flow.style.horizontal_spacing = 32
-    switch_flow.style.top_padding = 12
-    switch_flow.style.bottom_padding = 10
+    selected_row.style.top_margin = 10
+    selected_row.style.vertical_align = "center"
+    selected_row.style.horizontal_spacing = layout.selection_spacing
+    selected_row.style.horizontally_stretchable = true
 
-    add_switch_to_flow(switch_flow, "item/inserter", "inserters", { "tool-tip.Foundations-inserters" },
-        player_data.excludes)
-    add_switch_to_flow(switch_flow, "item/transport-belt", "belts", { "tool-tip.Foundations-belts" },
-        player_data.excludes)
-    add_switch_to_flow(switch_flow, "item/small-electric-pole", "poles", { "tool-tip.Foundations-poles" },
-        player_data.excludes)
+    local selected_title = selected_row.add {
+        type = "label",
+        caption = { "gui.Foundations-current-selection" },
+        style = "caption_label",
+    }
+    selected_title.style.right_margin = layout.selection_title_right_margin
+
+    local selected_caption = selected_row.add {
+        type = "label",
+        name = "Foundations-selected-caption",
+        caption = state.foundations_disabled
+            and { "gui.Foundations-disabled-state" }
+            or { "tile-name." .. state.selected },
+    }
+    selected_caption.style.single_line = true
+    selected_caption.style.horizontally_stretchable = true
+end
+
+local function build_tools_section(parent, state, layout)
+    local tools_flow = parent.add {
+        type = "flow",
+        name = "tile_selector_tools_flow",
+        direction = "vertical",
+    }
+    tools_flow.style.top_margin = 12
+    tools_flow.style.horizontally_stretchable = true
+
+    add_section_header(tools_flow, { "gui.Foundations-tools" })
+
+    local action_table = tools_flow.add {
+        type = "table",
+        name = "tile_selector_action_table",
+        column_count = 2,
+    }
+    action_table.style.horizontal_spacing = layout.tool_table_horizontal_spacing
+    action_table.style.vertical_spacing = layout.tool_table_vertical_spacing
+
+    local button_specs = {
+        { name = "Foundations-action-fill",    caption = { "gui.Foundations-fill-short" },    tooltip = { "tool-tip.Foundations-fill" } },
+        { name = "Foundations-action-unfill",  caption = { "gui.Foundations-unfill-short" },  tooltip = { "tool-tip.Foundations-unfill" } },
+        { name = "Foundations-action-place",   caption = { "gui.Foundations-place-short" },   tooltip = { "tool-tip.Foundations-place" } },
+        { name = "Foundations-action-unplace", caption = { "gui.Foundations-unplace-short" }, tooltip = { "tool-tip.Foundations-unplace" } },
+    }
+
+    for _, spec in ipairs(button_specs) do
+        local button = action_table.add {
+            type = "button",
+            name = spec.name,
+            caption = spec.caption,
+            tooltip = spec.tooltip,
+            style = "rounded_button",
+            enabled = not state.foundations_disabled,
+        }
+        button.style.width = layout.tool_button_width
+        button.style.height = 40
+    end
+end
+
+local function build_exclusions_section(parent, state, layout)
+    local options_flow = parent.add {
+        type = "flow",
+        name = "tile_selector_options_flow",
+        direction = "vertical",
+    }
+    options_flow.style.top_margin = 12
+    options_flow.style.horizontally_stretchable = true
+
+    add_section_header(options_flow, { "gui.Foundations-exclusions" })
+
+    local exclusions_table = options_flow.add {
+        type = "table",
+        name = "tile_selector_exclusions_table",
+        column_count = 3,
+    }
+    exclusions_table.style.horizontal_spacing = layout.exclusions_horizontal_spacing
+    exclusions_table.style.vertical_spacing = layout.exclusions_vertical_spacing
+    exclusions_table.style.horizontally_stretchable = true
+
+    add_exclusion_checkbox(
+        exclusions_table,
+        "inserters",
+        { "gui.Foundations-exclude-inserters" },
+        { "tool-tip.Foundations-inserters" },
+        state.player_data.excludes
+    )
+
+    add_exclusion_checkbox(
+        exclusions_table,
+        "belts",
+        { "gui.Foundations-exclude-belts" },
+        { "tool-tip.Foundations-belts" },
+        state.player_data.excludes
+    )
+
+    add_exclusion_checkbox(
+        exclusions_table,
+        "poles",
+        { "gui.Foundations-exclude-1x1-poles" },
+        { "tool-tip.Foundations-poles" },
+        state.player_data.excludes
+    )
+end
+
+local function build_bottom_buttons(parent, layout)
+    local bottom_row = parent.add {
+        type = "flow",
+        name = "tile_selector_bottom_row",
+        direction = "horizontal",
+    }
+    bottom_row.style.top_margin = 14
+    bottom_row.style.horizontal_spacing = layout.bottom_button_spacing
+    bottom_row.style.horizontally_stretchable = true
+
+    local disable_button = bottom_row.add {
+        type = "button",
+        name = "Foundations-action-disable",
+        caption = { "gui.Foundations-disable-short" },
+        tooltip = { "tool-tip.Foundations-disable" },
+        style = "red_back_button"
+    }
+    disable_button.style.width = layout.bottom_button_width
+    disable_button.style.height = 40
+
+    local spacer = bottom_row.add {
+        type = "empty-widget",
+        ignored_by_interaction = true,
+    }
+    spacer.style.horizontally_stretchable = true
+
+    local continue_button = bottom_row.add {
+        type = "button",
+        name = "Foundations-action-continue",
+        caption = "Continue",
+        tooltip = "Close this window and keep the selected foundation.",
+        style = "confirm_button",
+    }
+    continue_button.style.width = layout.bottom_button_width
+    continue_button.style.height = 40
+end
+
+local function show_tile_selector_gui(player)
+    destroy_tile_selector_gui(player)
+
+    local state = get_tile_selector_state(player)
+    local layout = get_tile_selector_layout(state)
+    local frame = create_tile_selector_frame(player, layout)
+
+    build_tile_selector_titlebar(frame)
+
+    local body = create_tile_selector_body(frame)
+    build_tile_grid(body, state, layout)
+    build_selection_row(body, state, layout)
+    build_exclusions_section(body, state, layout)
+    build_tools_section(body, state, layout)
+    build_bottom_buttons(body, layout)
 
     player.opened = frame
+    set_tile_selector_open_state(player, true)
     return frame
+end
+
+local function select_tile_from_gui(player, player_data, selected_tile_name)
+    player_data.foundation = selected_tile_name
+    show_tile_selector_gui(player)
+    refresh_player_ui(player)
+end
+
+local function close_tile_selector_from_gui(player)
+    destroy_tile_selector_gui(player)
+    refresh_player_ui(player)
+end
+
+local function disable_foundations_from_gui(player, player_data)
+    player_data.foundation = DISABLED
+    close_tile_selector_from_gui(player)
+end
+
+local function give_player_tool_from_gui(player, tool_name)
+    give_player_tool(player, tool_name)
+    close_tile_selector_from_gui(player)
 end
 
 local function on_gui_click(event)
@@ -331,62 +602,37 @@ local function on_gui_click(event)
     if not player then return end
 
     local player_data = get_player_data(player.index)
+    local name = event.element.name
 
-    if event.element.name == THIS_MOD then
-        if player.controller_type == defines.controllers.remote then return end
-        if not is_compatible_surface(player) then return end
+    if name == "tile_selector_close_button" or name == "Foundations-action-continue" then
+        close_tile_selector_from_gui(player)
+        return
+    end
 
-        if event.button == defines.mouse_button_type.left then
-            if event.control then
-                if player_data.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-fill-tool" })
-                end
-            elseif event.shift then
-                if player_data.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-unfill-tool" })
-                end
-            elseif event.alt then
-                -- do nothing
-            else
-                if player.gui.screen.tile_selector_frame then
-                    player.gui.screen.tile_selector_frame.destroy()
-                else
-                    show_tile_selector_gui(player)
-                end
-            end
-        elseif event.button == defines.mouse_button_type.right then
-            if event.control then
-                if player_data.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-place-tool" })
-                end
-            elseif event.shift then
-                if player_data.foundation ~= DISABLED and player.clear_cursor() then
-                    player.cursor_stack.set_stack({ name = "Foundations-unplace-tool" })
-                end
-            elseif event.alt then
-                -- do nothing
-            else
-                player_data.foundation = DISABLED
-            end
-        end
-        update_button(player)
-    elseif event.element.name == "tile_selector_close_button" then
-        if player.gui.screen.tile_selector_frame then
-            player.gui.screen.tile_selector_frame.destroy()
-            player.opened = nil
-        end
-    elseif string.find(event.element.name, "tile_selector_button_") == 1 then
-        local selected_tile_name = string.sub(event.element.name, string.len("tile_selector_button_") + 1)
-        player_data.foundation = selected_tile_name
+    if string.find(name, tile_selector_button_prefix, 1, true) == 1 then
+        local selected_tile_name = string.sub(name, string.len(tile_selector_button_prefix) + 1)
+        select_tile_from_gui(player, player_data, selected_tile_name)
+        return
+    end
 
-        if player.gui.screen.tile_selector_frame then
-            player.gui.screen.tile_selector_frame.destroy()
-            player.opened = nil
-        end
-
-        update_button(player)
+    if name == "Foundations-action-fill" then
+        give_player_tool_from_gui(player, "Foundations-fill-tool")
+        return
+    elseif name == "Foundations-action-unfill" then
+        give_player_tool_from_gui(player, "Foundations-unfill-tool")
+        return
+    elseif name == "Foundations-action-place" then
+        give_player_tool_from_gui(player, "Foundations-place-tool")
+        return
+    elseif name == "Foundations-action-unplace" then
+        give_player_tool_from_gui(player, "Foundations-unplace-tool")
+        return
+    elseif name == "Foundations-action-disable" then
+        disable_foundations_from_gui(player, player_data)
+        return
     end
 end
+
 
 local function entity_mined(event)
     if not event then return end
@@ -416,7 +662,6 @@ local function entity_mined(event)
         for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
             local tile = surface.get_tile(x, y)
             if tile and (tile.name == player_data.foundation or tile.name == "frozen-" .. player_data.foundation) then
-                -- will not mine tile if over water
                 player.mine_tile(tile)
             end
         end
@@ -454,7 +699,6 @@ local function player_selected_area(event)
 
     local placeable_tiles = storage.tile_to_item
 
-    -- [ctrl][left]
     if event.item == "Foundations-fill-tool" then
         if player_data.foundation ~= DISABLED then
             local tiles_to_place = {}
@@ -524,7 +768,6 @@ local function player_selected_area(event)
         end
     end
 
-    -- [shift][left]
     if event.item == "Foundations-unfill-tool" then
         if player_data.foundation ~= DISABLED then
             local entities = surface.find_entities_filtered({ area = event.area })
@@ -572,7 +815,6 @@ local function player_selected_area(event)
         end
     end
 
-    -- [ctrl][right]
     if event.item == "Foundations-place-tool" then
         if player_data.foundation ~= DISABLED then
             local entities = surface.find_entities_filtered({ area = event.area })
@@ -610,7 +852,6 @@ local function player_selected_area(event)
         end
     end
 
-    -- [shift][right]
     if event.item == "Foundations-unplace-tool" then
         if player_data.foundation ~= DISABLED then
             local tiles_to_unplace = {}
@@ -758,22 +999,20 @@ local function on_entity_moved(event)
     place_foundation_under_entity(event)
 end
 
-local function on_gui_switch_state_changed(event)
-    local player = game.players[event.player_index]
+local function on_gui_checked_state_changed(event)
+    local player = game.get_player(event.player_index)
     if not player then return end
-    if not event.element then return end
+    if not event.element or not event.element.valid then return end
+    if not player.gui.screen.tile_selector_frame then return end
 
-    if player.gui.screen.tile_selector_frame then
-        local storage_key = event.element.name
-        if storage_key then
-            local player_data = get_player_data(event.player_index)
-            player_data.excludes[storage_key] = (event.element.switch_state == "left")
-        end
+    local storage_key = event.element.name
+    if not storage_key then return end
 
-        local player_data = get_player_data(player.index)
-        load_excluded_name_list(player_data)
-        load_excluded_type_list(player_data)
-    end
+    local player_data = get_player_data(player.index)
+    player_data.excludes[storage_key] = event.element.state == true
+
+    load_excluded_name_list(player_data)
+    load_excluded_type_list(player_data)
 end
 
 local function init_storage()
@@ -790,7 +1029,7 @@ local function configuration_changed()
 
     for _, player in pairs(game.connected_players) do
         get_player_data(player.index)
-        update_button(player)
+        refresh_player_ui(player)
     end
     if not dectorio_hazard then
         game.print(
@@ -799,18 +1038,31 @@ local function configuration_changed()
 end
 
 local function close_tile_selector(player)
-    if player.gui.screen.tile_selector_frame then
-        player.gui.screen.tile_selector_frame.destroy()
-        player.opened = nil
-    end
+    destroy_tile_selector_gui(player)
 end
 
 local function on_gui_closed(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
-    if player.gui.screen.tile_selector_frame then
+    local frame = get_tile_selector_frame(player)
+    if not frame then
+        set_tile_selector_open_state(player, false)
+        return
+    end
+
+    local player_data = get_player_data(player.index)
+    local closed_tile_selector = false
+
+    if event.element and event.element.valid then
+        closed_tile_selector = event.element == frame
+    elseif player_data.tile_selector_open and player.opened ~= frame then
+        closed_tile_selector = true
+    end
+
+    if closed_tile_selector then
         close_tile_selector(player)
+        refresh_player_ui(player)
     end
 end
 
@@ -819,10 +1071,16 @@ local function on_lua_shortcut(event)
 
     local player = game.get_player(event.player_index)
     if not player then return end
+    if player.controller_type == defines.controllers.remote then return end
+    if not is_compatible_surface(player) then return end
 
-    local player_data = get_player_data(player.index)
-    player_data.button_on = not player_data.button_on
-    update_button(player)
+    if player.gui.screen.tile_selector_frame then
+        close_tile_selector(player)
+    else
+        show_tile_selector_gui(player)
+    end
+
+    refresh_player_ui(player)
 end
 
 local function controller_changed(event)
@@ -832,14 +1090,26 @@ local function controller_changed(event)
     local player_data = get_player_data(player.index)
 
     if player.controller_type == defines.controllers.remote then
+        player_data.reopen_tile_selector_on_controller_change = player_data.tile_selector_open == true
+
+        if player_data.tile_selector_open then
+            close_tile_selector(player)
+        end
+
         player_data.last_selected = player_data.foundation
         player_data.foundation = DISABLED
-        update_button(player)
+        refresh_player_ui(player)
     else
         if player_data.last_selected then
             player_data.foundation = player_data.last_selected
             player_data.last_selected = nil
-            update_button(player)
+            refresh_player_ui(player)
+        end
+
+        if player_data.reopen_tile_selector_on_controller_change then
+            player_data.reopen_tile_selector_on_controller_change = false
+            show_tile_selector_gui(player)
+            refresh_player_ui(player)
         end
     end
 end
@@ -848,7 +1118,7 @@ local function register_event_handlers()
     script.on_event(defines.events.on_player_controller_changed, controller_changed)
     script.on_event(defines.events.on_lua_shortcut, on_lua_shortcut)
     script.on_event(defines.events.on_gui_click, on_gui_click)
-    script.on_event(defines.events.on_gui_switch_state_changed, on_gui_switch_state_changed)
+    script.on_event(defines.events.on_gui_checked_state_changed, on_gui_checked_state_changed)
     script.on_event(defines.events.on_gui_closed, on_gui_closed)
     script.on_event(defines.events.on_runtime_mod_setting_changed, configuration_changed)
     script.on_event(defines.events.on_research_finished, configuration_changed)

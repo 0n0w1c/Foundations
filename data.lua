@@ -127,7 +127,7 @@ data.extend({
         small_icon_size = 32,
         associated_control_input = "give-Foundations-toggle-button",
         style = "default",
-        toggleable = true,
+        toggleable = false,
         order = "f[toggle-button]"
     }
 })

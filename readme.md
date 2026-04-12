@@ -18,7 +18,7 @@ Note: Videos hosted on YouTube, flagged as "made for kids", unlisted, not moneti
 
 &NewLine;
 
-#### Foundations button: ![](https://github.com/0n0w1c/Foundations/blob/main/graphics/icons/disabled_32x32.png?raw=true) (*disabled*)
+#### Foundations button: ![](https://github.com/0n0w1c/Foundations/blob/main/graphics/icons/disabled_32x32.png?raw=true)
 
 With the Foundations button, you can disable the automated placement of tiles or select the tile of your choice.  
 You can also enable the available selection based tools by:  

@@ -2,8 +2,9 @@ function get_player_data(player_index)
     storage.player_data[player_index] = storage.player_data[player_index] or
         {
             foundation = DISABLED,
-            button_on = true,
             last_selected = nil,
+            tile_selector_open = false,
+            reopen_tile_selector_on_controller_change = false,
             excludes =
             {
                 inserters = true,
@@ -13,6 +14,8 @@ function get_player_data(player_index)
         }
 
     local player_data = storage.player_data[player_index]
+    player_data.tile_selector_open = player_data.tile_selector_open == true
+    player_data.reopen_tile_selector_on_controller_change = player_data.reopen_tile_selector_on_controller_change == true
     load_excluded_name_list(player_data)
     load_excluded_type_list(player_data)
 
