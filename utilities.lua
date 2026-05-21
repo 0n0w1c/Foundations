@@ -266,6 +266,13 @@ function get_mineable_tiles()
     return mineable_tiles
 end
 
+local cached_mineable_tiles = nil
+
+local function get_cached_mineable_tiles()
+    cached_mineable_tiles = cached_mineable_tiles or get_mineable_tiles()
+    return cached_mineable_tiles
+end
+
 local ESP_FOUNDATION_TILES =
 {
     ["esp-foundation"] = true,
@@ -285,7 +292,7 @@ function natural_ground_tile_for_esp_foundation(target_tile)
     if tile_prototype_field(target_prototype, "is_foundation") then return false end
     if tile_prototype_field(target_prototype, "placeable_by") then return false end
 
-    local mineable_tiles = get_mineable_tiles()
+    local mineable_tiles = get_cached_mineable_tiles()
     if mineable_tiles and mineable_tiles[target_tile] then return false end
 
     return true
@@ -295,7 +302,11 @@ function selected_tile_allowed_on_target(selected_tile, target_tile)
     if not selected_tile or not target_tile then return false end
 
     local condition = FOUNDATION_TILE_CONDITIONS[selected_tile]
-    if condition and condition[target_tile] ~= true then
+    if condition then
+        if condition[target_tile] == true then
+            return true
+        end
+
         if not (ESP_FOUNDATION_TILES[selected_tile] and natural_ground_tile_for_esp_foundation(target_tile)) then
             return false
         end
@@ -423,14 +434,22 @@ function load_tiles(entity, area, player)
     return tiles_to_place, tiles_to_return
 end
 
+local function tile_hidden_from_selector(prototype)
+    return prototype.hidden
+        or prototype.hidden_in_factoriopedia
+        or string.sub(prototype.name, 1, 7) == "frozen-"
+        or string.sub(prototype.name, 1, 13) == "F077ET-frozen"
+        or prototype.name == "space-platform-foundation"
+end
+
 function get_placeable_items()
     local items = {}
     local prototypes = prototypes.get_tile_filtered { { filter = "minable" } }
 
     for _, prototype in pairs(prototypes) do
-        if prototype.items_to_place_this then
+        if not tile_hidden_from_selector(prototype) and prototype.items_to_place_this then
             for _, item in ipairs(prototype.items_to_place_this) do
-                if not items[prototype.name] and string.sub(prototype.name, 1, 7) ~= "frozen-" and prototype.name ~= "space-platform-foundation" and not prototype.hidden then
+                if not items[prototype.name] then
                     items[prototype.name] = item.name
                 end
             end

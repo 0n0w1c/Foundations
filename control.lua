@@ -61,6 +61,69 @@ local function get_responsible_player(event, entity)
     return nil
 end
 
+
+local function create_missing_tiles_text(player, position, tile_name, count)
+    local item_name = storage.tile_to_item[tile_name]
+    if not player or not item_name then return end
+
+    player.create_local_flying_text {
+        position = position or player.position,
+        text = {
+            "gui.Foundations-missing-tiles",
+            count,
+            { "item-name." .. item_name }
+        }
+    }
+end
+
+local function place_selection_tiles(surface, player, tile_name, tiles_to_place, destroy_fish)
+    local count = table_size(tiles_to_place)
+    if count <= 0 then return end
+
+    local item_name = storage.tile_to_item[tile_name]
+    if not item_name then return end
+
+    local available_count = player.get_item_count(item_name)
+    if available_count < count then
+        if halt_construction then
+            create_missing_tiles_text(player, player.position, tile_name, count)
+            return
+        end
+
+        count = math.min(count, available_count)
+        if count <= 0 then return end
+
+        local available_tiles = {}
+        for i = 1, count do
+            available_tiles[i] = tiles_to_place[i]
+        end
+        tiles_to_place = available_tiles
+    end
+
+    for _, tile in ipairs(tiles_to_place) do
+        local old_tile = surface.get_tile(tile.position)
+        local old_prototype = old_tile and old_tile.prototype
+
+        local should_destroy_fish =
+            destroy_fish
+            or (old_prototype and old_prototype.default_cover_tile == "landfill")
+
+        if should_destroy_fish then
+            local fishes = surface.find_entities_filtered {
+                position = tile.position,
+                name = "fish"
+            }
+
+            for _, fish in ipairs(fishes) do
+                if fish.valid then fish.destroy() end
+            end
+        end
+    end
+
+    surface.set_tiles(tiles_to_place, true, false, true, true, player)
+    player.remove_item { name = item_name, count = count }
+end
+
 local function place_foundation_under_entity(event)
     if not event then return end
     if not is_compatible_surface(event) then return end
@@ -778,26 +841,13 @@ local function player_selected_area(event)
                 end
             end
 
-            local count = table_size(tiles_to_place)
-            if count > 0 and player_has_sufficient_tiles(player, player_data.foundation, count) then
-                if surface.name == "nauvis" and prototypes.tile[player_data.foundation].is_foundation then
-                    for _, tile in ipairs(tiles_to_place) do
-                        local fishes = surface.find_entities_filtered {
-                            position = tile.position,
-                            name = "fish"
-                        }
-                        for _, fish in ipairs(fishes) do
-                            if fish.valid then fish.destroy() end
-                        end
-                    end
-                end
-
-                surface.set_tiles(tiles_to_place, true, false, true, true, player)
-                local item_name = placeable_tiles[player_data.foundation]
-                if item_name then
-                    player.remove_item { name = item_name, count = count }
-                end
-            end
+            place_selection_tiles(
+                surface,
+                player,
+                player_data.foundation,
+                tiles_to_place,
+                surface.name == "nauvis" and prototypes.tile[player_data.foundation].is_foundation
+            )
         end
     end
 
@@ -814,7 +864,7 @@ local function player_selected_area(event)
                     local entity_area = get_area_under_entity(entity)
                     if entity_area then
                         for x = math.floor(entity_area.left_top.x), math.ceil(entity_area.right_bottom.x) - 1 do
-                            for y = math.floor(entity_area.right_bottom.y), math.ceil(entity_area.right_bottom.y) - 1 do
+                            for y = math.floor(entity_area.left_top.y), math.ceil(entity_area.right_bottom.y) - 1 do
                                 local tile = surface.get_tile(x, y)
                                 if not tile then return end
 
@@ -876,12 +926,7 @@ local function player_selected_area(event)
                 end
             end
 
-            local count = table_size(tiles_to_place)
-            if count > 0 and player_has_sufficient_tiles(player, player_data.foundation, count) then
-                surface.set_tiles(tiles_to_place, true, false, true, true, player)
-                local item_name = placeable_tiles[player_data.foundation]
-                player.remove_item { name = item_name, count = count }
-            end
+            place_selection_tiles(surface, player, player_data.foundation, tiles_to_place)
         end
     end
 

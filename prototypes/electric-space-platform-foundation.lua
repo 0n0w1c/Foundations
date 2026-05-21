@@ -200,6 +200,16 @@ espf_recipe.ingredients =
 
 data:extend({ espf_recipe })
 
+local landfill_technology = data.raw.technology["landfill"]
+if landfill_technology then
+    landfill_technology.effects = landfill_technology.effects or {}
+
+    table.insert(landfill_technology.effects, {
+        type = "unlock-recipe",
+        recipe = "esp-foundation"
+    })
+end
+
 local electric_recipe = table.deepcopy(recipes[espf_recipe.name])
 electric_recipe.ingredients =
 {
