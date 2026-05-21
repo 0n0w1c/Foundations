@@ -201,6 +201,25 @@ function get_area_under_entity(entity)
     return area
 end
 
+function get_agricultural_tower_planting_positions(entity)
+    if not entity or entity.type ~= "agricultural-tower" then return nil end
+
+    local grid_size = entity.prototype.growth_grid_tile_size or 3
+    local sector_radius = math.floor((entity.prototype.agricultural_tower_radius or 3) + 0.5)
+    local positions = {}
+
+    for gx = -sector_radius, sector_radius do
+        for gy = -sector_radius, sector_radius do
+            table.insert(positions, {
+                x = math.floor(entity.position.x + gx * grid_size),
+                y = math.floor(entity.position.y + gy * grid_size)
+            })
+        end
+    end
+
+    return positions
+end
+
 function get_area_under_entity_at_position(entity, position)
     if not entity or not position then
         return
@@ -247,6 +266,95 @@ function get_mineable_tiles()
     return mineable_tiles
 end
 
+local ESP_FOUNDATION_TILES =
+{
+    ["esp-foundation"] = true,
+    ["F077ET-esp-foundation"] = true,
+}
+
+local function tile_prototype_field(prototype, field)
+    local ok, value = pcall(function() return prototype[field] end)
+    if ok then return value end
+end
+
+function natural_ground_tile_for_esp_foundation(target_tile)
+    local target_prototype = prototypes.tile[target_tile]
+    if not target_prototype then return false end
+
+    if tile_prototype_field(target_prototype, "default_cover_tile") then return false end
+    if tile_prototype_field(target_prototype, "is_foundation") then return false end
+    if tile_prototype_field(target_prototype, "placeable_by") then return false end
+
+    local mineable_tiles = get_mineable_tiles()
+    if mineable_tiles and mineable_tiles[target_tile] then return false end
+
+    return true
+end
+
+function selected_tile_allowed_on_target(selected_tile, target_tile)
+    if not selected_tile or not target_tile then return false end
+
+    local condition = FOUNDATION_TILE_CONDITIONS[selected_tile]
+    if condition and condition[target_tile] ~= true then
+        if not (ESP_FOUNDATION_TILES[selected_tile] and natural_ground_tile_for_esp_foundation(target_tile)) then
+            return false
+        end
+    end
+
+    if selected_tile == "foundation" then
+        local target_prototype = prototypes.tile[target_tile]
+        if target_prototype and target_prototype.default_cover_tile and target_prototype.default_cover_tile ~= selected_tile then
+            return false
+        end
+    end
+
+    return true
+end
+
+function selected_tile_uses_agricultural_planting_area(selected_tile)
+    return selected_tile == "artificial-yumako-soil"
+        or selected_tile == "overgrowth-yumako-soil"
+        or selected_tile == "artificial-jellynut-soil"
+        or selected_tile == "overgrowth-jellynut-soil"
+end
+
+function agricultural_soil_matches_selected_tile(selected_tile, target_tile)
+    if selected_tile == "artificial-yumako-soil" or selected_tile == "overgrowth-yumako-soil" then
+        return target_tile == "artificial-yumako-soil"
+            or target_tile == "overgrowth-yumako-soil"
+            or target_tile == "natural-yumako-soil"
+    end
+
+    if selected_tile == "artificial-jellynut-soil" or selected_tile == "overgrowth-jellynut-soil" then
+        return target_tile == "artificial-jellynut-soil"
+            or target_tile == "overgrowth-jellynut-soil"
+            or target_tile == "natural-jellynut-soil"
+    end
+
+    return target_tile == selected_tile
+end
+
+function agricultural_planting_area_can_be_filled(surface, centre, grid_size, selected_tile)
+    if not surface or not centre or not grid_size or not selected_tile then return false end
+
+    local half_left = math.floor(grid_size / 2)
+    local half_right = grid_size - half_left - 1
+
+    for dx = -half_left, half_right do
+        for dy = -half_left, half_right do
+            local tile = surface.get_tile(centre.x + dx, centre.y + dy)
+            if not tile then return false end
+
+            if not agricultural_soil_matches_selected_tile(selected_tile, tile.name)
+                and not selected_tile_allowed_on_target(selected_tile, tile.name) then
+                return false
+            end
+        end
+    end
+
+    return true
+end
+
 function load_tiles(entity, area, player)
     if not entity or not area then return end
 
@@ -263,14 +371,51 @@ function load_tiles(entity, area, player)
     local tiles_to_place = {}
     local tiles_to_return = {}
 
-    for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
-        for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
-            local current_tile = surface.get_tile(x, y)
-            if current_tile.name ~= foundation then
-                if mineable_tiles[current_tile.name] then
-                    table.insert(tiles_to_return, { name = current_tile.name, position = { x = x, y = y } })
+    local function add_tile(position)
+        local current_tile = surface.get_tile(position.x, position.y)
+        if not current_tile or current_tile.name == foundation then return end
+        if not selected_tile_allowed_on_target(foundation, current_tile.name) then return end
+
+        if mineable_tiles[current_tile.name] then
+            table.insert(tiles_to_return, { name = current_tile.name, position = position })
+        end
+
+        table.insert(tiles_to_place, { name = foundation, position = position })
+    end
+
+    local planting_positions = nil
+    if selected_tile_uses_agricultural_planting_area(foundation) then
+        planting_positions = get_agricultural_tower_planting_positions(entity)
+    end
+
+    if planting_positions then
+        local grid_size = entity.prototype.growth_grid_tile_size or 3
+        local half_left = math.floor(grid_size / 2)
+        local half_right = grid_size - half_left - 1
+        local seen_positions = {}
+
+        for _, planting_position in pairs(planting_positions) do
+            if agricultural_planting_area_can_be_filled(surface, planting_position, grid_size, foundation) then
+                for dx = -half_left, half_right do
+                    for dy = -half_left, half_right do
+                        local position = {
+                            x = planting_position.x + dx,
+                            y = planting_position.y + dy
+                        }
+                        local key = position.x .. ":" .. position.y
+
+                        if not seen_positions[key] then
+                            seen_positions[key] = true
+                            add_tile(position)
+                        end
+                    end
                 end
-                table.insert(tiles_to_place, { name = foundation, position = { x = x, y = y } })
+            end
+        end
+    else
+        for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
+            for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
+                add_tile({ x = x, y = y })
             end
         end
     end

@@ -657,19 +657,53 @@ local function entity_mined(event)
     local area = get_area_under_entity(entity)
     if not area then return end
 
-    for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
-        for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
-            local tile = surface.get_tile(x, y)
-            if tile and (tile.name == player_data.foundation or tile.name == "frozen-" .. player_data.foundation) then
-                player.mine_tile(tile)
-            end
+    local selected_tile = player_data.foundation
+
+    local function mine_selected_tile(position)
+        local tile = surface.get_tile(position.x, position.y)
+        if tile and (tile.name == selected_tile or tile.name == "frozen-" .. selected_tile) then
+            player.mine_tile(tile)
         end
     end
-end
 
-local function can_place_foundation_tile_on(foundation_tile, target_tile)
-    local condition = FOUNDATION_TILE_CONDITIONS[foundation_tile]
-    return condition and condition[target_tile] == true
+    local planting_positions = nil
+    if selected_tile_uses_agricultural_planting_area(selected_tile) then
+        planting_positions = get_agricultural_tower_planting_positions(entity)
+    end
+
+    if planting_positions then
+        local grid_size = entity.prototype.growth_grid_tile_size or 3
+        local half_left = math.floor(grid_size / 2)
+        local half_right = grid_size - half_left - 1
+        local seen_positions = {}
+
+        for _, planting_position in pairs(planting_positions) do
+            if agricultural_planting_area_can_be_filled(surface, planting_position, grid_size, selected_tile) then
+                for dx = -half_left, half_right do
+                    for dy = -half_left, half_right do
+                        local position = {
+                            x = planting_position.x + dx,
+                            y = planting_position.y + dy
+                        }
+                        local key = position.x .. ":" .. position.y
+
+                        if not seen_positions[key] then
+                            seen_positions[key] = true
+                            mine_selected_tile(position)
+                        end
+                    end
+                end
+            end
+        end
+
+        return
+    end
+
+    for x = math.floor(area.left_top.x), math.ceil(area.right_bottom.x) - 1 do
+        for y = math.floor(area.left_top.y), math.ceil(area.right_bottom.y) - 1 do
+            mine_selected_tile({ x = x, y = y })
+        end
+    end
 end
 
 local function is_water_tile(tile)
@@ -727,8 +761,8 @@ local function player_selected_area(event)
 
                 if tile.name == player_data.foundation then
                     place_tile = false
-                elseif prototypes.tile[player_data.foundation].is_foundation then
-                    if not can_place_foundation_tile_on(player_data.foundation, tile.name) then
+                elseif FOUNDATION_TILE_CONDITIONS[player_data.foundation] then
+                    if not selected_tile_allowed_on_target(player_data.foundation, tile.name) then
                         place_tile = false
                     end
                 end

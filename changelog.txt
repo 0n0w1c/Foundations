@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.25.0
+Date: 20.05.2026
+  Bugfixes:
+    - Incorrect required tile for the surface landfill tile
+  Changes:
+    - Placing agricultural towers with a Gleba landfill selected, places the landfill where allowed
+    - Recipes for Space Platform Foundation tiles have been modified
+    - Space Platform, for ground: tiles can not be placed where landfill tiles are required
+---------------------------------------------------------------------------------------------------
 Version: 2.24.4
 Date: 12.04.2026
   Bugfixes:

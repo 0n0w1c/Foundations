@@ -38,6 +38,21 @@ if FOUNDATION and settings.startup["Foundations-revert-landfill-recipe"] then
     end
 end
 
+if FOUNDATION and recipes["space-platform-for-ground"] then
+    local tile_name = "space-platform-for-ground"
+    local recipe = recipes[tile_name]
+
+    recipe.ingredients = {
+        { type = "item", name = "steel-plate", amount = 10 },
+        { type = "item", name = "concrete",    amount = 10 },
+    }
+    recipe.results = { { type = "item", name = tile_name, amount = 10 } }
+
+    if mods["quality"] then
+        recycling.generate_recycling_recipe(recipe)
+    end
+end
+
 local offset = 31
 
 if mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settings.startup["dectorio-painted-concrete"].value then
@@ -306,5 +321,74 @@ if mods["space-platform-for-ground"] then
     tiles["space-platform-for-ground"].layer = highest_layer
 
     items["space-platform-for-ground"].subgroup = items["stone-brick"].subgroup
-    items["space-platform-for-ground"].order = "00[a-x]"
+    items["space-platform-for-ground"].order = "c[landfill]-y[space-platform-for-ground]"
+end
+
+if items["esp-foundation"] then
+    items["esp-foundation"].order = "c[landfill]-yz[esp-foundation]"
+end
+
+if items["F077ET-esp-foundation"] then
+    items["F077ET-esp-foundation"].order = "c[landfill]-z[electric-esp-foundation]"
+end
+
+if tiles["esp-foundation"] and tiles["foundation"] then
+    tiles["esp-foundation"].order = (tiles["foundation"].order or "") .. "-yz[esp-foundation]"
+end
+
+if tiles["F077ET-esp-foundation"] and tiles["foundation"] then
+    tiles["F077ET-esp-foundation"].order = (tiles["foundation"].order or "") .. "-z[electric-esp-foundation]"
+end
+
+local GENERATED_FOUNDATION_COVER_TILES =
+{
+    ["esp-foundation"] = true,
+    ["F077ET-esp-foundation"] = true,
+}
+
+local function restore_default_cover_tile(tile_name, cover_tile_name)
+    if tiles[tile_name] then
+        tiles[tile_name].default_cover_tile = cover_tile_name
+    end
+end
+
+local function restore_generated_default_cover_tiles()
+    for name, tile in pairs(tiles) do
+        if tile.default_cover_tile and GENERATED_FOUNDATION_COVER_TILES[tile.default_cover_tile] then
+            local original_cover_tile = FOUNDATIONS_DEFAULT_COVER_TILES and FOUNDATIONS_DEFAULT_COVER_TILES[name]
+
+            if original_cover_tile then
+                tile.default_cover_tile = original_cover_tile
+            end
+        end
+    end
+end
+
+restore_generated_default_cover_tiles()
+
+restore_default_cover_tile("water", "landfill")
+restore_default_cover_tile("deepwater", "landfill")
+restore_default_cover_tile("water-green", "landfill")
+restore_default_cover_tile("deepwater-green", "landfill")
+restore_default_cover_tile("water-shallow", "landfill")
+restore_default_cover_tile("water-mud", "landfill")
+restore_default_cover_tile("oil-ocean-shallow", "foundation")
+restore_default_cover_tile("oil-ocean-deep", "foundation")
+restore_default_cover_tile("lava", "foundation")
+restore_default_cover_tile("lava-hot", "foundation")
+
+for _, tile_name in pairs({
+    "wetland-light-green-slime",
+    "wetland-green-slime",
+    "wetland-light-dead-skin",
+    "wetland-dead-skin",
+    "wetland-pink-tentacle",
+    "wetland-red-tentacle",
+    "wetland-yumako",
+    "wetland-jellynut",
+    "wetland-blue-slime",
+    "gleba-deep-lake",
+}) do
+    restore_default_cover_tile(tile_name,
+        (FOUNDATIONS_DEFAULT_COVER_TILES and FOUNDATIONS_DEFAULT_COVER_TILES[tile_name]) or "landfill")
 end

@@ -1,5 +1,12 @@
 require("constants")
 
+FOUNDATIONS_DEFAULT_COVER_TILES = {}
+for name, tile in pairs(data.raw.tile or {}) do
+    if tile.default_cover_tile then
+        FOUNDATIONS_DEFAULT_COVER_TILES[name] = tile.default_cover_tile
+    end
+end
+
 FOUNDATION = false
 if mods["electric-tiles"] and mods["space-platform-for-ground"] then
     FOUNDATION = true

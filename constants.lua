@@ -129,7 +129,6 @@ FOUNDATION_TILE_CONDITIONS =
     {
         ["ammoniacal-ocean"] = true,
         ["ammoniacal-ocean-2"] = true,
-        ["brash-ice"] = true
     },
 
     ["artificial-yumako-soil"] =
@@ -265,6 +264,8 @@ FOUNDATION_TILE_CONDITIONS =
         ["gleba-deep-lake"] = true,
         ["ammoniacal-ocean"] = true,
         ["ammoniacal-ocean-2"] = true,
-        ["brash-ice"] = true
+        ["brash-ice"] = true,
     }
 }
+
+FOUNDATION_TILE_CONDITIONS["esp-foundation"] = FOUNDATION_TILE_CONDITIONS["F077ET-esp-foundation"]

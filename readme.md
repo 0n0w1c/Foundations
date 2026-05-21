@@ -1,5 +1,6 @@
 #### Features:
-* New: Now works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
+* Placing agricultural towers with a Gleba landfill selected, places the landfill where allowed  
+* Works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
 * Compatible with personal logistics for construction and deconstruction  
 * Shortcut to open the Foundations selector  
 * In-game settings for automated tile placement for 1x1 electric poles, inserters, belts, splitters, and loaders  
