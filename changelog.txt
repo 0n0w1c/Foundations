@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.25.2
+Date: 21.05.2026
+  Bugfixes:
+    - Space platform, for ground tile could not be placed on a foundation tile
+    - Electric tiles could be placed on Space Platform Foundation (Electric)
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.25.1
 Date: 21.05.2026
   Bugfixes:

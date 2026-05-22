@@ -60,7 +60,18 @@ local function get_natural_ground_tile_condition_list()
         end
     end
 
-    table.sort(list)
+    return list
+end
+
+local function get_natural_ground_and_foundation_tile_condition_list()
+    local list = {}
+
+    for name, tile in pairs(data.raw.tile or {}) do
+        if is_natural_ground_tile(name, tile) or tile.is_foundation then
+            table.insert(list, name)
+        end
+    end
+
     return list
 end
 
@@ -92,7 +103,6 @@ local function get_tile_condition_list(tile_name, ground_only)
         end
     end
 
-    table.sort(list)
     return list
 end
 
@@ -128,7 +138,7 @@ visual_tile.placeable_by = { item = VISUAL_TILE, count = 1 }
 if visual_tile.minable then
     visual_tile.minable.result = VISUAL_TILE
 end
-configure_tile_item(visual_item, VISUAL_TILE, get_tile_condition_list(NAME, true))
+configure_tile_item(visual_item, VISUAL_TILE, get_natural_ground_and_foundation_tile_condition_list())
 visual_item.order                         = "c[landfill]-y[space-platform-for-ground]"
 visual_item.subgroup                      = items["stone-brick"].subgroup
 

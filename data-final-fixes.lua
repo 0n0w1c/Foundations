@@ -328,6 +328,42 @@ if items["esp-foundation"] then
     items["esp-foundation"].order = "c[landfill]-yz[esp-foundation]"
 end
 
+local function remove_tile_condition(tile_condition, tile_name)
+    for i = table_size(tile_condition), 1, -1 do
+        if tile_condition[i] == tile_name then
+            table.remove(tile_condition, i)
+        end
+    end
+end
+
+local function exclude_tile_from_place_as_tile(item_name, tile_name)
+    local item = items[item_name]
+    local place_as_tile = item and item.place_as_tile
+
+    if not place_as_tile then return end
+
+    if place_as_tile.tile_condition then
+        remove_tile_condition(place_as_tile.tile_condition, tile_name)
+        return
+    end
+
+    place_as_tile.tile_condition = {}
+
+    for name, _ in pairs(tiles) do
+        if name ~= tile_name then
+            table.insert(place_as_tile.tile_condition, name)
+        end
+    end
+end
+
+if FOUNDATION then
+    for item_name, _ in pairs(items) do
+        if string.sub(item_name, 1, 7) == "F077ET-" then
+            exclude_tile_from_place_as_tile(item_name, "F077ET-esp-foundation")
+        end
+    end
+end
+
 if items["F077ET-esp-foundation"] then
     items["F077ET-esp-foundation"].order = "c[landfill]-z[electric-esp-foundation]"
 end
