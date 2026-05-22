@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.25.3
+Date: 22.05.2026
+  Bugfixes:
+    - Incorrect default foundation tile could be set, resulting in a misleading flying text message
+  Changes:
+    - None
+---------------------------------------------------------------------------------------------------
 Version: 2.25.2
 Date: 21.05.2026
   Bugfixes:

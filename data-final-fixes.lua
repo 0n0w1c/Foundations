@@ -1,12 +1,14 @@
 require("constants")
 
 FOUNDATION = false
-if mods["electric-tiles"] and mods["space-platform-for-ground"] then
+ELECTRIC_FOUNDATION = false
+if mods["space-platform-for-ground"] then
     FOUNDATION = true
+    ELECTRIC_FOUNDATION = mods["electric-tiles"] ~= nil
 end
 
 HIDE_RECIPES = false
-if FOUNDATION and settings.startup["Foundations-hide-et-recipes"] then
+if ELECTRIC_FOUNDATION and settings.startup["Foundations-hide-et-recipes"] then
     HIDE_RECIPES = settings.startup["Foundations-hide-et-recipes"].value == true
 end
 
@@ -203,22 +205,28 @@ if mods["electric-tiles"] then
             end
         end
     end
-end
 
-if HIDE_RECIPES then
-    local electric_foundation = "F077ET-esp-foundation"
+    if HIDE_RECIPES or mods["craft-deco"] then
+        local electric_foundation = "F077ET-esp-foundation"
 
-    for _, tile in pairs(tiles) do
-        if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then
-            if tile.minable then
-                tile.minable.results = { { type = "item", name = electric_foundation, amount = 1 } }
+        for _, tile in pairs(tiles) do
+            if string.sub(tile.name, 1, 7) == "F077ET-" and tile.name ~= electric_foundation then
+                tile.hidden = true
+
+                if tile.minable then
+                    tile.minable.results = { { type = "item", name = electric_foundation, amount = 1 } }
+                end
             end
         end
-    end
 
-    for _, recipe in pairs(recipes) do
-        if string.sub(recipe.name, 1, 7) == "F077ET-" and recipe.name ~= electric_foundation then
-            if recipe then
+        for _, item in pairs(items) do
+            if string.sub(item.name, 1, 7) == "F077ET-" and item.name ~= electric_foundation then
+                item.hidden = true
+            end
+        end
+
+        for _, recipe in pairs(recipes) do
+            if string.sub(recipe.name, 1, 7) == "F077ET-" and recipe.name ~= electric_foundation then
                 recipe.hidden = true
             end
         end
@@ -356,7 +364,7 @@ local function exclude_tile_from_place_as_tile(item_name, tile_name)
     end
 end
 
-if FOUNDATION then
+if ELECTRIC_FOUNDATION then
     for item_name, _ in pairs(items) do
         if string.sub(item_name, 1, 7) == "F077ET-" then
             exclude_tile_from_place_as_tile(item_name, "F077ET-esp-foundation")
@@ -374,57 +382,4 @@ end
 
 if tiles["F077ET-esp-foundation"] and tiles["foundation"] then
     tiles["F077ET-esp-foundation"].order = (tiles["foundation"].order or "") .. "-z[electric-esp-foundation]"
-end
-
-local GENERATED_FOUNDATION_COVER_TILES =
-{
-    ["esp-foundation"] = true,
-    ["F077ET-esp-foundation"] = true,
-}
-
-local function restore_default_cover_tile(tile_name, cover_tile_name)
-    if tiles[tile_name] then
-        tiles[tile_name].default_cover_tile = cover_tile_name
-    end
-end
-
-local function restore_generated_default_cover_tiles()
-    for name, tile in pairs(tiles) do
-        if tile.default_cover_tile and GENERATED_FOUNDATION_COVER_TILES[tile.default_cover_tile] then
-            local original_cover_tile = FOUNDATIONS_DEFAULT_COVER_TILES and FOUNDATIONS_DEFAULT_COVER_TILES[name]
-
-            if original_cover_tile then
-                tile.default_cover_tile = original_cover_tile
-            end
-        end
-    end
-end
-
-restore_generated_default_cover_tiles()
-
-restore_default_cover_tile("water", "landfill")
-restore_default_cover_tile("deepwater", "landfill")
-restore_default_cover_tile("water-green", "landfill")
-restore_default_cover_tile("deepwater-green", "landfill")
-restore_default_cover_tile("water-shallow", "landfill")
-restore_default_cover_tile("water-mud", "landfill")
-restore_default_cover_tile("oil-ocean-shallow", "foundation")
-restore_default_cover_tile("oil-ocean-deep", "foundation")
-restore_default_cover_tile("lava", "foundation")
-restore_default_cover_tile("lava-hot", "foundation")
-
-for _, tile_name in pairs({
-    "wetland-light-green-slime",
-    "wetland-green-slime",
-    "wetland-light-dead-skin",
-    "wetland-dead-skin",
-    "wetland-pink-tentacle",
-    "wetland-red-tentacle",
-    "wetland-yumako",
-    "wetland-jellynut",
-    "wetland-blue-slime",
-    "gleba-deep-lake",
-}) do
-    restore_default_cover_tile(tile_name,
-        (FOUNDATIONS_DEFAULT_COVER_TILES and FOUNDATIONS_DEFAULT_COVER_TILES[tile_name]) or "landfill")
 end

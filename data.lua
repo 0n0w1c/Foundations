@@ -8,8 +8,10 @@ for name, tile in pairs(data.raw.tile or {}) do
 end
 
 FOUNDATION = false
-if mods["electric-tiles"] and mods["space-platform-for-ground"] then
+ELECTRIC_FOUNDATION = false
+if mods["space-platform-for-ground"] then
     FOUNDATION = true
+    ELECTRIC_FOUNDATION = mods["electric-tiles"] ~= nil
 end
 
 data.extend({

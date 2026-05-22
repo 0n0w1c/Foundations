@@ -17,7 +17,7 @@ local function get_default_layer(tile_color)
 end
 
 local layers_hidden = not (mods["Dectorio"] or mods["Concrete-Tints"])
-local et_recipes_hidden = not (mods["electric-tiles"] and mods["space-platform-for-ground"])
+local et_recipes_hidden = not mods["space-platform-for-ground"]
 
 data.extend({
     {

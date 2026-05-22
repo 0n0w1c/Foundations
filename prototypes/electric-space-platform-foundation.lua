@@ -63,18 +63,6 @@ local function get_natural_ground_tile_condition_list()
     return list
 end
 
-local function get_natural_ground_and_foundation_tile_condition_list()
-    local list = {}
-
-    for name, tile in pairs(data.raw.tile or {}) do
-        if is_natural_ground_tile(name, tile) or tile.is_foundation then
-            table.insert(list, name)
-        end
-    end
-
-    return list
-end
-
 local function get_tile_condition_list(tile_name, ground_only)
     local conditions = FOUNDATION_TILE_CONDITIONS[tile_name]
     local included = {}
@@ -138,7 +126,18 @@ visual_tile.placeable_by = { item = VISUAL_TILE, count = 1 }
 if visual_tile.minable then
     visual_tile.minable.result = VISUAL_TILE
 end
-configure_tile_item(visual_item, VISUAL_TILE, get_natural_ground_and_foundation_tile_condition_list())
+
+visual_item.place_as_tile = visual_item.place_as_tile or {}
+visual_item.place_as_tile.result = VISUAL_TILE
+visual_item.place_as_tile.condition_size = visual_item.place_as_tile.condition_size or 1
+if items["concrete"] and items["concrete"].place_as_tile and items["concrete"].place_as_tile.condition then
+    visual_item.place_as_tile.condition = table.deepcopy(items["concrete"].place_as_tile.condition)
+elseif items["stone-brick"] and items["stone-brick"].place_as_tile and items["stone-brick"].place_as_tile.condition then
+    visual_item.place_as_tile.condition = table.deepcopy(items["stone-brick"].place_as_tile.condition)
+else
+    visual_item.place_as_tile.condition = { layers = { water_tile = true } }
+end
+visual_item.place_as_tile.tile_condition  = nil
 visual_item.order                         = "c[landfill]-y[space-platform-for-ground]"
 visual_item.subgroup                      = items["stone-brick"].subgroup
 
@@ -220,20 +219,22 @@ if landfill_technology then
     })
 end
 
-local electric_recipe = table.deepcopy(recipes[espf_recipe.name])
-electric_recipe.ingredients =
-{
-    { type = "item", name = "esp-foundation", amount = 10 },
-    { type = "item", name = "copper-cable",   amount = 20 },
-}
-
-ElectricTilesDataInterface.modTilePrototypes({
+if mods["electric-tiles"] and ElectricTilesDataInterface then
+    local electric_recipe = table.deepcopy(recipes[espf_recipe.name])
+    electric_recipe.ingredients =
     {
-        tile = data.raw.tile[NAME],
-        item = data.raw.item[NAME],
-        recipe = electric_recipe,
-        others = { add_copper_wire_icon = true, result_amount = 10, technologies = { "F077ET-technology" } }
+        { type = "item", name = "esp-foundation", amount = 10 },
+        { type = "item", name = "copper-cable",   amount = 20 },
     }
-})
 
-configure_tile_item(data.raw.item["F077ET-" .. NAME], "F077ET-" .. NAME, get_tile_condition_list(NAME))
+    ElectricTilesDataInterface.modTilePrototypes({
+        {
+            tile = data.raw.tile[NAME],
+            item = data.raw.item[NAME],
+            recipe = electric_recipe,
+            others = { add_copper_wire_icon = true, result_amount = 10, technologies = { "F077ET-technology" } }
+        }
+    })
+
+    configure_tile_item(data.raw.item["F077ET-" .. NAME], "F077ET-" .. NAME, get_tile_condition_list(NAME))
+end

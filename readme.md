@@ -1,5 +1,5 @@
 #### Features:
-* Placing agricultural towers with a Gleba soil selected, places the soil where allowed  
+* Placing agricultural towers with a Gleba landfill selected, places the landfill where allowed  
 * Works with [Stable Foundations](https://mods.factorio.com/mod/StableFoundations)  
 * Compatible with personal logistics for construction and deconstruction  
 * Shortcut to open the Foundations selector  
