@@ -206,7 +206,7 @@ if mods["electric-tiles"] then
         end
     end
 
-    if HIDE_RECIPES or mods["craft-deco"] then
+    if HIDE_RECIPES then
         local electric_foundation = "F077ET-esp-foundation"
 
         for _, tile in pairs(tiles) do
