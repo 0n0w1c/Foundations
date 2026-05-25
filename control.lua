@@ -76,6 +76,17 @@ local function create_missing_tiles_text(player, position, tile_name, count)
     }
 end
 
+
+local function get_tile_display_name(tile_name)
+    local item_name = storage.tile_to_item and storage.tile_to_item[tile_name]
+
+    if item_name and item_name ~= tile_name then
+        return { "?", { "item-name." .. item_name }, { "tile-name." .. tile_name }, tile_name }
+    end
+
+    return { "?", { "item-name." .. tile_name }, { "tile-name." .. tile_name }, tile_name }
+end
+
 local function place_selection_tiles(surface, player, tile_name, tiles_to_place, destroy_fish)
     local count = table_size(tiles_to_place)
     if count <= 0 then return end
@@ -449,7 +460,7 @@ local function build_tile_grid(parent, state, layout)
                 name = tile_selector_button_prefix .. item_name,
                 sprite = sprite,
                 style = item_name == state.selected and "slot_sized_button_pressed" or "slot_sized_button",
-                tooltip = { "tile-name." .. item_name },
+                tooltip = get_tile_display_name(item_name),
                 mouse_button_filter = { "left" }
             }
             button.style.width = 40
@@ -487,7 +498,7 @@ local function build_selection_row(parent, state, layout)
         name = "Foundations-selected-caption",
         caption = state.foundations_disabled
             and { "gui.Foundations-disabled-state" }
-            or { "tile-name." .. state.selected },
+            or get_tile_display_name(state.selected),
     }
     selected_caption.style.single_line = true
     selected_caption.style.horizontally_stretchable = true
