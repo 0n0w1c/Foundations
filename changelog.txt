@@ -2,7 +2,7 @@
 Version: 2.25.5
 Date: 24.05.2026
   Bugfixes:
-    - Improved localized name resolution in the Resource selector gui
+    - Improved localized name resolution in the Foundations selector gui
   Changes:
     - None
 ---------------------------------------------------------------------------------------------------
