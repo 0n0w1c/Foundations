@@ -435,8 +435,8 @@ function load_tiles(entity, area, player)
 end
 
 local function tile_hidden_from_selector(prototype)
-    return prototype.hidden
-        or prototype.hidden_in_factoriopedia
+    return tile_prototype_field(prototype, "hidden")
+        or tile_prototype_field(prototype, "hidden_in_factoriopedia")
         or string.sub(prototype.name, 1, 7) == "frozen-"
         or string.sub(prototype.name, 1, 13) == "F077ET-frozen"
         or prototype.name == "space-platform-foundation"

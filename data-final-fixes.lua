@@ -12,8 +12,9 @@ if ELECTRIC_FOUNDATION and settings.startup["Foundations-hide-et-recipes"] then
     HIDE_RECIPES = settings.startup["Foundations-hide-et-recipes"].value == true
 end
 
-if mods["quality"] then
-    recycling = require("__quality__/prototypes/recycling")
+local recycling
+if mods["recycler"] then
+    recycling = require("__recycler__.recycling")
 end
 
 if settings.startup["Foundations-added-inventory-rows"] and settings.startup["Foundations-added-inventory-rows"].value > 0 then
@@ -50,7 +51,7 @@ if FOUNDATION and recipes["space-platform-for-ground"] then
     }
     recipe.results = { { type = "item", name = tile_name, amount = 10 } }
 
-    if mods["quality"] then
+    if recycling then
         recycling.generate_recycling_recipe(recipe)
     end
 end
@@ -78,7 +79,7 @@ if mods["Dectorio"] and settings.startup["dectorio-painted-concrete"] and settin
 
             data:extend({ new_item, new_recipe })
 
-            if mods["quality"] then
+            if recycling then
                 if recipes[tile_name .. "-recycling"] then
                     recipes[tile_name .. "-recycling"].hidden = true
                 end
@@ -280,7 +281,8 @@ if mods["Dectorio"] then
                     local recipe = data.raw["recipe"]["dect-paint-" .. variant]
                     if recipe then
                         recipe.ingredients = { { type = "item", name = "concrete", amount = 10 } }
-                        recipe.category = "crafting"
+                        recipe.categories = { "crafting" }
+                        recipe.category = nil
                     end
                 end
             end
